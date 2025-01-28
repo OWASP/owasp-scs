@@ -1,0 +1,345 @@
+:root {
+  --md-primary-fg-color: #499FFF;
+  --scs-blue: #499FFF;
+  --scs-gradient: linear-gradient(315deg, #38F8FF 0%, #875CFF 100%);
+}
+
+/* Wider space for pages */
+.md-grid {
+  max-width: 90%;
+}
+
+.md-sidebar--primary {
+  margin-right: 4em;
+}
+
+.md-sidebar--secondary {
+  margin-left: 4em;
+}
+
+/* Maximum space for tables */
+.md-typeset__table {
+  width: 100%;
+}
+
+.md-typeset__table table:not([class]) {
+  display: table
+}
+
+.md-header {
+  background: var(--scs-gradient);
+}
+
+.md-tabs {
+  background: var(--scs-gradient);
+}
+
+@keyframes pump {
+  0%, 40%, 80%, 100% {
+    transform: scale(1);
+  }
+  20%, 60% {
+    transform: scale(1.15);
+  }
+}
+
+.scs-chip {
+  border: solid 1px var(--md-primary-fg-color);
+  outline:none;
+  text-decoration:none;
+  border-radius: 1.2em;
+  min-width: 5.5em;
+  max-height: 1.6em;
+  padding-left: 0.5em;
+  padding-right: 0.4em;
+}
+
+.scsvs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 0.7em 0;
+}
+
+.scsvs-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 0.6em;
+
+}
+
+.scsvs-chips-title {
+  color: darkgrey;
+  font-size: small;
+  margin: 0 0.5em;
+}
+
+.scs-blue-chip {
+  background-color: #499FFF;
+  color: #fff !important;
+  cursor: default;
+}
+
+.scsvs-v1-chip {
+  background-color: #828282;
+  color: #fff !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.scsvs-v2-chip {
+  background-color: #499FFF;
+  color: #fff !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+.scsvs-v2-chip:hover {
+  background-color: #72b3fe;
+  color: #fff !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.scs-dot-blue {
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #33CCCC;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.scs-dot-green {
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #99CC00;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.scs-dot-orange {
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #FF9900;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.scs-dot-purple {
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #9933CC;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.md-footer__inner:not([hidden]){
+  display: none;
+}
+
+.scs-blue-hue {
+  filter: sepia(100%) hue-rotate(190deg) saturate(500%);
+}
+
+.scs-mini-app {
+  border-radius: 5px;
+}
+
+.scs-app-row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+.scs-apps-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  margin-left: 20px;
+}
+
+.scs-flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 800px) {
+  .scs-flex-container {
+    flex-direction: column;
+  }
+}
+
+.pump {
+  animation: pump 1000ms ease-out;
+}
+
+.grow:hover { transform: scale(1.05); transition: 0.2s;}
+
+.scs-button {
+  text-decoration: none;
+  position: relative;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: inherit;
+  color: #fff;
+  min-width: 15em;
+  height: 3em;
+  line-height: 2em;
+  text-align: center;
+  background: var(--scs-gradient);
+  background-size: 300%;
+  border-radius: 8px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.scs-button:hover {
+  animation: ani 8s linear infinite;
+  border: none;
+}
+
+@keyframes ani {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 400%;
+  }
+}
+
+.scs-button:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: var(--scs-gradient);
+  background-size: 400%;
+  border-radius: 8px;
+  transition: 1s;
+}
+
+.scs-button:hover::before {
+  filter: blur(20px);
+}
+
+.scs-button:active {
+  background: var(--scs-gradient);
+}
+
+.scs-test-button,
+.scs-demo-button {
+  background-color: var(--scs-blue); /* Adjust this value for .scs-demo-button if needed */
+  color: white !important;
+  line-height: 1em !important;
+  margin: 1em 0;
+  border-radius: .3rem;
+  display: block;
+  padding: .8rem;
+  transition: background-color .25s;
+  min-width: 100%;
+  text-align: left;
+  cursor: pointer; /* Add this line to show the pointer cursor */
+}
+
+.scs-demo-button {
+  background-color: #9900ff; /* Adjusted to match the hex value format */
+}
+
+.scs-test-button:hover {
+  background-color: #2e7fd5; 
+}
+
+.scs-demo-button:hover {
+  background-color: #aa33ff;
+}
+
+/* Default DataTables styling for light mode */
+table.dataTable {
+  background-color: white;
+  color: #3a3a3a;
+  border-bottom: 1px solid #ccc !important;
+}
+
+table.dataTable th {
+  border-bottom: 1px solid #ccc !important;
+}
+
+/* Dark mode DataTables styling */
+[data-md-color-scheme="slate"] table.dataTable,
+[data-md-color-scheme="dark"] table.dataTable {
+  background-color: var(--md-default-bg-color);
+  color: white;
+}
+
+[data-md-color-scheme="slate"] table.dataTable th,
+[data-md-color-scheme="dark"] table.dataTable th {
+  background-color: var(--md-default-bg-color);
+  color: white;
+}
+
+[data-md-color-scheme="slate"] table.dataTable td,
+[data-md-color-scheme="dark"] table.dataTable td {
+  background-color: var(--md-default-bg-color);
+  color: white;
+}
+
+/* Adjusting pagination buttons and other elements */
+[data-md-color-scheme="slate"] .dataTables_wrapper .dataTables_paginate .paginate_button,
+[data-md-color-scheme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: white !important;
+}
+
+/* Adjust  .dataTables_info */
+[data-md-color-scheme="slate"] .dataTables_wrapper .dataTables_info,
+[data-md-color-scheme="dark"] .dataTables_wrapper .dataTables_info {
+  color: white;
+}
+
+/* add margin to dataTables_filter and dataTables_info independent of color scheme */
+
+.dataTables_filter {
+  margin: 1em 0 2em 0;
+}
+
+.dataTables_info {
+  margin: 1em 0 2em 0;
+  padding-top: 0px !important;
+  color: #aaaaaa !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  border-radius: 10px !important;
+  margin-left: 10px !important;
+}
+
+[data-md-color-scheme="slate"] .dataTables_wrapper .dataTables_filter input,
+[data-md-color-scheme="dark"] .dataTables_wrapper .dataTables_filter input {
+  background-color: #3a3a3a;
+  color: white;
+  border: 1px solid #555;
+}
+
+
+[data-md-color-scheme="slate"] .dataTables_wrapper .dataTables_filter label,
+[data-md-color-scheme="dark"] .dataTables_wrapper .dataTables_filter label {
+  color: white;
+}
+
+.md-typeset details {
+  border: 0px;
+}
+
+.md-typeset .admonition {
+  border: 0px;
+}
+
+.md-banner {
+  background-color: #000000;
+  color: #ffffff;
+}
