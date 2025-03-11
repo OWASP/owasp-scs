@@ -1,0 +1,2149 @@
+metadata:
+  title: Smart Contract Security Verification Standard (SCSVS)
+  remarks: The SCSVS is a comprehensive framework for securing smart contracts, with
+    a focus on identifying vulnerabilities and mitigating risks in smart contract
+    deployments.
+  version: v0.0.1
+groups:
+- gid: SCSVS-ARCH
+  index: 1
+  title: Architecture, Design, and Threat Modeling
+  description: This group focuses on the design and architecture of smart contracts,
+    ensuring that they are secure by design and built with modularity, upgradability,
+    and separation of concerns in mind. It emphasizes the importance of threat modeling
+    to identify and mitigate risks early in the design phase.
+  controls:
+  - cid: SCSVS-ARCH-1
+    objective: Ensure that smart contracts are designed with modularity and upgradability
+      in mind.
+    requirements:
+    - rid: S1.1.A1
+      tid: SCSTG-TEST-0005
+      requirement: Verify that the contract is divided into modular components or
+        contracts.
+      testname: Verify modularity and upgradability.
+      checklist:
+      - Are the smart contracts using import statements to include other contracts
+        and libraries?
+      - Are functions within the contract logically separated and grouped into different
+        contracts or libraries?
+    - rid: S1.1.A2
+      tid: SCSTG-TEST-0006
+      requirement: Ensure that upgrade mechanisms are designed to allow secure and
+        controlled updates.
+      testname: Ensure secure and controlled updates.
+      checklist:
+      - Is the contract using a proxy pattern (e.g., Transparent Proxy or UUPS Proxy)
+        for upgradability?
+      - Are the upgradeTo or similar functions protected with onlyOwner or onlyAdmin
+        modifiers?
+      - Are there migration functions to safely transfer state variables to the new
+        contract version?
+    - rid: S1.1.A3
+      tid: SCSTG-TEST-0006
+      requirement: Check that module boundaries are clearly defined and that dependencies
+        are managed.
+      testname: Check module boundaries and dependencies.
+      checklist:
+      - Are interfaces and abstract contracts used to define boundaries between modules?
+      - Are external calls to other modules made through well-defined interfaces?
+    - rid: S1.1.A4
+      tid: SCSTG-TEST-0006
+      requirement: Ensure that changes to storage variable order or types between
+        contract versions are managed to avoid storage collisions and data corruption.
+      testname: Ensure changes to storage variables are managed.
+      checklist:
+      - Is there a well-documented storage layout for the contract?
+      - Are storage variables added in storage gaps to avoid conflicts?
+    - rid: S1.1.A5
+      tid: SCSTG-TEST-0006
+      requirement: Verify that critical privilege transfers are conducted in a two-step
+        process to ensure secure and reliable privilege changes.
+      testname: Verify critical privilege transfers.
+      checklist:
+      - Is there a two-step process for transferring ownership using transferOwnership
+        and claimOwnership?
+      - Are there events emitted for each step of the transfer process?
+    - rid: S1.1.A6
+      tid: SCSTG-TEST-0006
+      requirement: Verify that the data location of parameters and return variables
+        is correctly handled when overriding internal and public functions to avoid
+        generating invalid code during virtual function calls.
+      testname: Verify data location handling in function overrides.
+      checklist:
+      - Are memory and storage keywords correctly used for parameters and return variables
+        in overridden functions?
+      - Are there tests covering function overrides to ensure no invalid virtual function
+        calls?
+    - rid: S1.1.B1
+      requirement: Verify that different functionalities are separated into distinct
+        contracts or modules.
+      testname: Verify separation of different functionalities.
+      checklist:
+      - Are the contracts modular with clearly defined responsibilities?
+      - Is there a single responsibility per contract or module?
+    - rid: S1.1.B2
+      requirement: Ensure that each module has a single responsibility and minimal
+        dependencies on other modules.
+      testname: Ensure minimal dependencies between modules.
+      checklist:
+      - Are modules loosely coupled?
+      - Is each module's responsibility clearly defined and limited?
+    - rid: S1.1.B3
+      requirement: Check for any cross-module dependencies that could lead to security
+        risks.
+      testname: Check for cross-module dependencies.
+      checklist:
+      - Are there dependencies that could introduce security vulnerabilities?
+      - Is each module's responsibility clearly defined and limited?
+    - rid: S1.1.B4
+      requirement: Ensure that the protocol maintains consistent and reliable operation
+        during the transfer of privileges, with considerations for various edge cases.
+      testname: Ensure consistent operation during privilege transfers.
+      checklist:
+      - Are edge cases considered during privilege transfers?
+      - Is there a fallback mechanism in case of transfer failure?
+    - rid: S1.1.B5
+      requirement: Verify that proxy contracts use the onlyInitializing modifier instead
+        of initializer to ensure proper initialization.
+      testname: Verify proxy contract initialization.
+      checklist:
+      - Are proxy contracts using the onlyInitializing modifier?
+      - Is there a check to prevent re-initialization?
+    - rid: S1.1.B6
+      requirement: Verify that storage layouts between contract versions are consistent
+        to prevent data corruption and unpredictable behavior.
+      testname: Verify storage layout consistency.
+      checklist:
+      - Are storage layouts compatible across different contract versions?
+      - Is there documentation for storage layout changes?
+    - rid: S1.1.B7
+      requirement: Ensure that immutable variables are consistent across implementations
+        during proxy upgrades.
+      testname: Ensure immutable variable consistency.
+      checklist:
+      - Are immutable variables properly defined and documented?
+      - Is there a verification process for consistency across upgrades?
+    - rid: S1.1.B8
+      requirement: Verify that implementations of the same logic across different
+        parts of the contract are consistent to avoid introducing errors or vulnerabilities.
+      testname: Verify consistency in logic implementation.
+      checklist:
+      - Is logic implemented consistently across the contract?
+      - Is there a review process for verifying consistency?
+    - rid: S1.1.B9
+      requirement: Ensure that ETH and WETH are handled separately with appropriate
+        checks to avoid errors due to incorrect assumptions about exclusivity.
+      testname: Ensure separate handling of ETH and WETH.
+      checklist:
+      - Are ETH and WETH treated as distinct entities?
+      - Are there checks in place to handle ETH and WETH appropriately?
+    - rid: S1.1.B10
+      requirement: Verify that contracts with constructors are not used in a proxy
+        setup, and initializer logic is used instead.
+      testname: Verify proxy setup for contracts with constructors.
+      checklist:
+      - Are contracts designed without constructors for proxy setups?
+      - Is initializer logic implemented and verified?
+  - cid: SCSVS-ARCH-2
+    objective: Ensure that smart contracts are designed with modularity and upgradability
+      in mind.
+    requirements:
+    - rid: S1.2.A1
+      requirement: Verify that an upgrade mechanism (e.g., proxy pattern) is implemented
+        for the contract.
+      testname: Verify implementation of upgrade mechanisms.
+      checklist:
+      - Is the contract using a well-known proxy pattern such as Transparent Proxy
+        or UUPS Proxy?
+      - Are there unit tests verifying the upgrade functionality?
+      - Is the upgrade mechanism designed to be easily extensible for future upgrades?
+    - rid: S1.2.A2
+      requirement: Ensure that the upgrade process includes safeguards against unauthorized
+        upgrades.
+      testname: Ensure safeguards against unauthorized upgrades.
+      checklist:
+      - Is the upgradeTo function protected by onlyOwner or onlyAdmin modifiers?
+      - Are access controls and ownership mechanisms properly tested and reviewed?
+      - Are multi-signature wallets or other advanced access control mechanisms used
+        for upgrade authorization?
+    - rid: S1.2.A3
+      requirement: Check that the upgrade mechanism is documented and reviewed for
+        security.
+      testname: Review and document the upgrade mechanism.
+      checklist:
+      - Is the upgrade mechanism thoroughly documented in the project documentation?
+      - Has the upgrade mechanism undergone a formal security audit?
+      - Are there guidelines and best practices documented for performing upgrades?
+    - rid: S1.2.A4
+      requirement: Verify that immutable variables are consistent across implementations
+        during proxy upgrades to prevent misuse.
+      testname: Verify consistency of immutable variables.
+      checklist:
+      - Are immutable variables defined and documented across all contract versions?
+      - Is there a validation process to ensure consistency of immutable variables
+        during upgrades?
+      - Are there automated tests checking the state of immutable variables before
+        and after upgrades?
+    - rid: S1.2.A5
+      requirement: Verify that selfdestruct and delegatecall in implementation contracts
+        do not introduce vulnerabilities or unexpected behaviors in a proxy setup.
+      testname: Verify use of selfdestruct and delegatecall in proxy setup.
+      checklist:
+      - Is there a review process for identifying and mitigating risks associated
+        with selfdestruct and delegatecall?
+      - Are there unit tests covering scenarios involving selfdestruct and delegatecall?
+      - Is the use of selfdestruct and delegatecall documented and justified in the
+        contract?
+    - rid: S1.2.A6
+      requirement: Verify that UUPSUpgradeable contracts are protected against vulnerabilities
+        that may affect uninitialized implementation contracts, ensuring secure upgrade
+        mechanisms.
+      testname: Protect UUPSUpgradeable contracts.
+      checklist:
+      - Are UUPSUpgradeable contracts tested for initialization-related vulnerabilities?
+      - Is there a mechanism to ensure that implementation contracts are properly
+        initialized before use?
+      - Are there security reviews focused on initialization and upgrade vulnerabilities
+        in UUPSUpgradeable contracts?
+    - rid: S1.2.B1
+      requirement: Verify that deprecated contract versions are correctly marked and
+        handled.
+      testname: Verify handling of deprecated contract versions.
+      checklist:
+      - Are deprecated contract versions clearly marked with appropriate deprecation
+        notices in the code and documentation?
+      - Is there a mechanism to disable functionality in deprecated contracts while
+        maintaining state integrity?
+      - Are deprecated contracts archived and isolated from the main deployment pipeline
+        to prevent accidental usage?
+    - rid: S1.2.B2
+      requirement: Ensure that access to deprecated versions is restricted or disabled.
+      testname: Ensure restriction or disabling of access to deprecated versions.
+      checklist:
+      - Are access controls updated to restrict interactions with deprecated contract
+        versions?
+      - Is there a revocation process in place to revoke permissions or keys associated
+        with deprecated contracts?
+      - Are deprecated contracts audited to ensure no critical functions remain accessible
+        post-deprecation?
+    - rid: S1.2.B3
+      requirement: Check that migration paths from deprecated versions to new versions
+        are secure.
+      testname: Check security of migration paths from deprecated versions.
+      checklist:
+      - Is there a documented and tested migration plan for transitioning from deprecated
+        to new contract versions?
+      - Are migration scripts and tools audited for security vulnerabilities that
+        could compromise the migration process?
+      - Is there a rollback mechanism in case the migration encounters issues, ensuring
+        no loss of state or functionality?
+  - cid: SCSVS-ARCH-3
+    objective: Ensure that smart contracts are designed with modularity and upgradability
+      in mind.
+    requirements:
+    - rid: S1.3.C1
+      requirement: Verify that mitigations are implemented for high-priority risks.
+      testname: Verify implementation of high-priority risk mitigations.
+      checklist:
+      - Are there specific mitigations in place for reentrancy attacks, such as the
+        use of checks-effects-interactions pattern or reentrancy guards?
+      - Are overflow and underflow checks implemented using SafeMath or Solidity's
+        built-in overflow protection?
+      - Are access controls and role-based permissions thoroughly tested to prevent
+        unauthorized access?
+    - rid: S1.3.C2
+      requirement: Ensure that mitigation strategies are documented and tested.
+      testname: Ensure documentation and testing of mitigation strategies.
+      checklist:
+      - Are all mitigation strategies documented with clear explanations of how they
+        address specific vulnerabilities?
+      - Are there unit and integration tests specifically designed to validate the
+        effectiveness of each mitigation strategy?
+      - Is there a process for continuously updating the documentation and tests as
+        new threats and mitigations are identified?
+    - rid: S1.3.C3
+      requirement: Check that the effectiveness of implemented mitigations is reviewed
+        and validated.
+      testname: Review and validate effectiveness of implemented mitigations.
+      checklist:
+      - Are periodic security audits conducted to review and validate the effectiveness
+        of implemented mitigations?
+      - Are there automated tools and scripts in place to continuously monitor the
+        security posture of the smart contracts?
+      - Is there a feedback loop for integrating audit findings and monitoring results
+        into the mitigation strategy?
+    - rid: S1.3.G1
+      requirement: Understanding Protocol Actors
+      testname: Understanding Protocol Actors
+      checklist:
+      - Have all actors and their interactions within the protocol been clearly identified
+        and documented?
+      - Are the roles and permissions of each actor clearly defined and appropriate?
+    - rid: S1.3.G1
+      requirement: Function Overriding
+      testname: Verify Function Overriding
+      checklist:
+      - Does the contract inherit functions from parent contracts?
+      - Are functions that override parent contract functions explicitly marked with the
+        override keyword?
+    - rid: S1.3.G3
+      requirement: Sybil Attack Protection
+      testname: Verify Sybil Attack Protection
+      checklist:
+      - Is the protocol's quorum mechanism or rewarding system designed to resist Sybil
+        attacks? Verify the criteria used for participation or rewards.
+      - How does the contract ensure that actions or decisions are not unduly influenced
+        by Sybil attacks?
+      - Are there checks or balances in place to validate the legitimacy of addresses
+        participating in quorum or rewarding mechanisms?
+    - rid: S1.3.G4
+      requirement: Initializer Front Running
+      testname: Verify Front-Running Protection for Initializer
+      checklist:
+      - Does the contract use a factory pattern or other mechanism to prevent front-running
+        of the initializer function?
+      - Is the initializer function protected from being called by unauthorized parties
+        immediately after deployment?
+      - Have you implemented safeguards to ensure the initializer cannot be front-run
+        to alter critical access controls?
+- gid: SCSVS-CODE
+  index: 2
+  title: 'Policies, Procedures, and Code Management '
+  description: TBD
+  controls:
+  - cid: SCSVS-CODE-1
+    objective: TBD
+    requirements:
+    - rid: S2.1.A1
+      tid: TBD
+      requirement: Ensure that developers do not use outdated compiler versions and
+        adhere to the latest compiler recommendations.
+      testname: Ensure adherence to latest compiler recommendations.
+      checklist:
+      - Are the smart contracts compiled using the latest stable version of the Solidity
+        compiler?
+      - Are there automated checks in the CI/CD pipeline to enforce the use of specific
+        compiler versions?
+      - Is there documentation and enforcement of the project's policy on compiler
+        versioning?
+    - rid: S2.1.A2
+      tid: TBD
+      requirement: Verify that deprecated functions are not used in the code.
+      testname: Verify non-usage of deprecated functions.
+      checklist:
+      - Are deprecated functions identified and removed from the codebase during code
+        reviews?
+      - Are automated static analysis tools used to detect the usage of deprecated
+        functions?
+      - Is there a process to update the codebase to replace deprecated functions
+        with their recommended alternatives?
+    - rid: S2.1.B1
+      tid: TBD
+      requirement: Verify that all smart contract code changes are reviewed by at
+        least two independent developers with expertise in smart contract security
+        before merging to the main branch.
+      testname: Independent expert code review.
+      checklist:
+      - Are pull requests (PRs) for smart contract changes reviewed and approved by
+        at least two developers with smart contract security expertise?
+      - Is there documentation of the review process, including comments and approvals
+        from the reviewers?
+    - rid: S2.1.B2
+      tid: TBD
+      requirement: Ensure that code reviews of smart contracts involve automated static
+        analysis tools specifically designed for smart contracts, and that all flagged
+        issues are addressed or documented prior to merging.
+      testname: Incorporate automated static analysis tools.
+      checklist:
+      - Are automated static analysis tools, such as MythX or Slither, integrated
+        into the CI/CD pipeline for smart contract code reviews?
+      - Are all issues flagged by these tools documented and resolved or justified
+        before merging the code?
+    - rid: S2.1.B3
+      tid: TBD
+      requirement: Check that the code review process for smart contracts includes
+        a thorough analysis for vulnerabilities such as reentrancy attacks, integer
+        overflows, and improper access control.
+      testname: Thorough analysis for vulnerabilities.
+      checklist:
+      - Are code reviews checking for potential reentrancy vulnerabilities, such as
+        unprotected external calls within functions?
+      - Are integer overflow and underflow vulnerabilities being checked using SafeMath
+        or Solidity's built-in overflow protection?
+      - Is the code reviewed for proper access control mechanisms, ensuring that only
+        authorized addresses can perform sensitive operations?
+    - rid: S2.1.B4
+      tid: TBD
+      requirement: Verify that code reviews include adherence to smart contract development
+        standards, such as the use of safe math libraries and secure design patterns.
+      testname: Adherence to development standards.
+      checklist:
+      - Are smart contracts using SafeMath libraries for all arithmetic operations
+        to prevent overflows and underflows?
+      - Is the use of design patterns like checks-effects-interactions consistently
+        applied to mitigate reentrancy attacks?
+      - Are fallback and receive functions implemented securely, with proper checks
+        to prevent misuse?
+    - rid: S2.1.B5
+      tid: TBD
+      requirement: Ensure that code reviews incorporate a checklist of common smart
+        contract vulnerabilities, and that each item on the list is addressed before
+        code is approved.
+      testname: Checklist for common vulnerabilities.
+      checklist:
+      - Is there a comprehensive checklist of common smart contract vulnerabilities
+        (e.g., reentrancy, integer overflows, unchecked external calls) used during
+        code reviews?
+      - Are all items on the checklist reviewed and marked as addressed in the code
+        review process?
+      - Are the checklist and review process updated regularly to incorporate new
+        vulnerabilities and best practices?
+    - rid: S2.1.G1
+      requirement: Inherited Function Implementation
+      testname: Verify Inherited Function Implementation
+      checklist:
+      - Have all required functions specified by parent contracts been implemented in
+        the derived contract?
+      - Are there any missing implementations that could affect the functionality or purpose
+        of inheritance?
+      - Is the inherited contract’s behavior consistent with the parent contract’s expectations?
+    - rid: S2.1.G2
+      requirement: Interface Implementation
+      testname: Verify Interface Implementation
+      checklist:
+      - Does the contract correctly implement all functions defined in the interface it
+        adheres to?
+      - Have you verified that the interface methods are fully implemented and operational?
+      - Are there any discrepancies between the interface specification and the contract
+        implementation?
+    - rid: S2.1.G3
+      requirement: Inheritance Order
+      testname: Verify Correct Inheritance Order
+      checklist:
+      - Is the inheritance chain ordered from the most base-like contract to the most
+        derived contract?
+      - Have you verified that the inheritance order does not affect variable initialization
+        or functionality?
+      - Are there any issues with storage layout or state variable initialization due
+        to incorrect inheritance order?
+    - rid: S2.1.G4
+      requirement: Using Initializable
+      testname: Verify Initializable Usage
+      checklist:
+      - Does the contract use the onlyInitializing modifier if it is intended to be inherited?
+      - Is the initializer modifier used appropriately and not exposed to inherited contracts?
+      - Have you ensured that initialization is restricted correctly to avoid unauthorized
+        access?        
+    - rid: S2.1.G5
+      requirement: Comment Accuracy
+      testname: Verify Comment Accuracy
+      checklist:
+      - Are comments and documentation reviewed and updated regularly to match the current
+        implementation?
+      - Does the code review process include verification of comment accuracy and relevance?
+      - Are there automated tools or practices in place to flag outdated or inconsistent
+        comments?
+- gid: SCSVS-GOV
+  index: 3
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-GOV-1
+    objective: TBD
+    requirements:
+    - rid: S3.1.G1
+      requirement: Does the protocol prevent liquidations during operational pauses or
+        interruptions?
+      testname: Verify correct handling of operational pauses and liquidations.
+      checklist:
+      - Does the protocol prevent liquidations during operational pauses or interruptions?
+      - Are there mechanisms to handle user intentions to increase collateral during such
+        pauses?
+      - How does the system manage collateral and liquidation processes during temporary
+        pauses?
+    - rid: S3.1.G2
+      requirement: What specific procedures are in place for resuming liquidations after
+        a pause?
+      testname: Verify resumption of paused liquidations without issues.
+      checklist:
+      - What specific procedures are in place for resuming liquidations after a pause?
+      - How is solvency monitored and maintained during and after a liquidation pause?
+      - Are there mechanisms to ensure that resumed liquidations do not disrupt system
+        stability?
+    - rid: S3.1.G3
+      requirement: Does the protocol provide adequate incentives for liquidators to address
+        small positions?
+      testname: Verify fair distribution of small position incentives.
+      checklist:
+      - Does the protocol provide adequate incentives for liquidators to address small
+        positions?
+      - How are incentives structured to ensure small positions are effectively managed?
+      - Are there measures in place to prevent neglect of small liquidation opportunities?
+    - rid: S3.1.G4
+      requirement: Is accrued interest included in the Loan-to-Value (LTV) calculations?
+      testname: Verify correct interest rate calculations in LTV computations.
+      checklist:
+      - Is accrued interest included in the Loan-to-Value (LTV) calculations?
+      - How does the system ensure that interest is factored into credit evaluations accurately?
+      - Are there checks to confirm that interest calculations do not affect LTV assessments?
+    - rid: S3.1.G5
+      requirement: Can the liquidation and repaying mechanisms be independently enabled
+        or disabled?
+      testname: Verify consistency in liquidation and repayment logic.
+      checklist:
+      - Can the liquidation and repaying mechanisms be independently enabled or disabled?
+      - What controls are in place to ensure consistent operation of both mechanisms?
+      - How does the protocol prevent operational discrepancies between liquidation and
+        repaying functions?
+    - rid: S3.1.G6
+      requirement: Is there a mechanism to ensure that liquidation returns are consistent
+        and predictable?
+      testname: Verify accuracy of liquidation return calculations.
+      checklist:
+      - Is there a mechanism to ensure that liquidation returns are consistent and predictable?
+      - How does the protocol handle discrepancies in liquidation returns?
+      - What steps are taken to ensure that liquidators receive the expected returns?
+    - rid: S3.1.G7 
+      requirement: Can users be trapped in perpetual debt due to protocol conditions or
+        system design?
+      testname: Verify mitigation of perpetual debt risks.
+      checklist:
+      - Can users be trapped in perpetual debt due to protocol conditions or system design?
+      - What safeguards are in place to prevent users from being unable to repay their
+        loans?
+      - How does the protocol address situations where repayment becomes unfeasible?
+    - rid: S3.1.G8 
+      requirement: Can an arbitrary exchange rate be set during the processing of queued
+        withdrawals?
+      testname: Verify prevention of arbitrary exchange rate settings in withdrawals.
+      checklist:
+      - Can an arbitrary exchange rate be set during the processing of queued withdrawals?
+      - Does the protocol ensure that the exchange rate used during withdrawal matches
+        the rate at the time of withdrawal request?
+      - Are there safeguards to prevent manipulation of the exchange rate during withdrawal
+        processing?
+    - rid: S3.1.G9
+      requirement: Can users extend another user’s time lock duration by stacking tokens
+        on their behalf?
+      testname: Verify security of time lock amplification.
+      checklist:
+      - Can users extend another user’s time lock duration by stacking tokens on their
+        behalf?
+      - If token stacking is possible, are there checks to prevent unintended extensions
+        of time locks?
+      - Are there controls to ensure that time locks cannot be manipulated through token
+        stacking?
+    - rid: S3.1.G10
+      requirement: Can reward distribution be manipulated to delay or accelerate payouts?
+      testname: Verify fairness of reward distribution mechanisms.
+      checklist:
+      - Can reward distribution be manipulated to delay or accelerate payouts?
+      - If rewards are distributed, are there controls to ensure timely and correct distribution?
+      - Are there mechanisms to prevent premature or delayed reward claims?
+    - rid: S3.1.G11
+      requirement: Does the updateRewards function get called appropriately before relevant
+        operations?
+      testname: Verify security of update rewards function.
+      checklist:
+      - Does the updateRewards function get called appropriately before relevant operations?
+      - Can the reward update function be overlooked or missed in any use-case scenarios?
+      - Are there checks to ensure that rewards are up-to-date in all relevant cases?
+    - rid: S3.1.G12
+      requirement: Does calling a function multiple times with smaller amounts produce
+        the same contract state as calling it once with the aggregate amount?
+      testname: Verify financial operation consistency.
+      checklist:
+      - Does calling a function multiple times with smaller amounts produce the same contract
+        state as calling it once with the aggregate amount?
+      - Are there inconsistencies or unintended discrepancies when performing financial
+        operations in parts versus as a whole?
+      - If variations exist, are they intentional and well-documented, or do they indicate
+        potential issues?
+    - rid: S3.1.G13
+      requirement: What happens to protocol interactions if the AAVE protocol is paused?
+      testname: Verify correct enforcement of AAVE protocol pauses.
+      checklist:
+      - What happens to protocol interactions if the AAVE protocol is paused?
+      - Are there contingency plans or alternative mechanisms in place if AAVE is paused?
+      - Does the protocol handle the paused state of AAVE without causing disruptions?
+    - rid: S3.1.G14
+      requirement: What mechanisms are in place to handle pools that become deprecated?
+      testname: Verify removal of deprecated pools.
+      checklist:
+      - What mechanisms are in place to handle pools that become deprecated?
+      - If a pool is deprecated, how does the protocol adjust or manage its operations?
+      - Are there fallback strategies for deprecated pools to avoid service interruptions?
+    - rid: S3.1.G15
+      requirement: What are the rules or limitations when lending or borrowing assets
+        within the same eMode category?
+      testname: Verify correct classification of eMode category assets.
+      checklist:
+      - What are the rules or limitations when lending or borrowing assets within the
+        same eMode category?
+      - Does the protocol handle transactions involving assets in the same eMode category
+        without issues?
+      - Are there constraints in place for interacting with assets in the same eMode category?
+    - rid: S3.1.G16
+      requirement: Do flash loans impact the pool index, and if so, how is this managed?
+      testname: Verify accuracy of flash loan pool index calculations.
+      checklist:
+      - Do flash loans impact the pool index, and if so, how is this managed?
+      - Are there mechanisms to mitigate the effects of flash loans on the pool index?
+      - How does the protocol address the maximum number of flash loans per block affecting
+        the pool index?
+    - rid: S3.1.G17
+      requirement: Is slippage calculated on-chain?
+      testname: Verify correct implementation of on-chain slippage calculations.
+      checklist:
+      - Is slippage calculated on-chain?
+      - Can users specify the slippage parameter in the asset amount?
+      - What measures are in place to ensure accurate slippage calculation?
+    - rid: S3.1.G18
+      requirement: Is the slippage parameter enforced at the last step before transferring
+        funds to users?
+      testname: Verify minimization of intermediate swap slippage.
+      checklist:
+      - Is the slippage parameter enforced at the last step before transferring funds
+        to users?
+      - How is slippage enforced during the final fund transfer step?
+      - Does the system check the slippage parameter before completing transactions?
+    - rid: S3.1.G19
+      requirement: Is there a non-zero check for the denominator before division or modulo
+        operations?
+      testname: Verify enforcement of zero denominator checks.
+      checklist:
+      - Is there a non-zero check for the denominator before division or modulo operations?
+      - How does the system handle division or modulo by zero in Yul/inline assembly?
+      - What measures are in place to prevent division or modulo by zero?
+    - rid: S3.1.G20
+      requirement: Two Transaction Actions Frontrunning
+      testname: Verify Two Transaction Actions Frontrunning
+      checklist:
+      - Are two-transaction actions designed with measures to prevent frontrunning? Verify
+        if there are checks or locks between transactions.
+      - How does the protocol ensure that critical two-step actions are not vulnerable
+        to attack during the intermediary state?
+      - Are there safeguards to prevent malicious actors from intervening between the
+        two transactions?
+    - rid: S3.1.G21
+      requirement: Dust Transactions Reversion
+      testname: Verify Dust Transactions Reversion
+      checklist:
+      - Can users front-run transactions with negligible amounts to cause reverts? Verify
+        the contract’s handling of such scenarios.
+      - Are there checks to prevent transactions with minimal amounts from impacting the
+        contract's state or execution flow?
+      - How does the contract manage or mitigate the effects of dust transactions on legitimate
+        operations?
+    - rid: S3.1.G22
+      requirement: Unexpected Rewards
+      testname: Verify Unexpected Rewards Handling
+      checklist:
+      - Are there additional rewards accruing for user deposited assets?
+      - Does the protocol track and manage all potential rewards for user deposits?
+      - Are users provided with clear methods to claim or manage unexpected rewards?
+    - rid: S3.1.G23
+      requirement: Token Pegging
+      testname: Ensure Stability for Pegged Tokens
+      checklist:
+      - Are the protocol tokens pegged to any other asset?
+      - Have you tested the protocol’s behavior when the pegged asset depegs?
+    - rid: S3.1.G24
+      requirement: Visibility Modifier
+      testname: Verify Visibility Modifier
+      checklist:
+      - Is the visibility of each function limited to the strictest level necessary (private
+        or internal)?
+      - Are there any functions that are currently public or external but could be restricted
+        to internal or private?
+      - Does the contract expose any sensitive operations or state changes to external parties that should be restricted?
+  - cid: SCSVS-GOV-2
+    objective: TBD
+    requirements:
+    - rid: S3.2.G1
+      requirement: Verify ERC20 Compliance
+      testname: Verify ERC20 Compliance
+      checklist:
+      - Are the token's transfer functions (transfer, transferFrom) fully compliant with
+        the EIP20 standard, including returning a boolean flag and reverting on failure?
+      - Are safe transfer functions (safeTransfer, safeTransferFrom) consistently used
+        throughout the contract?
+    - rid: S3.2.G2
+      requirement: Verify Approval Race Condition
+      testname: Verify Approval Race Condition
+      checklist:
+      - Is there a risk of race conditions in the approval process that could lead to
+        unexpected fund loss for the signer?
+      - Are there mechanisms in place to prevent double-spending or front-running attacks?
+    - rid: S3.2.G3
+      requirement: Verify Decimal Discrepancies
+      testname: Verify Decimal Discrepancies
+      checklist:
+      - Could differences in the number of decimals between various ERC20 tokens lead
+        to calculation or interpretation errors?
+      - Are there any conversions or calculations that might be affected by differing
+        decimal places?
+    - rid: S3.2.G4
+      requirement: Caller Checking
+      testname: Verify Caller Checking
+      checklist:
+      - Does the function restrict calls to only externally owned accounts (EOA) or only
+        contract addresses as intended?
+      - Are there access control checks in place to differentiate between EOA and contract
+        callers when required?
+      - Has the protocol been reviewed to ensure it meets the intended caller requirements?
+    - rid: S3.2.G5
+      requirement: Verify Address Checks
+      testname: Verify Address Checks
+      checklist:
+      - Does the token implement any forms of address whitelisting, blacklisting, or validation
+        checks that could introduce issues?
+      - Are there any hardcoded addresses in the contract that could pose security risks?
+    - rid: S3.2.G6
+      requirement: Verify Transfer Fees
+      testname: Verify Transfer Fees
+      checklist:
+      - Does the token impose a fee on transfers, resulting in the receiver getting less
+        than the specified amount?
+      - How are transfer fees calculated and collected?
+    - rid: S3.2.G7
+      requirement: Verify ERC777 Compatibility
+      testname: Verify ERC777 Compatibility
+      checklist:
+      - Can the token also function as an ERC777 token, which includes hooks that execute
+        code before and after transfers, potentially leading to reentrancy attacks?
+      - Are there safeguards in place to handle the hooks securely?
+    - rid: S3.2.G8
+      requirement: Verify Solmate's ERC20.safeTransferLib Usage
+      testname: Verify Solmate's ERC20.safeTransferLib Usage
+      checklist:
+      - Does the protocol utilize Solmate's ERC20.safeTransferLib, which does not check
+        for the existence of a contract and could be exploited for honeypot attacks?
+      - Are there alternative libraries or methods that could enhance security?
+    - rid: S3.2.G9
+      requirement: Verify Zero Amount Transfers
+      testname: Verify Zero Amount Transfers
+      checklist:
+      - What is the token's behavior when transferring a zero amount? Does it revert,
+        and could this cause issues in certain integrations and operations?
+      - Are there any edge cases related to zero-amount transfers?
+    - rid: S3.2.G10
+      requirement: Verify ERC2612 Implementation
+      testname: Verify ERC2612 Implementation
+      checklist:
+      - Is the token an ERC2612 implementation, and is the DOMAIN_SEPARATOR() function
+        properly implemented to avoid vulnerabilities?
+      - How is the permit() function implemented, and are there any potential issues?
+    - rid: S3.2.G11
+      requirement: Verify Permit Function Replay Protection
+      testname: Verify Permit Function Replay Protection
+      checklist:
+      - Does the permit() function have adequate replay protection, or could someone reuse
+        a permit signature multiple times to authorize multiple transfers?
+      - Is the nonces mapping updated correctly, and does the implementation properly
+        prevent replays?
+  - cid: SCSVS-GOV-3
+    objective: TBD
+    requirements:
+    - rid: S3.3.G1
+      requirement: Token Donation Manipulation
+      testname: Verify Token Donation Manipulation
+      checklist:
+      - Does the contract rely on balance or balanceOf for determining token balances
+        or ownership? If so, are there safeguards against manipulation through token donations?
+      - Are token balances verified against internal accounting records rather than solely
+        using balanceOf?
+      - Does the contract implement additional validation to ensure donated tokens do
+        not alter accounting in unexpected ways?
+    - rid: S3.3.G2
+      requirement: On-Chain Slippage Manipulation
+      testname: Detect On-Chain Slippage Manipulation
+      checklist:
+      - Is slippage calculated directly on-chain?
+      - Can the slippage calculation be influenced or manipulated by attackers?
+      - Is there a mechanism to allow users to specify slippage based on off-chain calculations?
+    - rid: S3.3.G3
+      requirement: Intermediate Slippage Enforcement
+      testname: Ensure Slippage is Enforced at All Stages
+      checklist:
+      - Is the slippage parameter enforced at all stages of the swap process, including
+        the final step?
+      - Can users receive less than the specified minimum if the final step does not enforce
+        slippage?
+    - rid: S3.3.G4
+      requirement: First Deposit Initialization
+      testname: Verify Initial Deposit Behavior
+      checklist:
+      - Does the initial deposit set parameters or conditions for subsequent deposits?
+      - Have you tested to ensure that the first deposit initializes parameters correctly?
+    - rid: S3.3.G5
+      requirement: Read-Only Reentrancy
+      testname: Verify Read-Only Reentrancy
+      checklist:
+      - Are there view functions that could be reentered in a way that might return stale
+        or inconsistent values?
+      - Does the contract have measures to prevent reentrancy issues in view functions,
+        such as extending reentrancy guards?
+      - How does the protocol ensure that read-only functions do not lead to inconsistent
+        state or unintended actions?
+    - rid: S3.3.G6
+      requirement: Flashloan Deposit-Withdraw Attack
+      testname: Prevent Flashloan-Based Withdrawals
+      checklist:
+      - Is it possible to withdraw in the same transaction as the deposit?
+      - Does the protocol have protections against flashloan-based deposit-harvest-withdraw cycles?
+    - rid: S3.3.G7
+      requirement: Liquidation During Price Drops
+      testname: Ensure Liquidation Resilience in Volatile Markets
+      checklist:
+      - Does the liquidation mechanism include logic to handle extreme price drops effectively?
+      - Is there a safeguard to ensure liquidation occurs even when price volatility is high?
+      - How is the liquidation trigger threshold adjusted during rapid market downturns?
+    - rid: S3.3.G8
+      requirement: Position Liquidation Risk
+      testname: Manage Risks in Liquidation Processes
+      checklist:
+      - Is there a mechanism to automatically trigger liquidation if a position's collateral
+        falls below the required threshold?
+      - Are there specific conditions that can prevent liquidation, and how are these
+        managed?
+      - How does the system handle outstanding loans when the collateral value drops significantly?
+    - rid: S3.3.G9
+      requirement: Self-Liquidation Profit Loopholes
+      testname: Prevent Self-Liquidation Abuse
+      checklist:
+      - Is there validation to prevent users from exploiting self-liquidation for profit?
+      - How are self-liquidation scenarios tested for potential vulnerabilities?
+      - Are there limits or conditions imposed on self-liquidation to prevent abuse?
+    - rid: S3.3.G10
+      requirement: Parent Contract Visibility
+      testname: Verify Parent Contract Visibility
+      checklist:
+      - Have you reviewed the visibility of functions in parent contracts to ensure they
+        are appropriately exposed?
+      - Are there any public or external functions in parent contracts that should be
+        restricted or hidden in the derived contract?
+      - Is the visibility of inherited functions aligned with the desired access levels?
+    - rid: S3.3.G11
+      requirement: Commit Reveal Scheme
+      testname: Verify Commit Reveal Scheme
+      checklist:
+      - Does the protocol implement a commit-reveal scheme to protect against front-running?
+        Verify the presence of both commit and reveal phases.
+      - How does the protocol ensure that the commit-reveal pattern is followed to prevent
+        adversaries from gaining insight into actions before they are finalized?
+      - Are there mechanisms in place to ensure confidentiality and integrity of actions
+        until the reveal phase?
+    - rid: S3.3.G12
+      requirement: Hardcoded Slippage
+      testname: Ensure Dynamic Slippage Implementation
+      checklist:
+      - Is slippage implemented as a hardcoded value in the contract?
+      - Have you ensured that slippage can be adjusted dynamically based on market conditions?
+      - Is there functionality allowing users to specify slippage parameters based on
+        their own calculations?
+    - rid: S3.3.G13
+      requirement: Deadline Protection
+      testname: Validate Deadline Protection Mechanisms
+      checklist:
+      - Does the protocol implement deadline protection to prevent transactions from being
+        manipulated?
+      - Is there an option for users to set deadlines for their transactions?
+      - Have you validated that transactions cannot be processed outside the specified
+        deadline?
+    - rid: S3.3.G14
+      requirement: Reserve Validation
+      testname: Ensure Proper Reserve Validation
+      checklist:
+      - Is there a validation check in place for protocol reserves?
+      - Have you ensured that reserves are verified before being used or lent out?
+      - Does the protocol include mechanisms to safeguard against reserve depletion?
+    - rid: S3.3.G15
+      requirement: Slippage Protection
+      testname: Ensure Slippage Protection
+      checklist:
+      - Is there a mechanism to protect against excessive slippage in trades?
+      - Can users specify their own slippage parameters to manage risk?
+      - Are there safeguards to prevent losses from large price deviations?
+    - rid: S3.3.G16
+      requirement: Min Amount Out Calculation
+      testname: Ensure Reliable Min Amount Out Calculation
+      checklist:
+      - Does the protocol calculate minAmountOut before executing swaps?
+      - Is the source of rates for minAmountOut reliable and protected from manipulation?
+      - Have you validated the minAmountOut logic to prevent unfavorable rates and potential vulnerabilities?
+- gid: SCSVS-AUTH
+  index: 4
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-AUTH-1
+    objective: TBD
+    requirements:
+    - rid: S4.1.G1
+      requirement: Authorization Using msg.sender
+      testname: Verify Authorization Using msg.sender
+      checklist:
+      - Does the contract use tx.origin in validation? If yes, this must be avoided as
+        tx.origin phishing attacks are possible and can be exploited.
+      - Are proper authorization mechanisms in place using msg.sender to ensure secure
+        and accurate access control?
+    - rid: S4.1.G2
+      requirement: Verify Role-Based Access Control Implementation
+      testname: Verify Role-Based Access Control Implementation
+      checklist:
+      - Are there different roles that have been assigned and have different access control
+        mechanisms?
+      - If yes, check and verify that correct access control mechanisms are implemented
+        and least privilege policy is implemented.
+    - rid: S4.1.G3
+      requirement: Verify Modifier Logic
+      testname: Verify Modifier Logic
+      checklist:
+      - Are all custom modifiers correctly implemented and applied to the intended functions?
+      - Are there any modifiers that contain redundant or conflicting logic?
+      - Have the modifiers been reviewed and tested for potential vulnerabilities?
+    - rid: S4.1.G4
+      requirement: Does the _debitFrom function properly verify token ownership and transfer
+        permissions?
+      testname: Verify debit function validation.
+      checklist:
+      - Does the _debitFrom function properly verify token ownership and transfer permissions?
+      - Are there any gaps in validation that could impact token security?
+      - How does the function ensure that only authorized transfers occur?
+    - rid: S4.1.G5
+      requirement: Is it checked if the target address of a call has code deployed?
+      testname: Verify presence of required code components.
+      checklist:
+      - Is it checked if the target address of a call has code deployed?
+      - How does the system handle calls to addresses without code?
+      - What mechanisms are in place to verify code presence before making calls?
+    - rid: S4.1.G6
+      requirement: Access Control Verification
+      testname: Verify Access Control Implementation
+      checklist:
+      - Are there any functions lacking access control mechanisms?
+      - Are there any public functions that should have a more restricted visibility (e.g.,
+        internal, private)?
+      - Are access controls correctly implemented to prevent unauthorized access or modifications?
+    - rid: S4.1.G7
+      requirement: Admin Asset Pull Privilege
+      testname: Verify Admin Asset Pull Privilege
+      checklist:
+      - Can the admin of the protocol pull assets from the protocol? Verify the extent
+        of the admin's privileges and access controls.
+      - Are there constraints or timelocks in place to regulate admin access to protocol
+        funds?
+      - How does the protocol track and report admin actions that involve user funds?
+    - rid: S4.1.G8
+      requirement: Verify Timelocks for Critical Functions
+      testname: Verify Timelocks for Critical Functions
+      checklist:
+      - Are timelocks implemented for all critical functions in the smart contract?
+      - What is the duration of the timelock for each critical function? Is it adequate
+        for review purposes?
+      - Can timelocks be bypassed or modified? If so, under what conditions?
+    - rid: S4.1.G9
+      requirement: Whitelisting Implementation
+      testname: Verify Whitelisting Implementation
+      checklist:
+      - Are certain addresses required to be whitelisted to interact with the contract?
+      - Is the whitelisting mechanism properly implemented and enforced?
+    - rid: S4.1.G10
+      requirement: Verify Contract Initialization Functions
+      testname: Verify Contract Initialization Functions
+      checklist:
+      - Are initialization functions properly marked as internal?
+      - Is there a mechanism in place to ensure initialization functions cannot be executed
+        more than once?
+      - Are there any fallback functions that might unintentionally allow reinitialization?
+    - rid: S4.1.G11
+      requirement: Secure Privilege Transfer
+      testname: Verify Secure Privilege Transfer
+      checklist:
+      - Does the protocol allow the transfer of privileges?
+      - If yes, is the transfer process secure and includes a two-step (request and confirmation)
+        mechanism?
+      - What happens during the transfer of privileges?
+  - cid: SCSVS-AUTH-2
+    objective: TBD
+    requirements:
+    - rid: S4.2.G1
+      requirement: Critical Function Access Control
+      testname: Verify Critical Function Access Control
+      checklist:
+      - Does the contract have the specified functions?
+      - If yes, are proper access control measures in place?
+    - rid: S4.2.G2
+      requirement: Arbitrary Calls
+      testname: Prevent Arbitrary Calls Execution
+      checklist:
+      - Can the contract make arbitrary calls based on user input?
+      - Have you validated and sanitized user inputs to prevent executing unintended calls?
+      - Is there a mechanism to prevent execution of arbitrary code based on user input?
+    - rid: S4.2.G3
+      requirement: Callback Address Validation
+      testname: Verify Caller Address in Callbacks
+      checklist:
+      - Does the integrating contract verify the caller address in its callback functions?
+      - Have you implemented checks to validate the address of the calling contract in
+        callback functions?
+      - Is there a review of callback logic to ensure it prevents unauthorized access
+        or manipulation?
+    - rid: S4.2.G4
+      requirement: High Allowances Risk
+      testname: Mitigate Risks from Excessively High Allowances
+      checklist:
+      - Does the protocol implement safeguards against excessively high allowances?
+      - Is there a revert mechanism in place for overly high approval values?
+- gid: SCSVS-COMM
+  index: 5
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-COMM-1
+    objective: TBD
+    requirements:
+    - rid: S5.1.G1
+      requirement: Does the protocol allow instant withdrawals that could be exploited
+        through sandwich attacks?
+      testname: Verify protection of exchange rates from sandwich attacks.
+      checklist:
+      - Does the protocol allow instant withdrawals that could be exploited through sandwich
+        attacks?
+      - Can an attacker manipulate the exchange rate through immediate deposits and withdrawals?
+      - Is there a mechanism to prevent front-running and back-running attacks affecting
+        ETH drainage from the protocol?
+    - rid: S5.1.G2
+      requirement: Can oracle price updates be front-run to manipulate outcomes?
+      testname: Verify front-running protections for oracle price updates.
+      checklist:
+      - Can oracle price updates be front-run to manipulate outcomes?
+      - If oracle price updates are vulnerable to front-running, are there protections
+        in place?
+      - Are there mechanisms to safeguard the protocol from front-running attacks on oracle
+        price updates?
+    - rid: S5.1.G3
+      requirement: Does the protocol currently use Balancer's flash loans, and how are
+        potential fees handled?
+      testname: Verify enforcement of Balancer flash loan fees.
+      checklist:
+      - Does the protocol currently use Balancer's flash loans, and how are potential
+        fees handled?
+      - If Balancer implements flash loan fees in the future, how will the protocol manage
+        these fees?
+      - Are there mechanisms to ensure the repayment of fees along with the original debt
+        in the receiveFlashLoan function?
+    - rid: S5.1.G4
+      requirement: Does the protocol rely on Balancer's Oracle for pricing?
+      testname: Verify accuracy of Balancer oracle pricing.
+      checklist:
+      - Does the protocol rely on Balancer's Oracle for pricing?
+      - If Balancer's Oracle is used, are there safeguards against price updates that
+        do not reflect the true asset value?
+      - What are the potential risks of using Balancer's Oracle, and how are they mitigated?
+    - rid: S5.1.G5
+      requirement: Does the protocol use Balancer's Boosted Pool, and if so, does it use
+        virtualSupply correctly?
+      testname: Verify security of Balancer boosted pool supply calculations.
+      checklist:
+      - Does the protocol use Balancer's Boosted Pool, and if so, does it use virtualSupply
+        correctly?
+      - How is the total BPT supply in circulation determined in the context of Balancer's
+        Boosted Pool?
+      - Are there any discrepancies in using virtualSupply versus totalSupply?
+    - rid: S5.1.G6
+      requirement: Does the protocol use Balancer vault pool liquidity status for pricing
+        or other calculations?
+      testname: Verify Balancer vault pool liquidity security.
+      checklist:
+      - Does the protocol use Balancer vault pool liquidity status for pricing or other
+        calculations?
+      - How is the protocol protected against manipulation of token balances and BPT supply
+        in Balancer pools?
+      - Are there precautions in place to prevent inaccuracies caused by manipulation
+        of external queries?
+    - rid: S5.1.G7
+      requirement: Are all parameters thoroughly verified before calling Chainlink VRF
+        to ensure correct results?
+      testname: Verify correct Chainlink VRF parameter configurations.
+      checklist:
+      - Are all parameters thoroughly verified before calling Chainlink VRF to ensure
+        correct results?
+      - What mechanisms are in place to validate parameters for Chainlink VRF calls?
+      - How does the protocol handle potential issues with parameter verification in Chainlink
+        VRF?
+    - rid: S5.1.G8
+      requirement: Is it ensured that sufficient LINK is maintained in the Chainlink VRF
+        subscription to avoid pending states?
+      testname: Verify secure Chainlink VRF subscription mechanisms.
+      checklist:
+      - Is it ensured that sufficient LINK is maintained in the Chainlink VRF subscription
+        to avoid pending states?
+      - How does the protocol handle scenarios where the subscription is low on LINK?
+      - What measures are in place to prevent vulnerabilities related to insufficient
+        LINK in the Chainlink VRF subscription?
+    - rid: S5.1.G9
+      requirement: Is the number of confirmations chosen appropriate for the chain's history
+        and risks?
+      testname: Verify security of confirmation number selection.
+      checklist:
+      - Is the number of confirmations chosen appropriate for the chain's history and
+        risks?
+      - How does the choice of confirmations address past reorg events?
+      - Are there any adjustments made based on the chain's reorg vulnerabilities?
+    - rid: S5.1.G10
+      requirement: How is control over the cbETH/ETH rate determined?
+      testname: Verify correct cbETH rate control.
+      checklist:
+      - How is control over the cbETH/ETH rate determined?
+      - Are there specific addresses with control due to the onlyOracle modifier?
+      - Can centralization risks or manipulations arise from this control?
+    - rid: S5.1.G11
+      requirement: Is pool.swap() used directly in the application?
+      testname: Verify security of direct pool swap usage.
+      checklist:
+      - Is pool.swap() used directly in the application?
+      - What security mechanisms are bypassed by using pool.swap() directly?
+      - Does the system use the Router contract for swaps to enhance security?
+    - rid: S5.1.G12
+      requirement: Is unchecked used appropriately with Uniswap's TickMath and FullMath
+        libraries?
+      testname: Verify correct use of Uniswap math libraries.
+      checklist:
+      - Is unchecked used appropriately with Uniswap's TickMath and FullMath libraries?
+      - How does the application ensure compliance with Solidity version specifics regarding
+        unchecked?
+      - Are there any safety concerns with the current usage of unchecked?
+    - rid: S5.1.G13
+      requirement: Is pool.slot0 used for calculating sensitive information like current
+        price and exchange rates?
+      testname: Verify protection against Slot0 manipulation.
+      checklist:
+      - Is pool.slot0 used for calculating sensitive information like current price and
+        exchange rates?
+      - What alternatives are used for sensitive calculations to avoid manipulation risks?
+      - Are secure mechanisms like UniswapV3 TWAP or Chainlink Price Oracle used for price
+        and rate calculations?
+    - rid: S5.1.G14
+      requirement: Is there a hard-coded fee tier parameter in swap functions?
+      testname: Verify removal of hardcoded fee tiers.
+      checklist:
+      - Is there a hard-coded fee tier parameter in swap functions?
+      - Can users specify the fee tier parameter when initiating Uniswap V3 swaps?
+      - What impact does hard-coding the fee tier have on swap functionality?
+  - cid: SCSVS-COMM-2
+    objective: TBD
+    requirements:
+    - rid: S5.2.G1
+      requirement: Untrusted External Contract Calls
+      testname: Verify Untrusted External Contract Calls
+      checklist:
+      - Are there any state changes after interactions with untrusted external contracts?
+        Verify if these interactions are securely managed.
+      - Does the contract use the check-effects-interactions pattern or reentrancy guards
+        to handle external contract calls?
+      - How does the protocol handle potential issues arising from external contract callbacks,
+        such as multiple withdrawals or event order?
+    - rid: S5.2.G2
+      requirement: Input Validation
+      testname: Verify Input Validation
+      checklist:
+      - Are all function inputs validated for type, range, and format before processing?
+      - Is there validation logic for boundary values and unexpected input scenarios?
+      - Are there checks in place to prevent unauthorized or malicious data from being
+        processed?
+    - rid: S5.2.G3
+      requirement: Output Validation
+      testname: Verify Output Validation
+      checklist:
+      - Are outputs validated for correctness and consistency before being returned or
+        used?
+      - Does the contract include checks to ensure outputs do not introduce security vulnerabilities
+        or logical errors?
+      - Is there validation to confirm that outputs are within expected ranges and formats?
+    - rid: S5.2.G4
+      requirement: Price Manipulation Vectors
+      testname: Verify Price Manipulation Vectors
+      checklist:
+      - How does the protocol obtain asset prices? Verify if the method is susceptible
+        to manipulation through flash loans or donations.
+      - Are there external or decentralized price oracles used to mitigate risks associated
+        with price manipulation?
+      - Does the contract include mechanisms to verify the accuracy and integrity of price
+        data?
+  - cid: SCSVS-COMM-3
+    objective: TBD
+    requirements:
+    - rid: S5.3.G1
+      requirement: Arbitrary Input and Low-Level Calls
+      testname: Verify Arbitrary Input and Low-Level Calls
+      checklist:
+      - Are all low-level calls restricted or validated to prevent exploitation with arbitrary
+        user input?
+      - Does the contract include checks to ensure that arbitrary data used in low-level
+        calls does not lead to unintended behavior?
+      - Is there a mechanism to sanitize and validate user input before passing it to
+        low-level calls?
+    - rid: S5.3.G2
+      requirement: External Contract Interaction Safety
+      testname: Verify External Contract Interaction Safety
+      checklist:
+      - Does the contract use the check-effects-interactions pattern to ensure safe interactions
+        with external contracts?
+      - Are there fallback mechanisms in place to handle failures or unexpected results
+        from external contract interactions?
+      - How does the contract ensure that external dependencies do not affect its core
+        functionality or state?
+- gid: SCSVS-CRYPTO
+  index: 6
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-CRYPTO-1
+    objective: TBD
+    requirements:
+    - rid: S6.1.G1
+      requirement: Does the reward or withdrawal code of the protocol handle ETH transfers
+        or NFT minting in a manner that prevents re-entrancy attacks?
+      testname: Verify protection against reentrancy in reward withdrawals.
+      checklist:
+      - Does the reward or withdrawal code of the protocol handle ETH transfers or NFT
+        minting in a manner that prevents re-entrancy attacks?
+      - Are all state changes completed before external calls to prevent re-entrancy vulnerabilities?
+      - Can re-entrancy be exploited in the reward distribution or withdrawal process
+        due to improper sequencing of operations?
+    - rid: S6.1.G2
+      requirement: Are the EVM opcodes and operations used by the protocol compatible
+        across all targeted chains?
+      testname: Verify EVM opcode compatibility.
+      checklist:
+      - Are the EVM opcodes and operations used by the protocol compatible across all
+        targeted chains?
+      - What steps are taken to ensure compatibility with chains like Arbitrum and Optimism?
+      - How does the system handle unsupported EVM operations?
+  - cid: SCSVS-CRYPTO-2
+    objective: TBD
+    requirements:
+    - rid: S6.2.G1
+      requirement: Failed Transaction Replay Protection
+      testname: Verify Failed Transaction Replay Protection
+      checklist:
+      - Is there a mechanism in place to prevent replay attacks on failed transactions?
+        Verify the use of nonces or other protections.
+      - How does the contract ensure that each transaction can only be executed once,
+        even if it fails initially?
+      - Are there specific measures to differentiate between unique and replayed transactions?
+    - rid: S6.2.G2
+      requirement: Signature Replay Protection
+      testname: Verify Signature Replay Protection
+      checklist:
+      - Is there a protection mechanism to prevent signatures from being replayed on different
+        chains? Verify the use of domain separators or chain-specific parameters.
+      - How does the protocol ensure that signatures are only valid on the intended chain?
+      - Are there safeguards to prevent cross-chain replay attacks on signed transactions?
+    - rid: S6.2.G3
+      requirement: Event Emitting on State Change
+      testname: Verify Event Emitting on State Change
+      checklist:
+      - Are events emitted for all critical state changes and function executions to ensure
+        traceability?
+      - Is there a comprehensive list of all state-changing functions that should emit
+        events?
+      - Does the contract's event logging cover edge cases and error scenarios effectively?
+- gid: SCSVS-ORACLE
+  index: 7
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-ORACLE-1
+    objective: TBD
+    requirements:
+    - rid: S7.1.G1
+      requirement: Are there constraints to prevent lending and borrowing the same token
+        within a single transaction?
+      testname: Verify security of lending and borrowing the same token.
+      checklist:
+      - Are there constraints to prevent lending and borrowing the same token within a
+        single transaction?
+      - How does the protocol handle rapid price changes or flash loans involving the
+        same token?
+      - What measures are in place to prevent manipulation by exploiting lend-borrow actions?
+    - rid: S7.1.G2
+      requirement: Does the protocol avoid precision loss in deposit, withdrawal, and
+        reward calculations?
+      testname: Verify minimization of precision loss in calculations.
+      checklist:
+      - Does the protocol avoid precision loss in deposit, withdrawal, and reward calculations?
+      - Are there any instances of division before multiplication or rounding errors that
+        could affect calculations?
+      - How does the protocol handle precision and rounding to prevent inaccuracies in
+        financial operations?
+    - rid: S7.1.G3
+      requirement: Can variations in decimal precision from different price feeds lead
+        to inaccuracies?
+      testname: Verify decimal precision consistency.
+      checklist:
+      - Can variations in decimal precision from different price feeds lead to inaccuracies?
+      - If decimal precision varies, does the contract handle these variations correctly?
+      - Are there measures to standardize decimal precision across different price feeds?
+    - rid: S7.1.G4
+      requirement: Can off-by-one errors occur in the contract, such as using <= instead
+        of <?
+      testname: Verify avoidance of off-by-one errors.
+      checklist:
+      - Can off-by-one errors occur in the contract, such as using <= instead of <?
+      - If variables are set to the length of a list or the length minus one, is this
+        done correctly?
+      - Are there any potential off-by-one errors in iterations or boundary conditions?
+    - rid: S7.1.G5
+      requirement: Are there rounding errors that can be magnified or cause significant
+        issues?
+      testname: Verify prevention of rounding errors.
+      checklist:
+      - Are there rounding errors that can be magnified or cause significant issues?
+      - If rounding errors occur, can they be amplified through repeated function invocations
+        or specific conditions?
+      - Are there safeguards to prevent rounding errors from adversely affecting the system
+        or its users?
+    - rid: S7.1.G6
+      requirement: Does the protocol properly implement AAVE/COMP reward claims?
+      testname: Verify secure reward claims implementation.
+      checklist:
+      - Does the protocol properly implement AAVE/COMP reward claims?
+      - Are there any discrepancies in the implementation of reward claims for AAVE/COMP?
+      - How is the accuracy of reward claims ensured and tested?
+    - rid: S7.1.G7
+      requirement: Is the request confirmation number chosen high enough to account for
+        potential chain re-orgs?
+      testname: Verify correct handling of request confirmation numbers.
+      checklist:
+      - Is the request confirmation number chosen high enough to account for potential
+        chain re-orgs?
+      - What considerations are made to evaluate the chain's vulnerability to re-orgs?
+      - Are there adjustments made to the request confirmation number based on re-org
+        risk assessments?
+    - rid: S7.1.G8
+      requirement: Are there measures implemented to prevent frontrunning of VRF calls?
+      testname: Verify front-running protections for VRF calls.
+      checklist:
+      - Are there measures implemented to prevent frontrunning of VRF calls?
+      - How does the protocol ensure user interactions are closed before initiating a
+        VRF call?
+      - What safeguards are in place to prevent exploitation of VRF call timing?
+    - rid: S7.1.G9
+      requirement: Does the execTransactionFromModule() function increment the nonce appropriately?
+      testname: Verify correct nonce increments in exec transactions.
+      checklist:
+      - Does the execTransactionFromModule() function increment the nonce appropriately?
+      - What mechanisms are in place to ensure the nonce is incremented?
+      - Can issues arise if the nonce is not incremented in this function?
+    - rid: S7.1.G10
+      requirement: Does the application account for potential penalties or slashes from
+        validator misbehavior?
+      testname: Verify enforcement of Ethereum Beacon Chain penalties.
+      checklist:
+      - Does the application account for potential penalties or slashes from validator
+        misbehavior?
+      - How are these potential penalties or slashes reflected in the value of rETH?
+      - Are there mechanisms to manage or mitigate the impact of such penalties on rETH?
+    - rid: S7.1.G11
+      requirement: How does the system manage rewards accrued from staking?
+      testname: Verify secure management of staking rewards.
+      checklist:
+      - How does the system manage rewards accrued from staking?
+      - Are these rewards properly accounted for in the management of rETH?
+      - What mechanisms are in place to ensure accurate distribution of staking rewards?
+    - rid: S7.1.G12
+      requirement: Does the system handle potential reverts in the burn() function when
+        there is insufficient ether in the RocketDepositPool?
+      testname: Verify correct handling of Rocket Pool deposit burns.
+      checklist:
+      - Does the system handle potential reverts in the burn() function when there is
+        insufficient ether in the RocketDepositPool?
+      - Is there a mechanism to prevent or manage failures in the burn() function?
+      - Can the application gracefully handle a revert due to insufficient ether?
+    - rid: S7.1.G13
+      requirement: Is there a check on the return data size when calling precompiled code?
+      testname: Verify validation of precompiled code return sizes.
+      checklist:
+      - Is there a check on the return data size when calling precompiled code?
+      - How does the system handle calls to precompiled code that return a size of 0?
+      - What checks are in place for detecting failures in precompiled code calls?
+    - rid: S7.1.G14
+      requirement: Variable Bounds
+      testname: Verify Variable Bounds Handling
+      checklist:
+      - Have you ensured that variables do not exceed their bounds and cause reverts,
+        even in versions greater than 0.8.0?
+      - Are there explicit checks to prevent variable underflows and overflows in all
+        critical operations?
+      - Is there any logic to handle boundary conditions for variables to avoid unintended
+        reverts?
+    - rid: S7.1.G15
+      requirement: Unsigned Integer Values
+      testname: Ensure Correct Handling of Unsigned Integer Values
+      checklist:
+      - Are you aware of and have you ensured that unsigned integers are never assigned
+        negative values?
+      - Is there validation in place to prevent negative values from being assigned to
+        unsigned integers?
+      - Have you reviewed all assignments to ensure that only non-negative values are
+        used for unsigned integers?
+    - rid: S7.1.G16
+      requirement: Unchecked Blocks
+      testname: Verify Unchecked Blocks Usage
+      checklist:
+      - Have you reviewed all usages of the unchecked{} block to ensure they are applied
+        correctly?
+      - Is there a clear guarantee that no overflow or underflow occurs within unchecked{}
+        blocks?
+      - Are there sufficient tests to confirm that operations inside unchecked{} blocks
+        do not cause unintended behavior?
+    - rid: S7.1.G17
+      requirement: Time Units Overflow
+      testname: Prevent Time Units Overflow
+      checklist:
+      - Does the contract use time units (like days) and handle them as uint8?
+      - Have you verified that all calculations involving time units are checked for potential
+        overflow, considering their range?
+      - Are there safeguards in place to prevent overflow in time-related calculations
+        using uint8?
+  - cid: SCSVS-ORACLE-2
+    objective: TBD
+    requirements:
+    - rid: S7.2.G1
+      requirement: Low Decimal Tokens Issues
+      testname: Verify Low Decimal Token Handling
+      checklist:
+      - Does the contract handle tokens with low decimal precision appropriately? Verify
+        if rounding issues are addressed.
+      - Are there checks to ensure that transactions involving low decimal tokens do not
+        result in unintended failures or errors?
+      - How does the contract handle rounding or precision issues to maintain accurate
+        token transactions?
+    - rid: S7.2.G2
+      requirement: Precision in Summation
+      testname: Verify Precision in Summation
+      checklist:
+      - Is the summing of variables done accurately compared to separate calculations?
+        Verify the approach used for summation.
+      - How does the contract handle precision issues in financial calculations or other
+        critical computations?
+      - Are there tests in place to verify the accuracy of summation logic and address
+        any discrepancies?
+    - rid: S7.2.G3
+      requirement: Mathematical Calculation Accuracy
+      testname: Verify Mathematical Calculation Accuracy
+      checklist:
+      - Have all mathematical calculations been reviewed to ensure accuracy and adherence
+        to established rules?
+      - Is there a clear and documented approach to handle mathematical operations in
+        the contract?
+      - Are there any potential sources of error or miscalculation that need to be addressed?
+    - rid: S7.2.G4
+      requirement: Precision Loss
+      testname: Verify Handling of Precision Loss
+      checklist:
+      - Is there potential for loss of precision in any calculations, especially those
+        involving frequent or large numbers?
+      - Are appropriate data types used to minimize precision loss and ensure accurate
+        results?
+      - Have rounding methods and precision handling been correctly applied and verified?
+    - rid: S7.2.G6
+      requirement: Data Type Conversion
+      testname: Verify Safe Data Type Conversion
+      checklist:
+      - Have you verified that expressions like 1 day are explicitly cast to avoid unintended
+        conversions (e.g., to uint24)?
+      - Are there any expressions in the contract where implicit type conversions could
+        lead to unexpected behavior or overflow?
+      - Is type conversion handled explicitly to prevent data loss or overflow issues?
+    - rid: S7.2.G7
+      requirement: Multiplication Before Division
+      testname: Verify Multiplication Before Division
+      checklist:
+      - Does the contract ensure that multiplication occurs before division in calculations
+        to preserve precision?
+      - Are there any instances where division is performed before multiplication, potentially
+        causing precision loss?
+      - Have you reviewed all calculations to confirm that multiplication precedes division
+        where necessary?
+    - rid: S7.2.G8
+      requirement: Rounding Direction
+      testname: Verify Correct Rounding Direction
+      checklist:
+      - Is the rounding direction considered and correctly applied in accounting operations?
+      - Does the rounding direction align with the protocol’s requirements and user share
+        calculations?
+      - Have you verified that rounding is handled consistently across all relevant operations?
+    - rid: S7.2.G9
+      requirement: Division by Zero
+      testname: Verify Division by Zero Protection
+      checklist:
+      - Is there a check in place to prevent division by zero in any calculations?
+      - Have you reviewed all divisions to ensure that denominators are never zero?
+      - Are there safety checks implemented to handle potential division by zero scenarios?
+    - rid: S7.2.G10
+      requirement: Incorrect Inequality
+      testname: Check for Correct Inequality Usage
+      checklist:
+      - In comparisons involving < or >, have you ensured that the correct operators (≤
+        or ≥) are used where appropriate?
+      - Are all edge cases covered to avoid unexpected behavior due to incorrect inequality
+        operators?
+      - Have you reviewed the logic to confirm that the appropriate comparison operators
+        are applied?
+    - rid: S7.2.G11
+      requirement: Inline Assembly
+      testname: Validate Inline Assembly Operations
+      checklist:
+      - Have you thoroughly tested and verified all mathematical operations performed
+        in inline assembly?
+      - Is there an awareness of how inline assembly handles division by zero, overflow,
+        or underflow differently from high-level constructs?
+      - Are there checks in place to handle potential issues with inline assembly operations?
+    - rid: S7.2.G12
+      requirement: Edge Case Calculation
+      testname: Ensure Edge Case Coverage in Calculations
+      checklist:
+      - Have you tested calculations with minimum and maximum values for all terms to
+        ensure accurate outcomes?
+      - Are edge cases handled correctly to prevent unexpected results in complex calculations?
+      - Is there a thorough review of calculations involving numerous terms to validate
+        behavior with extreme values?
+    - rid: S7.2.G13
+      requirement: Forced Type Casting
+      testname: Validate Type Casting Operations
+      checklist:
+      - Is there any forced type casting in the contract?
+      - Have you ensured that all forced type casting operations are validated to avoid
+        overflow or underflow issues?
+      - Is there a review of all type casting to confirm that values fall within the acceptable
+        range for the target type?
+    - rid: S7.2.G14
+      requirement: Rounding Issues
+      testname: Check for Rounding Errors in Calculations
+      checklist:
+      - Are rounding issues addressed in the AMM's product constant formulas?
+      - Have you verified that rounding does not introduce inaccuracies in token swaps?
+      - Is there a review of mathematical operations to ensure proper handling of rounding?
+- gid: SCSVS-BLOCK
+  index: 8
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-BLOCK-1
+    objective: TBD
+    requirements:
+    - rid: S8.1.G1
+      requirement: Does the protocol avoid iterating over the entire set of operators
+        or validators to prevent gas limit issues?
+      testname: Verify secure iteration over operators and validators.
+      checklist:
+      - Does the protocol avoid iterating over the entire set of operators or validators
+        to prevent gas limit issues?
+      - Are there mechanisms to manage large sets of operators or validators without causing
+        denial of service?
+      - How does the protocol handle large numbers of operators or validators to maintain
+        efficiency and avoid out-of-gas errors?
+    - rid: S8.1.G2
+      requirement: Does the system handle potential oracle reverts effectively?
+      testname: Verify handling of oracle reverts.
+      checklist:
+      - Does the system handle potential oracle reverts effectively?
+      - If an oracle revert occurs, are there safeguards to prevent Denial-of-Service
+        conditions?
+      - Are there alternative strategies in place to address oracle reverts?
+    - rid: S8.1.G3
+      requirement: Does the system use blocking or non-blocking mechanisms?
+      testname: Verify blocking mechanism security.
+      checklist:
+      - Does the system use blocking or non-blocking mechanisms?
+      - Can the use of a blocking mechanism lead to a DoS attack?
+      - What are the risks associated with the current mechanism used?
+    - rid: S8.1.G4
+      requirement: Is there excessive reliance on pool reserves?
+      testname: Verify protocol stability without overreliance on reserves.
+      checklist:
+      - Is there excessive reliance on pool reserves?
+      - What alternative methods or checks are implemented to mitigate risks associated
+        with pool reserves?
+      - Can pool reserves be manipulated through techniques like flashloans?
+    - rid: S8.1.G5
+      requirement: Front-Running Risk
+      testname: Verify Front-Running Risk
+      checklist:
+      - Are there safeguards to prevent front-running attacks by ensuring fair transaction
+        processing?
+      - Does the protocol include measures to handle transactions in a way that mitigates
+        the risk of priority manipulation?
+      - Is there a mechanism to protect against attacks that exploit transaction ordering
+        or timing?
+    - rid: S8.1.G6
+      requirement: Can functionality be bypassed if a related pause check is missing in
+        one of the functions?
+      testname: Verify correct pausing functionality.
+      checklist:
+      - Can functionality be bypassed if a related pause check is missing in one of the
+        functions?
+      - Are all functions that should be paused during a system-wide pause consistently
+        checked for the paused state?
+      - Is there a mechanism to ensure all related functions respect the pause state uniformly?
+  - cid: SCSVS-BLOCK-2
+    objective: TBD
+    requirements:
+    - rid: S8.2.G1
+      requirement: Queue Processing Denial Of Service
+      testname: Verify Queue Processing DoS Risks
+      checklist:
+      - Is there a limit on the size or number of queued transactions to prevent denial
+        of service? Verify that the contract enforces these limits.
+      - Does the contract implement measures to prevent abuse of queue processing, such
+        as rate limiting or prioritization?
+      - How does the protocol handle excessive queue sizes or frequent updates to prevent
+        system overload?
+    - rid: S8.2.G2
+      requirement: Withdrawals in the Same Block
+      testname: Prevent Same-Block Withdrawal Attacks
+      checklist:
+      - Are withdrawals disabled within the same block as other significant actions?
+      - Does the protocol prevent flashloan attacks by implementing a delay or restriction
+        on withdrawals within the same block?
+    - rid: S8.2.G3
+      requirement: DoS in Loops
+      testname: Verify DoS in Loops
+      checklist:
+      - Is there a potential for a Denial-of-Service (DoS) attack in loops? Verify if
+        external calls or user inputs could impact the loop execution.
+      - How does the contract ensure that a failure in a single iteration does not affect
+        the overall operation?
+      - Are there mechanisms to handle or mitigate the impact of failed or problematic
+        iterations in loops?
+    - rid: S8.2.G7
+      requirement: Msg.value in Loop
+      testname: Verify msg.value in Loop
+      checklist:
+      - Is msg.value used within a loop? Verify if msg.value is accessed multiple times
+        within a loop.
+      - How does the contract manage msg.value to ensure consistent accounting throughout
+        the transaction?
+      - Are there potential issues or mistakes in accounting if msg.value is used in a
+        loop?
+    - rid: S8.2.G8
+      requirement: Batch Fund Transfer
+      testname: Verify Batch Fund Transfer
+      checklist:
+      - Is there a loop to handle batch fund transfers? Verify how the mechanism handles
+        residual or leftover funds.
+      - How does the contract ensure that all funds are transferred correctly, including
+        any residual amounts?
+      - Are there specific checks or logic to handle the last transfer in a batch to account
+        for dust funds?
+    - rid: S8.2.G9
+      requirement: Block Timestamp Manipulation
+      testname: Verify Block Timestamp Manipulation
+      checklist:
+      - Is block.timestamp used for critical logic where precision is crucial? Verify
+        that it is used appropriately.
+      - How does the contract account for potential inaccuracies or manipulations in block.timestamp?
+      - Are there alternative mechanisms or fallback strategies used when precise timing
+        is required?
+- gid: SCSVS-BRIDGE
+  index: 9
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-BRIDGE-1
+    objective: TBD
+    requirements:
+    - rid: S9.1.G1
+      requirement: Does the protocol verify the freshness of data retrieved from the Proof
+        of Reserves Oracle?
+      testname: Verify handling of stale data in proof-of-reserves oracle.
+      checklist:
+      - Does the protocol verify the freshness of data retrieved from the Proof of Reserves
+        Oracle?
+      - Can the protocol process stale data due to lack of timestamp validation from the
+        Oracle?
+      - What measures are in place to ensure the data from the Proof of Reserves Oracle
+        is current and reliable?
+    - rid: S9.1.G2
+      requirement: Is the protocol using deprecated Chainlink functions like latestAnswer()
+        that may return stale data?
+      testname: Verify removal of deprecated Chainlink functions.
+      checklist:
+      - Is the protocol using deprecated Chainlink functions like latestAnswer() that
+        may return stale data?
+      - Are there updated Chainlink methods in use to ensure accurate and current data
+        retrieval?
+      - How does the protocol handle deprecated functions to maintain data integrity?
+    - rid: S9.1.G3
+      requirement: Are price feed addresses hard-coded in the contract?
+      testname: Verify secure updating of price feed addresses.
+      checklist:
+      - Are price feed addresses hard-coded in the contract?
+      - If price feed addresses are hard-coded, is there a mechanism to update them if
+        they become deprecated?
+      - Can the contract manage risks associated with outdated or inaccurate hard-coded
+        price feed addresses?
+    - rid: S9.1.G4
+      requirement: Does the protocol use the cETH token, and if so, how is the absence
+        of underlying() handled?
+      testname: Verify correct cETH token integration.
+      checklist:
+      - Does the protocol use the cETH token, and if so, how is the absence of underlying()
+        handled?
+      - If cETH token integration is utilized, are there any issues or errors due to the
+        absence of the underlying() function?
+      - Are integration tests performed to ensure proper functionality with the cETH token?
+    - rid: S9.1.G5
+      requirement: How does the system handle potential decreases in the cbETH/ETH rate?
+      testname: Verify management of cbETH rate decreases.
+      checklist:
+      - How does the system handle potential decreases in the cbETH/ETH rate?
+      - What mechanisms are in place to inform users about significant rate changes?
+      - Can users be affected by a dramatic decrease in the cbETH/ETH rate?
+    - rid: S9.1.G6
+      requirement: Does the system handle potential detachment of sfrxETH from frxETH
+        during reward transfers?
+      testname: Verify secure sfrxETH detachment handling.
+      checklist:
+      - Does the system handle potential detachment of sfrxETH from frxETH during reward
+        transfers?
+      - Is there transparency regarding actions of the Frax team's multi-sig contract
+        in managing sfrxETH and frxETH?
+      - Are mechanisms in place to alert users about discrepancies between sfrxETH and
+        frxETH?
+    - rid: S9.1.G7
+      requirement: Does the system guarantee the stability of the sfrxETH/ETH rate, or
+        can it change in the future?
+      testname: Verify stability of sfrxETH rate calculations.
+      checklist:
+      - Does the system guarantee the stability of the sfrxETH/ETH rate, or can it change
+        in the future?
+      - Are users informed about potential changes to the sfrxETH/ETH rate?
+      - Is there documentation available regarding the stability and future changes of
+        the sfrxETH/ETH rate?
+    - rid: S9.1.G8
+      requirement: Is the application aware of the rebasing nature of stETH?
+      testname: Verify handling of stETH rebasing mechanisms.
+      checklist:
+      - Is the application aware of the rebasing nature of stETH?
+      - Does the system consider using wstETH for simpler DeFi integrations?
+      - Are there mechanisms in place to handle complexities introduced by rebasing tokens?
+    - rid: S9.1.G9
+      requirement: Does the system account for overheads when withdrawing stETH or wstETH?
+      testname: Verify correct handling of stETH withdrawals.
+      checklist:
+      - Does the system account for overheads when withdrawing stETH or wstETH?
+      - Are there mechanisms in place to handle queue time and limits associated with
+        withdrawals?
+      - How does the protocol address issues related to NFT receipt and withdrawal amount
+        limits?
+    - rid: S9.1.G10
+      requirement: Does the system handle conversions between stETH and wstETH accurately?
+      testname: Verify secure stETH-wstETH conversions.
+      checklist:
+      - Does the system handle conversions between stETH and wstETH accurately?
+      - Are the rebasing characteristics of stETH managed correctly during conversions?
+      - What measures are in place to ensure correct handling of stETH to wstETH conversions?
+    - rid: S9.1.G11
+      requirement: Is the order of token0 and token1 consistent across different chains?
+      testname: Verify consistency of token order.
+      checklist:
+      - Is the order of token0 and token1 consistent across different chains?
+      - What steps are taken to verify token order when interacting with various chains?
+      - Can inconsistencies in token order impact functionality?
+  - cid: SCSVS-BRIDGE-2
+    objective: TBD
+    requirements:
+    - rid: S9.2.G1
+      requirement: Has the protocol been reviewed for compatibility with target chains?
+      testname: Verify blockchain compatibility.
+      checklist:
+      - Has the protocol been reviewed for compatibility with target chains?
+      - What steps are taken to address differences between chains?
+      - How does the system ensure compatibility with various chains?
+    - rid: S9.2.G2
+      requirement: Have contract upgradability implications been evaluated for different
+        chains?
+      testname: Verify secure contract upgradability.
+      checklist:
+      - Have contract upgradability implications been evaluated for different chains?
+      - What upgradability characteristics are documented for each chain?
+      - How does the system address upgradability differences across chains?
+    - rid: S9.2.G3
+      requirement: Have cross-chain messaging implementations been thoroughly reviewed
+        for permissions and functionality?
+      testname: Verify security of cross-chain messaging.
+      checklist:
+      - Have cross-chain messaging implementations been thoroughly reviewed for permissions
+        and functionality?
+      - What security checks are in place for cross-chain messaging?
+      - How does the system ensure correct permissions for cross-chain messages?
+    - rid: S9.2.G4
+      requirement: Is there a whitelist of compatible chains for message handling?
+      testname: Verify handling of unsupported chain messages.
+      checklist:
+      - Is there a whitelist of compatible chains for message handling?
+      - What measures are in place to block messages from unsupported chains?
+      - How does the system handle messages from non-whitelisted chains?
+    - rid: S9.2.5
+      requirement: Is the PUSH0 opcode supported for Solidity version >=0.8.20 on the
+        target chain?
+      testname: Verify correct PUSH0 opcode support.
+      checklist:
+      - Is the PUSH0 opcode supported for Solidity version >=0.8.20 on the target chain?
+      - What compatibility checks are performed for the PUSH0 opcode?
+      - How does the system handle chains that do not support PUSH0?
+    - rid: S9.2.G6
+      requirement: Direct Transfers Vulnerabilities
+      testname: Prevent Accounting Issues from Direct Transfers
+      checklist:
+      - Could direct transfers of assets affect the protocol's internal accounting?
+      - Does the protocol rely on balanceOf or address.balance for accounting purposes?
+      - Have you ensured that direct transfers do not disrupt the protocol’s logic or
+        accounting?
+    - rid: S9.2.G7
+      requirement: Residual Amounts
+      testname: Handle Small Residual Balances
+      checklist:
+      - What happens if a small residual amount (e.g., 1 wei) remains in the pool?
+      - Does the protocol handle minimal residual amounts appropriately?
+    - rid: S9.2.G8
+      requirement: Array Deletion Method
+      testname: Verify Array Deletion Method
+      checklist:
+      - How does the protocol remove an item from an array? Verify the method used for
+        array element removal.
+      - Does the contract handle array reordering or element shifting after an item is
+        deleted?
+      - Are there mechanisms in place to update the array length or manage gaps created
+        by delete?
+    - rid: S9.2.G9
+      requirement: Array Index Usage
+      testname: Verify Array Index Usage
+      checklist:
+      - Does any function get an index of an array as an argument? Verify if this index
+        is used in contexts where the array might be modified.
+      - How does the contract handle index-based access in arrays where elements might
+        be added or removed?
+      - Are there checks to ensure that index values are valid and consistent with the
+        current state of the array?
+    - rid: S9.2.G10
+      requirement: Unique Array Validation
+      testname: Verify Unique Array Validation
+      checklist:
+      - Is it acceptable to have duplicate items in the array? Verify the expected behavior
+        of the array regarding uniqueness.
+      - How does the protocol validate and handle duplicate entries in arrays, particularly
+        user input arrays?
+      - Are there checks or validations to enforce array uniqueness where required?
+    - rid: S9.2.G11
+      requirement: Loop Edge Cases
+      testname: Verify Loop Edge Cases
+      checklist:
+      - Is there any issue with the first and last iteration of loops? Verify if these
+        iterations have different logic or edge cases.
+      - How does the contract ensure consistent behavior throughout all iterations, including
+        the initial and final ones?
+      - Are there specific tests for the edge cases of loop iterations to prevent potential
+        vulnerabilities?
+    - rid: S9.2.G13
+      requirement: Loop Control Statements
+      testname: Verify Loop Control Statements
+      checklist:
+      - Is there a break or continue statement inside a loop? Verify how these statements
+        are used within the loop.
+      - How does the contract ensure that the use of break or continue does not lead to
+        unexpected behaviors or logic errors?
+      - Are there tests to cover scenarios where loop control statements might affect
+        the loop's functionality?
+    - rid: S9.2.G14
+      requirement: State Variable Initialization
+      testname: Verify State Variable Initialization
+      checklist:
+      - Are all important state variables explicitly initialized in the constructor or
+        initialization functions?
+      - Have you reviewed the contract to ensure no uninitialized state variables could
+        lead to vulnerabilities or errors?
+      - Is there a clear initialization strategy for all state variables used in the contract?
+    - rid: S9.2.G15
+      requirement: Nested Structure Deletion
+      testname: Verify Proper Deletion of Nested Structures
+      checklist:
+      - Does the deletion logic ensure that all nested fields within a structure are properly
+        handled and reset?
+      - Are there mechanisms in place to delete or reset nested fields before removing
+        the top-level field?
+      - Have you verified that nested structures are correctly managed to avoid residual
+        data issues?
+    - rid: S9.2.G16
+      requirement: External State Changes Impact
+      testname: Verify External State Changes Impact
+      checklist:
+      - Does the contract rely on external states that can be modified by other actors?
+        Verify how these external changes impact critical functions.
+      - Are there protections against state changes that could disrupt normal user transactions,
+        particularly for crucial operations like withdrawals or repayments?
+      - How does the contract ensure that its core functionality remains intact despite
+        potential manipulations by external actors?
+    - rid: S9.2.G17
+      requirement: Edge Case Handling
+      testname: Verify Edge Case Handling
+      checklist:
+      - Are edge cases (such as zero or maximum values) specifically tested to ensure
+        the contract handles them correctly?
+      - Is there logic in place to handle unusual or extreme input values gracefully without
+        failure?
+      - Does the contract have mechanisms to validate and handle boundary values appropriately?
+- gid: SCSVS-DEFI
+  index: 10
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-DEFI-1
+    objective: TBD
+    requirements:
+    - rid: S10.1.G1
+      requirement: Is gas estimated accurately for cross-chain messages?
+      testname: Verify accuracy of gas estimation.
+      checklist:
+      - Is gas estimated accurately for cross-chain messages?
+      - What measures are in place to validate gas estimates?
+      - Can inaccuracies in gas estimation lead to message failures?
+    - rid: S10.1.G2
+      requirement: Is there validation on the size of the input data?
+      testname: Verify enforcement of input data validation.
+      checklist:
+      - Is there validation on the size of the input data?
+      - How does the system handle input data that exceeds the expected size?
+      - Are there measures to revert or clean unused bits if data size is invalid?
+    - rid: S10.1.G3
+      requirement: Is there a risk of exploiting low gas fees to execute a high volume
+        of transactions?
+      testname: Verify security of gas fee mechanisms.
+      checklist:
+      - Is there a risk of exploiting low gas fees to execute a high volume of transactions?
+      - What measures are in place to mitigate potential attacks associated with low gas
+        fees?
+      - How does the system address issues related to transaction volume and gas costs?
+    - rid: S10.1.G4
+      requirement: Is block production consistency ensured in the protocol?
+      testname: Verify consistency in block production timing.
+      checklist:
+      - Is block production consistency ensured in the protocol?
+      - How does the system handle potential inconsistencies in block production?
+      - What measures are in place to address unexpected application behaviors due to
+        block production variability?
+    - rid: S10.1.G5
+      requirement: Slippage Protection
+      testname: Verify Slippage Protection
+      checklist:
+      - Does the protocol include slippage protection mechanisms for user transactions?
+        Verify if users can set a minimum output amount.
+      - How does the contract handle price manipulation risks from front-running attacks?
+      - Are there any controls in place to prevent attackers from exploiting slippage
+        to benefit from user transactions?
+    - rid: S10.1.G6
+      requirement: Transaction Gas Limit
+      testname: Verify Transaction Gas Limit
+      checklist:
+      - Is there a possibility of iterating over a huge array in a single transaction?
+        Verify the gas usage and limits associated with such operations.
+      - How does the contract handle scenarios where the gas limit might be exceeded due
+        to large-scale operations?
+      - Are there safeguards or limits in place to prevent transactions from exceeding
+        the block gas limit? 
+- gid: SCSVS-COMP
+  index: 11
+  title: TBD
+  description: TBD
+  controls:
+  - cid: SCSVS-COMP-1
+    objective: TBD
+    requirements:
+    - rid: S11.1.G1
+      requirement: Does the protocol validate that the returned price from the price feed
+        is non-zero?
+      testname: Verify validation of zero price transactions.
+      checklist:
+      - Does the protocol validate that the returned price from the price feed is non-zero?
+      - What safeguards are in place to handle zero or invalid price values?
+      - How does the protocol ensure that price feeds do not return zero values that could
+        affect operations?
+    - rid: S11.1.G2
+      requirement: Does the protocol validate the last update timestamp of the price feed
+        to ensure it is within an acceptable delay?
+      testname: Verify accuracy of price update time validation.
+      checklist:
+      - Does the protocol validate the last update timestamp of the price feed to ensure
+        it is within an acceptable delay?
+      - What mechanisms are in place to compare the price feed's update time against predefined
+        maximum delays?
+      - How does the protocol handle outdated price feeds to prevent inaccuracies in price
+        usage?
+    - rid: S11.1.G3
+      requirement: Does the protocol validate the operational status of the rollup sequencer
+        to ensure it is online?
+      testname: Verify enforcement of rollup sequencer validation.
+      checklist:
+      - Does the protocol validate the operational status of the rollup sequencer to ensure
+        it is online?
+      - Is there a method to check if the rollup sequencer is running to prevent stale
+        price issues?
+      - How does the protocol handle the scenario where the rollup sequencer is offline?
+    - rid: S11.1.G4
+      requirement: Can the TWAP period be adjusted to mitigate risks of price manipulation?
+      testname: Verify security of TWAP period calculations.
+      checklist:
+      - Can the TWAP period be adjusted to mitigate risks of price manipulation?
+      - If the TWAP period is set, does it align with the protocol’s requirements for
+        accurate price updates?
+      - Are there mechanisms in place to adjust the TWAP period based on identified manipulation
+        risks?
+    - rid: S11.1.G5
+      requirement: Does the desired price feed pair consistently appear across all deployed
+        chains?
+      testname: Verify consistency of price feeds across chains.
+      checklist:
+      - Does the desired price feed pair consistently appear across all deployed chains?
+      - If there is a process to verify price feed pairs, is it effective in maintaining
+        consistency across chains?
+      - Are there checks in place to ensure that price feed pairs remain uniform across
+        all chains?
+    - rid: S11.1.G6
+      requirement: Is the heartbeat of the price feed appropriate for the protocol’s specific
+        use case?
+      testname: Verify appropriateness of price feed heartbeat intervals.
+      checklist:
+      - Is the heartbeat of the price feed appropriate for the protocol’s specific use
+        case?
+      - If the price feed heartbeat is set, does it meet the operational needs of the
+        protocol?
+      - Are there controls to ensure the price feed heartbeat aligns with the protocol’s
+        requirements?
+    - rid: S11.1.G7 
+      requirement: Are the price feeds accurately matched to the underlying assets they
+        represent?
+      testname: Verify suitability of price feeds for financial operations.
+      checklist:
+      - Are the price feeds accurately matched to the underlying assets they represent?
+      - If using a price feed, does it correctly reflect the value of the underlying asset?
+      - Are there checks to ensure the appropriateness of the price feeds for the underlying
+        assets?
+    - rid: S11.1.G8
+      requirement: Can the protocol be manipulated through AMM spot prices, especially
+        with flash loans?
+      testname: Verify security of AMM spot price calculations.
+      checklist:
+      - Can the protocol be manipulated through AMM spot prices, especially with flash
+        loans?
+      - If spot prices from AMMs are used, are there additional checks to prevent manipulation?
+      - Are there safeguards to ensure the reliability of price data from AMMs?
+    - rid: S11.1.G9 
+      requirement: Does the system have measures to handle inaccuracies in price feeds
+        during flash crashes?
+      testname: Verify mitigation of flash crash price inaccuracies.
+      checklist:
+      - Does the system have measures to handle inaccuracies in price feeds during flash
+        crashes?
+      - If a flash crash occurs, are price feed values validated to be within an acceptable
+        range?
+      - Are there safeguards to manage potential flash crash vulnerabilities in price
+        feeds?
+    - rid: S11.1.G10
+      requirement: Is the _lzSend function correctly utilized in place of direct lzEndpoint.send
+        calls?
+      testname: Verify secure usage of LzApp functions.
+      checklist:
+      - Is the _lzSend function correctly utilized in place of direct lzEndpoint.send
+        calls?
+      - Are there vulnerabilities associated with using direct calls to lzEndpoint.send?
+      - How does the protocol ensure proper usage of _lzSend?
+    - rid: S11.1.G11
+      requirement: Is the ILayerZeroUserApplicationConfig interface implemented correctly?
+      testname: Verify correct LayerZero user application configurations.
+      checklist:
+      - Is the ILayerZeroUserApplicationConfig interface implemented correctly?
+      - Does the implementation include the forceResumeReceive function?
+      - How does the system handle unexpected scenarios that require unblocking the message
+        queue?
+    - rid: S11.1.G12
+      requirement: Are default configuration contracts used in the application?
+      testname: Verify security of default contract configurations.
+      checklist:
+      - Are default configuration contracts used in the application?
+      - What steps are taken to ensure applications are configured uniquely?
+      - How are default settings avoided in the contract configuration?
+    - rid: S11.1.G13
+      requirement: Does the protocol issue refunds for failed or partially filled orders?
+      testname: Verify correct handling of refunds for failed orders.
+      checklist:
+      - Does the protocol issue refunds for failed or partially filled orders?
+      - What mechanisms are in place to handle refunds after swaps?
+      - Are there clear procedures for managing failed or incomplete transactions?
+    - rid: S11.1.G14
+      requirement: ERC20 Decimals Support
+      testname: Ensure ERC20 Decimal Compatibility
+      checklist:
+      - Can the protocol handle ERC20 tokens with decimals other than 18?
+      - Are there mechanisms in place to adjust for different decimal configurations of
+        ERC20 tokens?
+    - rid: S11.1.G15
+      requirement: ERC20 Compliance
+      testname: Ensure ERC20 Token Compatibility
+      checklist:
+      - Does the protocol support all kinds of ERC20 tokens?
+      - Is there a whitelist or compatibility check for ERC20 tokens?
+      - Are there any unsupported token types clearly documented?
+    - rid: S11.1.G16
+      requirement: Reorg Vulnerability with CREATE
+      testname: Verify Reorg Vulnerability with CREATE
+      checklist:
+      - Does the contract deployment process use CREATE2 instead of CREATE to ensure contract
+        stability across block reorgs?
+      - Is there a fallback mechanism in place to handle contract creation failures due
+        to block reorgs?
+      - Has the protocol been tested for resilience against block reorgs affecting contract
+        creation?
+    - rid: S11.1.G17
+      requirement: Token Decimals Support
+      testname: Validate Token Decimal Handling
+      checklist:
+      - Does the AMM handle tokens with varying decimal places and types correctly?
+      - Have you verified compatibility with tokens of different decimal configurations?
+      - Is there validation for token types and decimal places before processing?
+    - rid: S11.1.G18
+      requirement: Fee On Transfer Support
+      testname: Ensure Fee-On-Transfer Token Support
+      checklist:
+      - Does the AMM support fee-on-transfer tokens?
+      - Have you accounted for discrepancies between the sent and received amounts with
+        fee-on-transfer tokens?
+      - Is there functionality to handle or adjust for fee-on-transfer tokens appropriately?
+    - rid: S11.1.G19
+      requirement: Rebasing Tokens Support
+      testname: Handle Rebasing Token Effects
+      checklist:
+      - Does the AMM support rebasing tokens?
+      - Have you accounted for changes in balance due to rebasing tokens?
+      - Is there functionality to correctly handle rebasing tokens and their balance changes?
+    - rid: S11.1.G20
+      requirement: ERC4626 Flashloan Risk
+      testname: Mitigate ERC4626 Flashloan Manipulation
+      checklist:
+      - Can ERC4626 be manipulated through flashloans?
+      - Are there protections in place against flashloan attacks in ERC4626-related operations?
+      - Is the protocol aware of flashloan risks and has it implemented safeguards?
+    - rid: S11.1.G21
+      requirement: Forked Code Risks
+      testname: Analyze Risks in Forked Code
+      checklist:
+      - Is the AMM using code forked from known projects?
+      - Have you reviewed the forked code for known vulnerabilities?
+      - Is there a comparison of the forked code against the original to identify potential
+        security issues?
+
