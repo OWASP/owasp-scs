@@ -41,7 +41,7 @@ contract Solidity_Reentrancy {
 
 ### Remediation:
 - Always ensure that every state change happens before calling external contracts, i.e., update balances or code internally before calling external code.
-- Use function modifiers that prevent reentrancy, like Open Zepplin’s Re-entrancy Guard.
+- Use function modifiers that prevent reentrancy, like OpenZeppelin’s Re-entrancy Guard.
 
 ### Example (Fixed version):
 
