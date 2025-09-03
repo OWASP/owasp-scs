@@ -24,16 +24,16 @@ As a result, the same token can exist simultaneously on both chains, enabling a 
 
 ## Remediation  
 1. Burn the NFT
-- Call the burn(tokenId) function on the L2 NFT contract before sending the cross-chain withdrawal request.
-- This ensures that the NFT no longer exists on L2 and cannot be reused, transferred, or sold.
+  - Call the burn(tokenId) function on the L2 NFT contract before sending the cross-chain withdrawal request.
+  - This ensures that the NFT no longer exists on L2 and cannot be reused, transferred, or sold.
 
 2. Alternatively, Lock the NFT (if burning isn’t possible)
-- If NFTs are not meant to be permanently destroyed, implement a lock mechanism to freeze the token on L2 until the cross-chain withdrawal is completed successfully.
+  - If NFTs are not meant to be permanently destroyed, implement a lock mechanism to freeze the token on L2 until the cross-chain withdrawal is completed successfully.
 
 3. Update Cross-Chain Workflow
 
-- Enforce the burn/lock operation as part of the withdrawal process.
-- Revert the entire transaction if the burn/lock fails.
+  - Enforce the burn/lock operation as part of the withdrawal process.
+  - Revert the entire transaction if the burn/lock fails.
 
 ## Examples  
 - **Vulnerable Code (Not Burning Token Before Sending Cross Chain Message)**  
