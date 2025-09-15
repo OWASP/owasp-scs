@@ -21,10 +21,14 @@ Insecure cross-chain messaging refers to vulnerabilities that arise when communi
 - Loss of funds or data.
 - Exploitation of vulnerabilities in cross-chain logic.
 
+- Economic inconsistencies due to unvalidated msg.value in message handlers.
+
 ## Remediation
 - **Validate messages:** Ensure all cross-chain messages are properly validated.
 - **Use secure protocols:** Leverage secure cross-chain communication protocols.
 - **Test thoroughly:** Conduct extensive testing to ensure cross-chain logic is secure.
+
+- **Validate msg.value:** Decode expected value from the message payload or protocol parameters and require that `msg.value` matches (or meets) this expectation; revert on mismatch.
 
 ## Examples
 - **Insecure Cross-Chain Messaging**
@@ -115,3 +119,111 @@ Why is this better?
 ✅ Ensures Message Authenticity: Only validly signed messages are accepted.
 
 ---
+
+- **Unvalidated msg.value in Cross-Chain Message Handling**
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+
+    contract VulnerableBridgedGovernor {
+        address public endpoint;
+        uint256 public _lastNonce;
+        uint32 public ownerEid;
+        address public owner;
+
+        struct Origin {
+            uint32 srcEid;
+            address sender;
+            uint256 nonce;
+        }
+
+        struct Call {
+            address to;
+            uint256 value;
+            bytes data;
+        }
+
+        modifier onlyProxy() {
+            _;
+        }
+
+        function runCalls(Call[] memory calls) internal {
+            for (uint i = 0; i < calls.length; i++) {
+                (bool success, ) = calls[i].to.call{value: calls[i].value}(calls[i].data);
+                require(success, "Call failed");
+            }
+        }
+
+        function lzReceive(
+            Origin calldata origin,
+            bytes32, /* guid */
+            bytes calldata message,
+            address, /* executor */
+            bytes calldata /* extraData */
+        ) public payable onlyProxy {
+            require(msg.sender == endpoint, "Must be called by the endpoint");
+            require(origin.srcEid == ownerEid, "Invalid message source chain");
+            require(origin.sender == owner, "Invalid message sender");
+            require(origin.nonce == _lastNonce + 1, "Invalid message nonce");
+            _lastNonce = origin.nonce;
+            runCalls(abi.decode(message, (Call[])));
+            // <-- No check on msg.value!
+        }
+    }
+    ```
+    🔴 Issue: The handler accepts arbitrary `msg.value`, enabling front-running or unintended value-carrying calls that desync protocol accounting.
+
+- **Validated msg.value in Cross-Chain Message Handling**
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+
+    contract SafeBridgedGovernor {
+        address public endpoint;
+        uint256 public _lastNonce;
+        uint32 public ownerEid;
+        address public owner;
+
+        struct Origin {
+            uint32 srcEid;
+            address sender;
+            uint256 nonce;
+        }
+
+        struct Call {
+            address to;
+            uint256 value;
+            bytes data;
+        }
+
+        modifier onlyProxy() {
+            _;
+        }
+
+        function runCalls(Call[] memory calls) internal {
+            for (uint i = 0; i < calls.length; i++) {
+                (bool success, ) = calls[i].to.call{value: calls[i].value}(calls[i].data);
+                require(success, "Call failed");
+            }
+        }
+
+        function lzReceive(
+            Origin calldata origin,
+            bytes32, /* guid */
+            bytes calldata message,
+            address, /* executor */
+            bytes calldata /* extraData */
+        ) public payable onlyProxy {
+            require(msg.sender == endpoint, "Must be called by the endpoint");
+            require(origin.srcEid == ownerEid, "Invalid message source chain");
+            require(origin.sender == owner, "Invalid message sender");
+            require(origin.nonce == _lastNonce + 1, "Invalid message nonce");
+            _lastNonce = origin.nonce;
+
+            (uint256 expectedMsgValue, Call[] memory calls) = abi.decode(message, (uint256, Call[]));
+            require(msg.value >= expectedMsgValue, "Invalid message value");
+            runCalls(calls);
+        }
+    }
+    ```
+    ✅ Fix: Decode expected value from the payload and enforce that `msg.value` meets it before executing downstream calls.
