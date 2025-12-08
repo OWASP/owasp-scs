@@ -9,12 +9,16 @@ hide:
     <div class="esp-banner__content">
       <div class="esp-banner__left">
         <a href="https://esp.ethereum.foundation/" target="_blank" rel="noopener">
-          <img class="esp-banner__logo" src="assets/esp-logo-main.svg" alt="Ethereum Foundation Ecosystem Support Program">
+          <img class="esp-banner__logo esp-logo-light" src="assets/esp-logo-main-b.svg" alt="Ethereum Foundation Ecosystem Support Program">
+          <img class="esp-banner__logo esp-logo-dark" src="assets/esp-logo-main.svg" alt="Ethereum Foundation Ecosystem Support Program">
         </a>
         <div class="esp-banner__text">
           <div class="esp-banner__eyebrow">Grant Support · 2025</div>
           <div class="esp-banner__title">Supported by Ethereum Foundation's Ecosystem Support Program (ESP)</div>
         </div>
+      </div>
+      <div class="esp-banner__cta">
+        <a href="https://blog.ethereum.org/2025/12/02/allocation-q3-25" target="_blank" rel="noopener">Read more…</a>
       </div>
     </div>
   </div>
@@ -90,7 +94,6 @@ hide:
 </div>
 
 <br>
-
 
 ## Trusted By
 
