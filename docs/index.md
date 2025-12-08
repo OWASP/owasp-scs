@@ -2,9 +2,7 @@
 hide:
   - navigation
   - toc
----
-
-# OWASP Smart Contract Security
+--- 
 
 <div class="esp-banner">
   <div class="esp-banner__shell">
@@ -21,6 +19,8 @@ hide:
     </div>
   </div>
 </div>
+
+# OWASP Smart Contract Security
 
 ## Our Mission
 
@@ -90,6 +90,7 @@ hide:
 </div>
 
 <br>
+
 
 ## Trusted By
 
