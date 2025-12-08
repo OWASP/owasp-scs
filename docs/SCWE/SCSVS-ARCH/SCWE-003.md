@@ -1,48 +1,147 @@
 ---
-title: Insertion of Sensitive Data into Logs
+title: Lack of Modularity
 id: SCWE-003
-alias: data-in-logs
+alias: lack-of-modularity
 platform: []
-profiles: [L1, L2, R]
+profiles: [L1]
 mappings:
-  scsvs-cg: [SCSVS-AUTH]
-  scsvs-scg: [SCSVS-AUTH-2, SCSVS-CODE-1]
-  cwe: [200, 359, 497, 532]
-  android-risks:
-  - https://developer.android.com/privacy-and-security/risks/log-info-disclosure
-refs:
-  - https://stackoverflow.com/questions/45270547/is-read-logs-a-normal-or-dangerous-android-permission
+  scsvs-cg: [SCSVS-ARCH]
+  scsvs-scg: [SCSVS-ARCH-1]
+  cwe: [1047]
 status: new
 ---
 
-## Overview
+## Relationships
+- CWE-1047: Modules with Circular Dependencies
+  [https://cwe.mitre.org/data/definitions/1047.html](https://cwe.mitre.org/data/definitions/1047.html)
 
-Mobile apps may write [sensitive data]() to logs. This may include sensitive user data, such as passwords, credit card numbers, or other personally identifiable information (PII), as well as sensitive system data, such as cryptographic keys, session tokens, or other sensitive information.
+## Description
+Lack of modularity refers to a design flaw where a system's components are not sufficiently separated into independent, reusable modules. This deficiency leads to tightly coupled code, making the system difficult to understand, maintain, and extend. In the context of smart contracts, this manifests as monolithic contracts where all functionalities are bundled together, increasing complexity and the potential for errors.
 
-Logging all possible information is very useful at development time, especially for debugging the app. However, in production it might not always be necessary and should be prevented whenever possible to avoid any accidentally exposure to potential attackers.
+## Remediation
+- **Modular Design:** Break down the contract into smaller, focused modules that handle specific responsibilities.
+- **Use of Libraries:** Leverage existing, well-tested libraries to handle common functionalities, reducing the need for custom code.
+- **Simplify Logic:** Avoid unnecessary complexity by streamlining the contract's logic and removing redundant code.
+- **Regular Audits:** Conduct periodic code reviews and audits to identify and address areas of excessive complexity.
 
-## Modes of Introduction
+## Examples
 
-This can typically occur in two ways:
+### Example of Lack of Modularity:
 
-- **System Logs**: The application may log sensitive data to the system log, which can be accessed by other applications on the device (in old OS versions or compromised devices or if they hold the appropriate permissions).
-- **App Logs**: The application may log sensitive data to a file in the application's data directory, which can be accessed by any application on the device if the device is rooted.
+```solidity
+pragma solidity ^0.8.0;
 
-## Impact
+contract TightlyCoupledContract {
+    mapping(address => uint) public balances;
+    mapping(address => mapping(address => uint)) public allowances;
 
-Loss of confidentiality: Sensitive data within logs is at risk of being exposed to an attacker with access to the device who may be able to extract it. This may lead to further attacks, such as identity theft, or compromise of the application's backend.
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
+    }
 
-## Mitigations
+    function withdraw(uint amount) public {
+        require(balances[msg.sender] >= amount, "Insufficient funds");
+        balances[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount);
+    }
 
-The following are generic recommendations to avoid logging sensitive data in production releases:
+    function transfer(address to, uint amount) public {
+        require(balances[msg.sender] >= amount, "Insufficient funds");
+        balances[msg.sender] -= amount;
+        balances[to] += amount;
+    }
 
-- Avoid logging sensitive data at all.
-- Redact sensitive data in logs.
-- Remove logging statements unless deemed necessary to the application or explicitly identified as safe, e.g. as a result of a security audit.
-- Use log levels properly to ensure that sensitive data is not logged in production releases.
-- Use flags to disable logging in production releases.
+    function approve(address spender, uint amount) public {
+        allowances[msg.sender][spender] = amount;
+    }
 
-The documentation for each platform provides best practices for developers:
+    function transferFrom(address from, address to, uint amount) public {
+        require(allowances[from][msg.sender] >= amount, "Allowance exceeded");
+        allowances[from][msg.sender] -= amount;
+        balances[from] -= amount;
+        balances[to] += amount;
+    }
+}
+```
 
-- [Android mitigations to avoid log disclosure](https://developer.android.com/privacy-and-security/risks/log-info-disclosure#mitigations)
-- [iOS mitigations to avoid log disclosure](https://developer.apple.com/documentation/os/logging/generating_log_messages_from_your_code#3665948)
+**Problem:** Instead of separating concerns into independent, reusable modules, everything is handled within one contract.
+
+Why is this lack of modularity?
+
+- Single contract handling multiple responsibilities (balance management, approvals, transfers).
+- Code is not reusable: If another contract needs balance functions, it must copy-paste this logic.
+- Testing is harder: Changing transfer() might break withdraw(), as they're tightly coupled.
+
+### Refactored with Modular Design:
+
+```solidity
+pragma solidity ^0.8.0;
+
+library BalanceLibrary {
+    struct Data {
+        mapping(address => uint) balances;
+    }
+
+    function deposit(Data storage self, address user, uint amount) internal {
+        self.balances[user] += amount;
+    }
+
+    function withdraw(Data storage self, address user, uint amount) internal {
+        require(self.balances[user] >= amount, "Insufficient funds");
+        self.balances[user] -= amount;
+        payable(user).transfer(amount);
+    }
+}
+
+library AllowanceLibrary {
+    struct Data {
+        mapping(address => mapping(address => uint)) allowances;
+    }
+
+    function approve(Data storage self, address owner, address spender, uint amount) internal {
+        self.allowances[owner][spender] = amount;
+    }
+
+    function transferFrom(
+        Data storage self,
+        BalanceLibrary.Data storage balances,
+        address from,
+        address to,
+        uint amount
+    ) internal {
+        require(self.allowances[from][msg.sender] >= amount, "Allowance exceeded");
+        require(balances.balances[from] >= amount, "Insufficient funds");
+
+        self.allowances[from][msg.sender] -= amount;
+        balances.balances[from] -= amount;
+        balances.balances[to] += amount;
+    }
+}
+
+contract ModularContract {
+    using BalanceLibrary for BalanceLibrary.Data;
+    using AllowanceLibrary for AllowanceLibrary.Data;
+
+    BalanceLibrary.Data private balances;
+    AllowanceLibrary.Data private allowances;
+
+    function deposit() public payable {
+        balances.deposit(msg.sender, msg.value);
+    }
+
+    function withdraw(uint amount) public {
+        balances.withdraw(msg.sender, amount);
+    }
+
+    function approve(address spender, uint amount) public {
+        allowances.approve(msg.sender, spender, amount);
+    }
+
+    function transferFrom(address from, address to, uint amount) public {
+        allowances.transferFrom(balances, from, to, amount);
+    }
+}
+
+```
+
+**Solution:** Use libraries for shared functionality and separate contract concerns. Now, storage is separated, reusable libraries are used, and responsibilities are divided!

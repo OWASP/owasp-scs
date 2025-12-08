@@ -4,8 +4,8 @@ scsvs_cg_id:
 - SCSVS-AUTH
 scsvs_scg_id:
 - SCSVS-AUTH-1
-platform: android
-title: Least Privilege Principle
+platform: []
+title: Least Privilege Principle Test
 scsvs_cg_levels:
 - L2
 tests: SCSTG-TEST-0003 

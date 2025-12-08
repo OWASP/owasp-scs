@@ -5,18 +5,18 @@ log = logging.getLogger('mkdocs')
 def get_edit_url(src_path, edit_url_SCSTG, edit_url_SCSVS):
     if src_path.startswith("SCSVS"):
         edit_url = f"{edit_url_SCSVS}{src_path}"
-        edit_url = edit_url.replace("master/SCSVS/controls", "master/controls/")
-        edit_url = edit_url.replace("master/SCSVS/", "master/Document/")
+        edit_url = edit_url.replace("main/SCSVS/controls", "main/controls/")
+        edit_url = edit_url.replace("main/SCSVS/", "main/0.1/en/")
     elif src_path.startswith("SCSTG"):
         edit_url = f"{edit_url_SCSTG}{src_path}"
-        edit_url = edit_url.replace("master/SCSTG/0x", "master/Document/0x")
-        edit_url = edit_url.replace("master/SCSTG/", "master/")
+        edit_url = edit_url.replace("main/SCSTG/0x", "main/docs/0x")
+        edit_url = edit_url.replace("main/SCSTG/", "main/")
     elif src_path.startswith("scwe"):
         edit_url = f"{edit_url_SCSTG}{src_path}"
-        edit_url = edit_url.replace("master/scwe/", "master/weaknesses/")
+        edit_url = edit_url.replace("main/scwe/", "main/weaknesses/")
     elif src_path.startswith(("contributing", "donate")):
         edit_url = f"{edit_url_SCSTG}{src_path}"
-        edit_url = edit_url.replace("master/", "master/docs/")
+        edit_url = edit_url.replace("main/", "main/docs/")
     else:
         edit_url = ""
     
@@ -24,8 +24,8 @@ def get_edit_url(src_path, edit_url_SCSTG, edit_url_SCSVS):
 
 def on_pre_page(page, config, files):
     try:
-        edit_url_SCSTG = "https://github.com/OWASP/owasp-scstg/edit/master/"
-        edit_url_SCSVS = "https://github.com/OWASP/owasp-scsvs/edit/master/"
+        edit_url_SCSTG = "https://github.com/OWASP/www-project-smart-contract-security-testing-guide/edit/master/"
+        edit_url_SCSVS = "https://github.com/OWASP/www-project-smart-contract-security-verification-standard/edit/master/"
     except KeyError:
         return page
     

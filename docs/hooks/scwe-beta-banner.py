@@ -37,10 +37,10 @@ def get_cg_tests_data():
     return scsvs_cg_tests_metadata, scsvs_cg_mapping
 
 beta_banner = """
-??? example "Content in BETA"
-    This content is in **beta** and still under active development, so it is subject to change any time (e.g. structure, IDs, content, URLs, etc.).
+??? example "Stable Version v0.0.1"
+    This content is in the **version-(v0.0.1)** and still under active development, so it is subject to change any time (e.g. structure, IDs, content, URLs, etc.).
     
-    [:fontawesome-regular-paper-plane: Send Feedback](https://github.com/OWASP/owasp-scstg/discussions/categories/scwe-scstg-v2-beta-feedback)
+    [:fontawesome-regular-paper-plane: Send Feedback](https://github.com/OWASP/www-project-smart-contract-security-testing-guide/discussions/categories/scwe-scstg-v2-beta-feedback)
 """
 
 def get_scstg_cg_coverage(meta):
@@ -94,7 +94,7 @@ def get_info_banner(meta):
     This weakness hasn't been created yet and it's in **draft**. But you can check its status or start working on it yourself.
     If the issue has not yet been assigned, you can request to be assigned to it and submit a PR with the new content for that weakness by following our [guidelines](https://docs.google.com/document/d/1EMsVdfrDBAu0gmjWAUEs60q-fWaOmDB5oecY9d9pOlg/edit?usp=sharing).
 
-    <a href="https://github.com/OWASP/owasp-scstg/issues?q=is%3Aissue+is%3Aopen+{id}" target="_blank">:material-github: Check our GitHub Issues for {id}</a>
+    <a href="https://github.com/OWASP/www-project-smart-contract-security-testing-guide/issues?q=is%3Aissue+is%3Aopen+{id}" target="_blank">:material-github: Check our GitHub Issues for {id}</a>
     
     ## Initial Description or Hints
 

@@ -338,3 +338,8 @@ table.dataTable th {
 .md-typeset .admonition {
   border: 0px;
 }
+
+.md-banner {
+  background-color: #000000;
+  color: #ffffff;
+}

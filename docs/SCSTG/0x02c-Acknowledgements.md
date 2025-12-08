@@ -51,7 +51,7 @@ If you'd like to apply please contact the project leaders by sending an email. P
 
 - If the "SCS Advocate" status is granted and you'd like to maintain it, the aforementioned contributions must remain consistent after the initial period as well. You should keep collecting this evidence and send us a _contribution report_ yearly.
 - [Financial donations](https://scs.owasp.org/donate/) are not part of the eligibility criteria but will be listed for completion.
-- Re-shared publications and blog posts linked in SCSTG text must be **educational** and focus on mobile security or SCSVS/SCSTG and **not endorse company products/services**.
+- Re-shared publications and blog posts linked in SCSTG text must be **educational** and focus on smart contract security or SCSVS/SCSTG and **not endorse company products/services**.
 - Advocate Companies may use the logo and links to SCSVS/SCSTG resources as part of their communication but cannot use them as an endorsement by OWASP as a preferred provider of software and services.
     - Example of what's ok: list SCS Advocate status on website home page, in "about company" slides in sales presentations, on sales collateral.
     - Example of what's not ok: a SCS Advocate cannot claim they are OWASP certified.

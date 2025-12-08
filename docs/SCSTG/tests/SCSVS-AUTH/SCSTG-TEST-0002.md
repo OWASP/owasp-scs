@@ -4,8 +4,8 @@ scsvs_cg_id:
 - SCSVS-AUTH
 scsvs_scg_id:
 - SCSVS-AUTH-1
-platform: android
-title: Identity Verification
+platform: []
+title: Identity Verification Test
 scsvs_cg_levels:
 - L2
 tests: SCSTG-TEST-0002 

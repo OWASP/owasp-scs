@@ -1,6 +1,6 @@
 # Frontispiece
 
-<img src="../../../assets/Images/owasp_scs_header.png" width="100%" />
+<img src="../../../assets/Images/Other/owasp_scs_header.png" width="100%" />
 
 ## About the OWASP SCSTG
 
@@ -19,17 +19,17 @@ The OWASP SCSVS and SCSTG are trusted by the following platform providers and st
 
 All our Changelogs are available online at the OWASP SCSTG GitHub repository, see the Releases page:
 
-<https://github.com/OWASP/owasp-scstg/releases>
+<https://github.com/OWASP/www-project-smart-contract-security-testing-guide/releases>
 
 ## Disclaimer
 
 Please consult the laws in your country before executing any tests against smart contracts by utilizing the SCSTG materials. Refrain from violating the laws with anything described in the SCSTG.
 
-Our [Code of Conduct] has further details: <https://github.com/OWASP/owasp-scstg/blob/master/.github/CODE_OF_CONDUCT.md>
+Our [Code of Conduct] has further details: <https://github.com/OWASP/www-project-smart-contract-security-testing-guide/blob/master/.github/CODE_OF_CONDUCT.md>
 
 OWASP thanks the many authors, reviewers, and editors for their hard work in developing this guide. If you have any comments or suggestions, please connect with us: <https://scs.owasp.org/contact>
 
-If you find any inconsistencies or typos please open an issue in the OWASP SCSTG Github Repo: <https://github.com/OWASP/owasp-scstg>
+If you find any inconsistencies or typos please open an issue in the OWASP SCSTG Github Repo: <https://github.com/OWASP/www-project-smart-contract-security-testing-guide>
 
 ## Copyright and License
 

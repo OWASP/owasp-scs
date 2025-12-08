@@ -213,7 +213,7 @@ Use markdown's in-line link format (A) `[TEXT](URL "TITLE")` or (B) `[TEXT](URL)
 For example:
 
 ```markdown
-The [threat modeling guidelines defined by OWASP](https://owasp.org/www-community/Threat_Modeling "OWASP Threat Modeling") are generally applicable to mobile apps.
+The [threat modeling guidelines defined by OWASP](https://owasp.org/www-community/Threat_Modeling "OWASP Threat Modeling") are generally applicable to smart contracts.
 ```
 
 When using (A), be sure to escape special characters such as apostrophe (\') or single quote (\`), as otherwise the link will be broken in Gitbook.

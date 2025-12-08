@@ -11,6 +11,10 @@ search:
 
 The OWASP Smart Contract Security Checklist contains links to the SCSTG test cases for each SCSVS control.
 
+<a href="https://github.com/OWASP/www-project-smart-contract-security-testing-guide/checklists">:material-github: GitHub Repo</a>
+
+<a href="https://owasp.org/www-project-smart-contract-security-testing-guide">:material-web: OWASP Project Page</a>
+
 - **Security Assessments / Pentests**: ensure you're at least covering the standard attack surface and start exploring.
 - **Standard Compliance**: includes SCSVS and SCSTG versions and commit IDs.
 - **Learn & practice** your smart contract security skills.
@@ -18,6 +22,6 @@ The OWASP Smart Contract Security Checklist contains links to the SCSTG test cas
 
 <br>
 
-<button class="scs-button" onclick="window.location.href='https://github.com/OWASP/owasp-scstg/releases/latest/download/OWASP_SCS_Checklist.xlsx';"> Download the SCS Checklist</button>
+<button class="scs-button" onclick="window.location.href='https://docs.google.com/spreadsheets/d/1W3-XeqbCQp7RHRJKVfllcL9VmzrErMad-biL2mwOChM/edit?usp=sharing';"> Visit the SCS Checklist</button>
 
 <br>

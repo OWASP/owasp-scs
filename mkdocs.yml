@@ -1,4 +1,5 @@
 site_name: OWASP Smart Contract Security
+site_url: https://scs.owasp.org
 repo_url: https://github.com/OWASP/owasp-scs
 repo_name: OWASP/owasp-scs
 # use_directory_urls: false # only set for mkdocs build
@@ -64,18 +65,86 @@ nav:
 
   - "Smart Contract Top 10":
     - sctop10/index.md
-    - SC01:2023 - Reentrancy Attacks: sctop10/SC01-Reentrancy.md
-    - SC02:2023 - Integer Overflow and Underflow: sctop10/SC02-IntegerOverflowUnderflow.md
-    - SC03:2023 - Timestamp Dependence: sctop10/SC03-TimestampDependence.md
-    - SC04:2023 - Access Control Vulnerabilities: sctop10/SC04-AccessControl.md
-    - SC05:2023 - Front-running Attacks: sctop10/SC05-FrontRunning.md
-    - SC06:2023 - Denial of Service (DoS) Attacks: sctop10/SC06-DOS.md
-    - SC07:2023 - Logic Errors: sctop10/SC07-LogicErrors.md
-    - SC08:2023 - Insecure Randomness: sctop10/SC08-InsecureRandomness.md
-    - SC09:2023 - Gas Limit Vulnerabilities: sctop10/SC09-GasLimit.md
-    - SC10:2023 - Unchecked External Calls: sctop10/SC10-UncheckedCalls.md
+    - sctop10/Top10:2023.md
+    - SC01:2025 - Access Control Vulnerabilities: sctop10/SC01-AccessControlVulnerabilities.md
+    - SC02:2025 - Price Oracle Manipulation: sctop10/SC02-PriceOracleManipulation.md
+    - SC03:2025 - Logic Errors: sctop10/SC03-LogicErrors.md
+    - SC04:2025 - Lack of Input Validation: sctop10/SC04-LackOfInputValidation.md
+    - SC05:2025 - Reentrancy Attacks: sctop10/SC05-Reentrancy.md
+    - SC06:2025 - Unchecked External Calls: sctop10/SC06-UncheckedExternalCalls.md
+    - SC07:2025 - Flash Loan Attacks: sctop10/SC07-FlashLoanAttacks.md
+    - SC08:2025 - Integer Overflow and Underflow: sctop10/SC08-IntegerOverUnderFlow.md
+    - SC09:2025 - Insecure Randomness: sctop10/SC09-InsecureRandomness.md
+    - SC10:2025 - Denial of Service (DoS) Attacks: sctop10/SC10-DenailOfService.md
 
-  - "SCWE (Beta)": 
+  - SCSTG:
+      - SCSTG/index.md
+      - Intro:
+        - ... | flat | SCSTG/0x0[1-2]*.md 
+        - ... | flat | SCSTG/0x09*.md
+      - General Concepts:
+        - ... | flat | SCSTG/0x04*.md
+      - Tests (Beta):
+        - SCSTG/tests/index.md
+        - Solidity:
+          - SCSVS-ARCH:  
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-ARCH/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-ARCH/*.md
+          - SCSVS-CODE:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-CODE/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-CODE/*.md
+          - SCSVS-GOV:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-GOV/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-GOV/*.md
+          - SCSVS-AUTH:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-AUTH/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-AUTH/*.md
+          - SCSVS-COMM:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-COMM/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-COMM/*.md
+          - SCSVS-CRYPTO:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-CRYPTO/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-CRYPTO/*.md
+          - SCSVS-ORACLE:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-ORACLE/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-ORACLE/*.md
+          - SCSVS-BLOCK:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-BLOCK/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-BLOCK/*.md
+          - SCSVS-BRIDGE:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-BRIDGE/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-BRIDGE/*.md
+          - SCSVS-DEFI:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-DEFI/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-DEFI/*.md
+          - SCSVS-COMP:
+            - Overview: 
+              - ... | flat | SCSTG/tests/SCSVS-COMP/overview/*.md
+            - Tests: 
+              - ... | flat | SCSTG/tests/SCSVS-COMP/*.md
+
+
+  - "SCWE": 
     - SCWE/index.md
     - SCSVS-ARCH:
       - ... | flat | SCWE/SCSVS-ARCH/*.md
@@ -100,42 +169,6 @@ nav:
     - SCSVS-COMP:
       - ... | flat | SCWE/SCSVS-COMP/*.md
 
-  - SCSTG:
-      - SCSTG/index.md
-      - Intro:
-        - ... | flat | SCSTG/0x0[1-2]*.md 
-        - ... | flat | SCSTG/0x09*.md
-      - General Concepts:
-        - ... | flat | SCSTG/0x04*.md
-      - Tests (Beta):
-        - SCSTG/tests/index.md
-        - Solidity:
-          - SCSVS-ARCH:  
-            - ... | flat | SCSTG/tests/SCSVS-ARCH/*.md
-          - SCSVS-CODE:
-            - ... | flat | SCSTG/tests/SCSVS-CODE/*.md
-          - SCSVS-GOV:
-            - ... | flat | SCSTG/tests/SCSVS-GOV/*.md
-          - SCSVS-AUTH:
-            - Overview: 
-              - ... | flat | SCSTG/tests/SCSVS-AUTH/overview/*.md
-            - Tests: 
-              - ... | flat | SCSTG/tests/SCSVS-AUTH/*.md
-          - SCSVS-COMM:
-            - ... | flat | SCSTG/tests/SCSVS-COMM/*.md
-          - SCSVS-CRYPTO:
-            - ... | flat | SCSTG/tests/SCSVS-CRYPTO/*.md
-          - SCSVS-ORACLE:
-            - ... | flat | SCSTG/tests/SCSVS-ORACLE/*.md
-          - SCSVS-BLOCK:
-            - ... | flat | SCSTG/tests/SCSVS-BLOCK/*.md
-          - SCSVS-BRIDGE:
-            - ... | flat | SCSTG/tests/SCSVS-BRIDGE/*.md
-          - SCSVS-DEFI:
-            - ... | flat | SCSTG/tests/SCSVS-DEFI/*.md
-          - SCSVS-COMP:
-            - ... | flat | SCSTG/tests/SCSVS-COMP/*.md
-
 
   - "SCS Checklist":
      - checklists/index.md
@@ -152,6 +185,7 @@ nav:
      - SCSVS-COMP: checklists/SCSVS-COMP.md
 
 
+
   - News:
       - news
   - talks.md
@@ -165,13 +199,14 @@ nav:
 
 copyright: |
   <div style="float: left; padding-right: 1em;">
-    <a href="https://www.owasp.org"><img src="https://github.com/OWASP/owasp-scs/blob/master/docs/assets/OWASP_logo_white.png?raw=true" width="100px" /></a>
+    <a href="https://www.owasp.org"><img src="https://github.com/OWASP/owasp-scs/blob/main/docs/assets/OWASP_logo_white.png?raw=true" width="100px" /></a>
   </div>
   <span style="font-size: smaller">
     &#169; OWASP Foundation 2024. This work is licensed under 
     <a href="https://creativecommons.org/licenses/by/4.0">CC-BY-4.0</a>. For any reuse or distribution, you must make clear to others the license terms of this work.
   </span><br><span style="font-size: smaller">OWASP &#174; is a registered trademark of the OWASP Foundation, Inc.</span> <span>This website uses cookies to analyze our traffic and only share that information with our analytics partners. <a href="https://github.com/OWASP/owasp-scs/blob/master/about_cookies.md">Learn more</a>.</span>
-  <div style="color: #6a6868; font-size: smaller"><span>Made with</span> <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>  | <i>Website and covers designed by Pratik Lagaskar.</i></div>
+  <div style="color: #6a6868; font-size: smaller"><span>Made with</span> <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>  | <i>Website Created by <a href="https://www.linkedin.com/in/pratik-lagaskar/" target="_blank">Pratik Lagaskar</a>.</i> | <i>Covers Designed by <a href="https://www.linkedin.com/in/siddharth-neekher-340519117" target="_blank">Siddharth Neekher</a>.</i></div>
+
 
 theme:
   name: material
@@ -215,17 +250,31 @@ theme:
     # - navigation.sections
     - content.code.copy
     - content.action.edit
+    - announce.dismiss
+
 
   palette:
-    # - primary: #499FFF 
-    - scheme: default
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/weather-night 
+        icon: material/brightness-4
+        name: Switch to system preference
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/weather-night
         name: Switch to dark mode
-    - scheme: slate
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+
 
 extra_css:
   - stylesheets/extra.css
@@ -307,10 +356,9 @@ extra:
     - icon: fontawesome/brands/slack
       link: https://owasp.slack.com/archives/C07MNDE6TPZ
     - icon: fontawesome/brands/twitter 
-      link: https://twitter.com/owasp_scs
+      link: https://x.com/scs_owasp
     - icon: fontawesome/brands/github
       link: https://github.com/OWASP/owasp-scs/discussions
-
   tags:
     android: android
     ios: ios

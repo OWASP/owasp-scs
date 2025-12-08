@@ -4,8 +4,8 @@ scsvs_cg_id:
 - SCSVS-AUTH
 scsvs_scg_id:
 - SCSVS-AUTH-1
-platform: android
-title: Timed Permissions
+platform: []
+title: Test Timed Permissions
 scsvs_cg_levels: 
 - L2
 tests: SCSTG-TEST-0005 

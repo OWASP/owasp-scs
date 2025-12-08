@@ -18,8 +18,8 @@ Normally, contributors should follow the whole flow. But sometimes it's clear wh
 
 If you just have an **specific question** you can post it to (you need a [GitHub Account](https://docs.github.com/en/get-started/signing-up-for-github/signing-up-for-a-new-github-account)):
 
-- <https://github.com/OWASP/owasp-scsvs/discussions/categories/q-a>
-- <https://github.com/OWASP/owasp-scstg/discussions/categories/q-a>
+- <https://github.com/OWASP/www-project-smart-contract-security-verification-standard/discussions/categories/q-a>
+- <https://github.com/OWASP/www-project-smart-contract-security-testing-guide/discussions/categories/q-a>
 
 "GitHub Discussions" are re-posted to [our Slack channel](https://owasp.slack.com/archives/C07MNDE6TPZ).
 
@@ -50,12 +50,12 @@ Learn more about the github.dev Web-based Editor in ["GitHub Docs"](https://docs
 For this you need an IDE or text editor and git on your machine. We recommend using the free [Visual Studio Code editor](https://code.visualstudio.com "Visual Studio Code") with the [markdownlint extension](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint).
 
 1. [Fork the repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository). Forking the repo allows you to make your changes without affecting the original project until you're ready to merge them.
-2. [Clone your fork repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository#about-cloning-a-repository) and [add the remote upstream repo](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#remotes-and-forks), e.g. for owasp-scsvs:
+2. [Clone your fork repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository#about-cloning-a-repository) and [add the remote upstream repo](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#remotes-and-forks), e.g. for www-project-smart-contract-security-verification-standard:
 
     ```bash
-    $ git clone https://github.com/<your_github_user>/owasp-scsvs.git
-    $ cd owasp-scsvs/
-    $ git remote add upstream git@github.com:OWASP/owasp-scsvs.git
+    $ git clone https://github.com/<your_github_user>/www-project-smart-contract-security-verification-standard.git
+    $ cd www-project-smart-contract-security-verification-standard/
+    $ git remote add upstream git@github.com:OWASP/www-project-smart-contract-security-verification-standard.git
     ```
 
 3. Create a branch.

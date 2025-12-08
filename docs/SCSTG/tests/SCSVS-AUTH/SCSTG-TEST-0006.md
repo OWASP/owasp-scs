@@ -4,8 +4,8 @@ scsvs_cg_id:
 - SCSVS-AUTH
 scsvs_scg_id:
 - SCSVS-AUTH-2
-platform: ethereum
-title: Timed Permissions
+platform: []
+title: Test Access Control Using Merkle Trees
 scsvs_cg_levels:
 - L2
 tests: SCSTG-TEST-0006
