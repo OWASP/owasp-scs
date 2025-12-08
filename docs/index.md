@@ -6,6 +6,22 @@ hide:
 
 # OWASP Smart Contract Security
 
+<div class="esp-banner">
+  <div class="esp-banner__shell">
+    <div class="esp-banner__content">
+      <div class="esp-banner__left">
+        <a href="https://esp.ethereum.foundation/" target="_blank" rel="noopener">
+          <img class="esp-banner__logo" src="assets/esp-logo-main.svg" alt="Ethereum Foundation Ecosystem Support Program">
+        </a>
+        <div class="esp-banner__text">
+          <div class="esp-banner__eyebrow">Grant Support · 2025</div>
+          <div class="esp-banner__title">Supported by Ethereum Foundation's Ecosystem Support Program (ESP)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 ## Our Mission
 
 <div class="scs-flex-container">
