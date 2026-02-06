@@ -37,8 +37,8 @@ def get_cg_tests_data():
     return scsvs_cg_tests_metadata, scsvs_cg_mapping
 
 beta_banner = """
-??? example "Stable Version v0.0.1"
-    This content is in the **version-(v0.0.1)** and still under active development, so it is subject to change any time (e.g. structure, IDs, content, URLs, etc.).
+??? example "Stable Version v1.0"
+    This content is in the **version-(v1.0)** and still under active development, so it is subject to change any time (e.g. structure, IDs, content, URLs, etc.).
     
     [:fontawesome-regular-paper-plane: Send Feedback](https://github.com/OWASP/www-project-smart-contract-security-testing-guide/discussions/categories/scwe-scstg-v2-beta-feedback)
 """

@@ -44,6 +44,6 @@ The standard is divided into various groups of controls, labeled **SCSVS-XXXXX**
 
     **The SCS project has traditionally provided three verification levels (L1, L2 and L3), which were revisited during the SCSVS refactoring in 2024, and have been reworked as ["SCS Testing Profiles"]().
     <br><br>
-    While we move things around and as a temporary measure, the [OWASP SCS Checklist](../checklists/index.md) will still contain the verification levels, associated with the current SCSTG v0.0.1 tests.
+    While we move things around and as a temporary measure, the [OWASP SCS Checklist](../checklists/index.md) will still contain the verification levels, associated with the current SCSTG v1.0 tests.
 
 <br><br>

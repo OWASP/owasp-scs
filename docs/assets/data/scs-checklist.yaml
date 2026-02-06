@@ -1,6 +1,6 @@
 metadata:
   title: OWASP SCS Checklist
-  version: v0.0.1
+  version: v1.0
   description: Interactive security checklist for verifying compliance with OWASP
     SCSVS controls.
 categories:

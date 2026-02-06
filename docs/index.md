@@ -64,7 +64,7 @@ hide:
 
 <br>
 
-<button class="scs-button" onclick="window.location.href='../SCWE';"> Access v0.0.1</button>
+<button class="scs-button" onclick="window.location.href='../SCWE';"> Access v1.0</button>
 
 </center>
 
@@ -87,7 +87,7 @@ hide:
 
 <br>
 
-<button class="scs-button" onclick="window.location.href='https://docs.google.com/spreadsheets/d/1W3-XeqbCQp7RHRJKVfllcL9VmzrErMad-biL2mwOChM/edit?usp=sharing';"> Visit the Checklist</button>
+<button class="scs-button" onclick="window.location.href='checklists/interactive/';"> Visit the Checklist</button>
 
 </center>
 

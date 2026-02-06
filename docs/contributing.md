@@ -63,7 +63,7 @@ The latest version of the SCSVS v1 including all translations is available here:
 
 ### OWASP SCSTG 
 
-The latest version of the SCSTG v0.0.1 is available here: <https://github.com/OWASP/www-project-smart-contract-security-testing-guide/releases/tag/v0.0.1>
+The latest version of the SCSTG v1.0 is available here: <https://github.com/OWASP/www-project-smart-contract-security-testing-guide/releases/tag/v0.0.1>
 
 **Note**: This contributor table is generated based on our [GitHub contribution statistics](https://github.com/OWASP/www-project-smart-contract-security-testing-guide/graphs/contributors "GitHub contribution statistics"). For more information on these stats, see the [GitHub Repository README](https://github.com/OWASP/www-project-smart-contract-security-testing-guide/blob/master/README.md "GitHub Repository README"). We manually update the table, so be patient if you're not listed immediately.
 

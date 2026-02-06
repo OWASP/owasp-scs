@@ -3,7 +3,7 @@ metadata:
   remarks: The SCSVS is a comprehensive framework for securing smart contracts, with
     a focus on identifying vulnerabilities and mitigating risks in smart contract
     deployments.
-  version: v0.0.1
+  version: v1.0
 groups:
 - gid: SCSVS-ARCH
   index: 1
