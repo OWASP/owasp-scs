@@ -1,27 +1,27 @@
 ---
-title: Missing Timelock on Privileged Operations
+title: Missing Quorum Validation in Governance Execution
 id: SCWE-100
-alias: missing-timelock
+alias: missing-governance-quorum-validation
 platform: []
 profiles: [L1]
 mappings:
   scsvs-cg: [SCSVS-GOV]
   scsvs-scg: [SCSVS-GOV-3]
-  cwe: [284]
+  cwe: [754]
 status: new
 ---
 
 ## Relationships
-- CWE-284: Improper Access Control  
-  [https://cwe.mitre.org/data/definitions/284.html](https://cwe.mitre.org/data/definitions/284.html)
+- CWE-754: Improper Check for Unusual or Exceptional Conditions  
+  [https://cwe.mitre.org/data/definitions/754.html](https://cwe.mitre.org/data/definitions/754.html)
 
 ## Description
-Without a timelock on privileged actions (upgrades, parameter changes, pausing), a compromised or malicious admin can instantly deploy hostile logic or drain funds. Users and validators have no window to react, audit, or exit.
+Governance systems that allow proposal execution based solely on vote counts (e.g., "for" > "against") without enforcing a minimum participation threshold (quorum) can execute proposals with negligible community participation. A proposal may "pass" with only a handful of votes if quorum is not checked, allowing a small group or attacker with accumulated tokens to push through changes that lack legitimate community mandate.
 
 ## Remediation
-- Gate all privileged operations behind a timelock contract with queue, minimum delay, and cancellation.
-- Emit events on queue/execute/cancel to provide monitoring transparency.
-- Use multi-sig or role separation so a single key cannot bypass the delay.
+- Enforce a minimum quorum (e.g., percentage of total supply or voting power) before allowing execution.
+- Require both vote majority and quorum to be satisfied; revert execution if quorum is not met.
+- Consider time-weighted or participation-based quorum to prevent last-block manipulation.
 
 ## Examples
 
@@ -29,15 +29,15 @@ Without a timelock on privileged actions (upgrades, parameter changes, pausing),
 ```solidity
 pragma solidity ^0.8.0;
 
-contract Gov {
-    address public owner;
-    address public implementation;
+contract VulnerableGov {
+    mapping(uint256 => uint256) public forVotes;
+    mapping(uint256 => uint256) public againstVotes;
+    uint256 public totalSupply;
 
-    constructor() { owner = msg.sender; }
-
-    function upgrade(address impl) external {
-        require(msg.sender == owner, "not owner");
-        implementation = impl; // executes immediately
+    function execute(uint256 proposalId) external {
+        require(forVotes[proposalId] > againstVotes[proposalId], "proposal failed");
+        // No quorum check — can execute with 2 for, 1 against even if totalSupply is 1M
+        _executeProposal(proposalId);
     }
 }
 ```
@@ -46,23 +46,17 @@ contract Gov {
 ```solidity
 pragma solidity ^0.8.0;
 
-contract TimelockGov {
-    struct Action { address impl; uint256 eta; }
-    Action public queued;
-    address public owner;
-    uint256 public constant DELAY = 2 days;
+contract SecureGov {
+    mapping(uint256 => uint256) public forVotes;
+    mapping(uint256 => uint256) public againstVotes;
+    uint256 public totalSupply;
+    uint256 public constant QUORUM_BPS = 400; // 4%
 
-    constructor() { owner = msg.sender; }
-
-    function queueUpgrade(address impl) external {
-        require(msg.sender == owner, "not owner");
-        queued = Action({impl: impl, eta: block.timestamp + DELAY});
-    }
-
-    function executeUpgrade() external {
-        require(block.timestamp >= queued.eta, "too early");
-        implementation = queued.impl;
+    function execute(uint256 proposalId) external {
+        uint256 totalVotes = forVotes[proposalId] + againstVotes[proposalId];
+        require(forVotes[proposalId] > againstVotes[proposalId], "proposal failed");
+        require(totalVotes * 10000 >= totalSupply * QUORUM_BPS, "quorum not met");
+        _executeProposal(proposalId);
     }
 }
 ```
-

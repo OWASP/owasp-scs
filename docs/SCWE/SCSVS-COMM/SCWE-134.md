@@ -1,41 +1,52 @@
 ---
-title: Event Emission Before State Update
+title: Low-Level Call to Non-Contract Address
 id: SCWE-134
-alias: premature-event-emission
+alias: call-to-non-contract-address
 platform: []
 profiles: [L1]
 mappings:
   scsvs-cg: [SCSVS-COMM]
-  scsvs-scg: [SCSVS-COMM-2]
-  cwe: [209]
+  scsvs-scg: [SCSVS-COMM-1]
+  cwe: [252]
 status: new
 ---
 
 ## Relationships
-- CWE-209: Generation of Error Message Containing Sensitive Information  
-  [https://cwe.mitre.org/data/definitions/209.html](https://cwe.mitre.org/data/definitions/209.html)
+- CWE-252: Unchecked Return Value  
+  [https://cwe.mitre.org/data/definitions/252.html](https://cwe.mitre.org/data/definitions/252.html)
 
 ## Description
-Emitting events before state changes can mislead off-chain indexers, bots, and accounting systems. Attackers may race on optimistic off-chain reactions (e.g., bots responding to Transfer events) before the actual state is finalized or even reverted.
+When using low-level `call`, `staticcall`, or `delegatecall` to a user-supplied or dynamic address, the target may be an EOA (externally owned account) with no contract code. In that case, the call returns `success = true` and empty return data, but no code executes. Contracts that assume the target performed logic (e.g., a callback, validation, or state change) can proceed under false assumptions, leading to bypassed checks, unexecuted logic, or incorrect accounting.
 
 ## Remediation
-- Emit events only after successful state updates.
-- When using optimistic event flows, include commit/reveal or finalized flags.
-- In critical paths, make off-chain consumers validate state after seeing events.
+- Verify that the target address contains code using `extcodesize` (or `address.code.length` in Solidity 0.8.12+) before low-level calls.
+- Use allowlists for callable targets instead of accepting arbitrary addresses.
+- Prefer high-level interface calls when the target is known to be a contract.
 
 ## Examples
 
 ### Vulnerable
 ```solidity
-emit Transfer(msg.sender, to, amount);
-balances[msg.sender] -= amount; // may revert later
-balances[to] += amount;
+pragma solidity ^0.8.0;
+
+contract PluginRegistry {
+    function executeViaPlugin(address plugin, bytes calldata data) external {
+        (bool ok, ) = plugin.call(data);
+        require(ok, "plugin failed");
+        // If plugin is an EOA, call "succeeds" but no code ran — logic may be bypassed
+    }
+}
 ```
 
 ### Fixed
 ```solidity
-balances[msg.sender] -= amount;
-balances[to] += amount;
-emit Transfer(msg.sender, to, amount); // after state change
-```
+pragma solidity ^0.8.0;
 
+contract PluginRegistry {
+    function executeViaPlugin(address plugin, bytes calldata data) external {
+        require(plugin.code.length > 0, "target has no code");
+        (bool ok, ) = plugin.call(data);
+        require(ok, "plugin failed");
+    }
+}
+```
