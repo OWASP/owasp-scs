@@ -444,7 +444,7 @@ def on_page_markdown(markdown, page, **kwargs):
     elif path.endswith("SCWE/index.md"):
         # weaknesses/index.md
 
-        column_titles = {'id': 'SCWE ID', 'title': 'Title',   'scsvs_cg_id': "SCSVS CG ID",  'scsvs_scg_id': "SCSVS SCG IDs", 'L1': 'L1', 'L2': 'L2', 'status': 'Status'}
+        column_titles = {'id': 'SCWE ID', 'title': 'Title',   'scsvs_cg_id': "SCSVS CG ID",  'scsvs_scg_id': "SCSVS SCG IDs", 'status': 'Status'}
 
         weaknesses = get_all_weaknesses()
         weaknesses_columns_reordered = [reorder_dict_keys(weakness, column_titles.keys()) for weakness in weaknesses]
