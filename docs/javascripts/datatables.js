@@ -1,6 +1,16 @@
 document$.subscribe(function() {
     const currentPage = window.location.pathname; // Get the current page URL path
 
+    // SCWE index page: show all rows, no pagination, keep sorting
+    if (currentPage === '/SCWE/' || currentPage === '/SCWE' || currentPage.endsWith('/SCWE/index.html')) {
+        $('table').DataTable({
+            paging: false,
+            ordering: true,
+            dom: '<"top"if>rt<"bottom"lp><"clear">'
+        });
+        return;
+    }
+
     // List the pages where you want to disable sorting
     const pagesWithNoSorting = [
         '/checklists/SCSVS-ARCH/',
