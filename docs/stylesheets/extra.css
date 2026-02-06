@@ -232,6 +232,45 @@
   background: var(--scs-gradient);
 }
 
+/* Checklist page: primary CTA – animated gradient, prominent focus */
+a.md-button.scs-btn-interactive {
+  background: linear-gradient(135deg, #38F8FF 0%, #499FFF 35%, #875CFF 70%, #c84eff 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: #fff !important;
+  font-weight: 700;
+  padding: 0.6em 1.2em;
+  border: none;
+  box-shadow: 0 4px 15px rgba(135, 92, 255, 0.4);
+  animation: scs-btn-glow 3s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.5s ease;
+}
+
+a.md-button.scs-btn-interactive:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 6px 25px rgba(135, 92, 255, 0.6);
+  transform: scale(1.05);
+  color: #fff !important;
+}
+
+@keyframes scs-btn-glow {
+  0%, 100% { box-shadow: 0 4px 15px rgba(135, 92, 255, 0.4); }
+  50% { box-shadow: 0 4px 25px rgba(135, 92, 255, 0.6), 0 0 30px rgba(56, 248, 255, 0.3); }
+}
+
+/* Checklist page: secondary button (Google Sheets) – green accent */
+a.md-button.scs-btn-sheets {
+  background-color: transparent;
+  color: hsl(160, 84%, 39%);
+  border: 2px solid hsl(160, 84%, 39%);
+}
+
+a.md-button.scs-btn-sheets:hover {
+  background-color: hsl(160, 84%, 39%);
+  color: #fff;
+  border-color: hsl(160, 84%, 39%);
+}
+
 .scs-test-button,
 .scs-demo-button {
   background-color: var(--scs-blue); /* Adjust this value for .scs-demo-button if needed */

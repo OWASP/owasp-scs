@@ -172,17 +172,7 @@ nav:
 
   - "SCS Checklist":
      - checklists/index.md
-     - SCSVS-ARCH: checklists/SCSVS-ARCH.md
-     - SCSVS-CODE: checklists/SCSVS-CODE.md 
-     - SCSVS-GOV: checklists/SCSVS-GOV.md
-     - SCSVS-AUTH: checklists/SCSVS-AUTH.md
-     - SCSVS-COMM: checklists/SCSVS-COMM.md
-     - SCSVS-CRYPTO: checklists/SCSVS-CRYPTO.md
-     - SCSVS-ORACLE: checklists/SCSVS-ORACLE.md
-     - SCSVS-BLOCK: checklists/SCSVS-BLOCK.md
-     - SCSVS-BRIDGE: checklists/SCSVS-BRIDGE.md
-     - SCSVS-DEFI: checklists/SCSVS-DEFI.md
-     - SCSVS-COMP: checklists/SCSVS-COMP.md
+     - "✨ Interactive Checklist": checklists/interactive.md
 
 
 
@@ -278,12 +268,15 @@ theme:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/interactive-checklist.css
   - https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css
 extra_javascript:
   - javascripts/external_links.js
   - https://code.jquery.com/jquery-3.5.1.js
   - https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js
   - javascripts/datatables.js
+  - https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js
+  - javascripts/interactive-checklist.js
 plugins:
   # Uses https://github.com/mkdocs/mkdocs-redirects getting the redirects map from src/scripts/generate_redirects.py
   - search
@@ -334,6 +327,7 @@ markdown_extensions:
           case: lower
 
 hooks:
+  - docs/hooks/add_rid_to_checklist.py
   - docs/hooks/replace_snippets.py
   - docs/hooks/update_titles.py
   - docs/hooks/scwe-beta-banner.py
