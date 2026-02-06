@@ -25,6 +25,8 @@ Incorrect type conversion occurs when a value is cast or implicitly converted be
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function unsafeDowncast(uint256 value) public pure returns (uint8) {
         return uint8(value);  // ❌ Truncates value if > 255
@@ -43,6 +45,8 @@ contract Example {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 contract SecureExample {
     function safeDowncast(uint256 value) public pure returns (uint8) {
         require(value <= type(uint8).max, "Value exceeds uint8 range");  // ✅ Ensure valid range
@@ -57,7 +61,7 @@ contract SecureExample {
 **Why is this safe?**
 
 - Ensures that values do not exceed the allowed range before downcasting.
-- Re- stricts type conversion to avoid security risks from improper arithmetic operations.
+- Restricts type conversion to avoid security risks from improper arithmetic operations.
 - Prevents silent data loss that could lead to unintended contract behavior.
 
 **By enforcing safe type conversions, developers can ensure contract logic remains reliable and free from unexpected truncation issues.**

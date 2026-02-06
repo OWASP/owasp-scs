@@ -17,9 +17,7 @@ status: new
 
 
 ## Description
-In Solidity, state variables have a default visibility of `internal`, which means they can only be accessed within the contract or derived contracts. However, developers might unintentionally leave state variables with incorrect or unspecified visibility, leading to unintended access. In some cases, this could allow external contracts or users to interact with the variable, potentially leading to security vulnerabilities, such as unauthorized access or manipulation of the contract's state.
-
-It is essential to explicitly define the visibility of state variables to ensure they behave as intended and are protected from unintended access.
+In Solidity, state variables have a default visibility of `internal`, which means they can only be accessed within the contract or derived contracts (not by external callers). Omitting explicit visibility can lead to unintended behavior: for example, if a developer intends `private` but forgets to specify it, derived contracts can still access the variable; if they intend `public` but omit it, no getter is generated and external callers cannot read the value. Explicit visibility ensures the variable behaves as intended.
 
 ## Remediation
 Always explicitly specify the visibility of state variables. The possible visibility options are:
@@ -30,14 +28,14 @@ Always explicitly specify the visibility of state variables. The possible visibi
 ### Vulnerable Contract Example
 ```solidity
 contract Vulnerable {
-    uint publicBalance;  // Default visibility is internal, but it is still publicly accessible
+    uint balance;  // Default internal; no getter — external callers cannot read it
 
     constructor() {
-        publicBalance = 100;
+        balance = 100;
     }
 
     function updateBalance(uint amount) public {
-        publicBalance = amount;  // Access to internal variable, but external access is possible
+        balance = amount;  // Intended public? Forgot visibility — no automatic getter
     }
 }
 ```

@@ -23,6 +23,8 @@ To mitigate this vulnerability, ensure that operations that depend on gas consum
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract GasLimitDoS {
     uint256[] public data;
 
@@ -35,12 +37,15 @@ contract GasLimitDoS {
 ```
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract GasLimitSafe {
     uint256[] public data;
+    uint256 public constant MAX_BATCH = 100;
 
     function addData(uint256[] memory newData) public {
-        uint256 batchSize = 100;  // Limit the batch size to avoid excessive gas usage
-        for (uint256 i = 0; i < newData.length && i < batchSize; i++) {
+        require(newData.length <= MAX_BATCH, "Batch too large; split into smaller calls");
+        for (uint256 i = 0; i < newData.length; i++) {
             data.push(newData[i]);
         }
     }

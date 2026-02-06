@@ -28,7 +28,8 @@ contract IncentiveModel {
     function distributeRewards(address[] memory users) public {
         uint256 reward = rewardPool / users.length;  // Dividing the total reward pool among users
         for (uint256 i = 0; i < users.length; i++) {
-            payable(users[i]).transfer(reward);
+            (bool ok, ) = payable(users[i]).call{value: reward}("");
+            require(ok, "Transfer failed");
         }
     }
 }
@@ -54,7 +55,8 @@ contract SecureIncentiveModel {
         uint256 reward = rewardPool / users.length;
         require(reward > 0, "Reward amount is too low");
         for (uint256 i = 0; i < users.length; i++) {
-            payable(users[i]).transfer(reward);
+            (bool ok, ) = payable(users[i]).call{value: reward}("");
+            require(ok, "Transfer failed");
         }
     }
 }

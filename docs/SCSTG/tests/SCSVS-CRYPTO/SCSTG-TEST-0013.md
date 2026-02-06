@@ -78,7 +78,7 @@ contract RandomNumberGenerator {
 
 ### **Why It’s Vulnerable**
 
-- The contract uses block properties like `block.timestamp` and `block.difficulty` to generate random numbers, which can be manipulated by miners or validators.
+- The contract uses block properties like `block.timestamp` and `block.difficulty` (post-merge: `block.prevrandao`) to generate random numbers, which can be manipulated by validators.
 - This weak random number generation can lead to predictable values, making the contract vulnerable to attacks such as manipulation of lottery or gambling outcomes.
 
 #### Fixed Code:
@@ -86,12 +86,38 @@ contract RandomNumberGenerator {
 ```solidity
 pragma solidity ^0.8.0;
 
-contract SecureRandomNumberGenerator {
-    uint256 public randomValue;
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 
-    function generateRandomNumber() public {
-        // Using Chainlink VRF for secure and verifiable randomness
-        randomValue = uint256(keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp)));
+contract SecureRandomNumberGenerator is VRFConsumerBaseV2 {
+    VRFCoordinatorV2Interface immutable COORDINATOR;
+    uint64 immutable s_subscriptionId;
+    bytes32 immutable s_keyHash;
+    uint256 public randomValue;
+    uint256 public s_requestId;
+
+    constructor(
+        address vrfCoordinator,
+        uint64 subscriptionId,
+        bytes32 keyHash
+    ) VRFConsumerBaseV2(vrfCoordinator) {
+        COORDINATOR = VRFCoordinatorV2Interface(vrfCoordinator);
+        s_subscriptionId = subscriptionId;
+        s_keyHash = keyHash;
+    }
+
+    function requestRandomNumber() external {
+        s_requestId = COORDINATOR.requestRandomWords(
+            s_keyHash,
+            s_subscriptionId,
+            3,      // requestConfirmations
+            100000, // callbackGasLimit
+            1      // numWords
+        );
+    }
+
+    function fulfillRandomWords(uint256, uint256[] memory randomWords) internal override {
+        randomValue = randomWords[0];
     }
 }
 

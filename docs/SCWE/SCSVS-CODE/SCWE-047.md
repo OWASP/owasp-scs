@@ -44,19 +44,17 @@ contract Vulnerable {
 ### Fixed Contract Example
 
 ```solidity
-pragma solidity ^0.6.0;
-import "@openzeppelin/contracts/math/SafeMath.sol";
+pragma solidity ^0.8.0;
 
 contract Secure {
-    using SafeMath for uint8;
     uint8 public totalSupply;
 
     function addTokens(uint8 _value) public {
-        totalSupply = totalSupply.add(_value);
+        totalSupply += _value; // Built-in overflow check in 0.8+
     }
 
     function subtractTokens(uint8 _value) public {
-        totalSupply = totalSupply.sub(_value);
+        totalSupply -= _value; // Built-in underflow check in 0.8+
     }
 }
 ```

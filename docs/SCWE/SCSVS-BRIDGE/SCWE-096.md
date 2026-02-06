@@ -1,7 +1,7 @@
 ---
-title: Missing Token Burn on During Cross-Chain NFT Withdrawal
+title: Missing Token Burn During Cross-Chain NFT Withdrawal
 id: SCWE-096
-alias: Missing-Token-Burn-on-During-Cross-Chain-NFT-Withdrawal
+alias: Missing-Token-Burn-During-Cross-Chain-NFT-Withdrawal
 platform: []
 profiles: [L1]
 mappings:

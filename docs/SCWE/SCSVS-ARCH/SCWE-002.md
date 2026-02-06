@@ -36,7 +36,7 @@ The more complex the code, the higher the chance that mistakes are made, especia
 ### Excessive Complexity
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract ComplexContract {
     uint public balance;
@@ -65,7 +65,7 @@ contract ComplexContract {
 ### Simplified Version
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract SimpleContract {
     uint public balance;
@@ -78,6 +78,7 @@ contract SimpleContract {
     function withdraw(uint value) public {
         require(balance >= value, "Insufficient funds");
         balance -= value;
+        // Note: Simplified example — internal accounting only. For ETH vaults, add payable(msg.sender).call{value: value}("") and require(success).
     }
 }
 ```

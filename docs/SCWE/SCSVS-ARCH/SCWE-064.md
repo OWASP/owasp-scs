@@ -25,6 +25,8 @@ To mitigate this vulnerability, carefully review and order the inheritance struc
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract BaseA {
     uint public value;
 
@@ -50,6 +52,8 @@ contract Child is BaseB, BaseA {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract BaseA {
     uint public value;
 

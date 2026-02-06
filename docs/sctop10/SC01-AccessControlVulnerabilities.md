@@ -20,7 +20,8 @@ contract Solidity_AccessControl {
 
     // Burn function with no access control
     function burn(address account, uint256 amount) public {
-        _burn(account, amount);
+        require(balances[account] >= amount, "Insufficient balance");
+        balances[account] -= amount;
     }
 }
 ```
@@ -45,7 +46,8 @@ contract Solidity_AccessControl is Ownable {
 
     // Burn function with proper access control, only accessible by the contract owner
     function burn(address account, uint256 amount) public onlyOwner {
-        _burn(account, amount);
+        require(balances[account] >= amount, "Insufficient balance");
+        balances[account] -= amount;
     }
 }
 ```

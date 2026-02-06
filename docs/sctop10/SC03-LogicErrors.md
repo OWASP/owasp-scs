@@ -37,7 +37,8 @@ contract Solidity_LogicErrors {
 
         // This should update the total lending pool, but it's omitted here.
 
-        payable(msg.sender).transfer(amount);
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");
     }
 
     function mintReward(address to, uint256 rewardAmount) public {
@@ -84,7 +85,8 @@ contract Solidity_LogicErrors {
         userBalances[msg.sender] -= amount;
         totalLendingPool -= amount;
 
-        payable(msg.sender).transfer(amount);
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");
     }
 
     function mintReward(address to, uint256 rewardAmount) public {

@@ -56,7 +56,7 @@ In the `NoEmergencyStop` contract, there is no way to stop or pause critical ope
 ```solidity
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol"; // OZ 5.x: utils/Pausable.sol
 
 contract EmergencyStopExample is Pausable {
     address public owner;

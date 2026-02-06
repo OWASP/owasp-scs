@@ -42,14 +42,16 @@ contract DApp {
 ### Fixed
 ```solidity
 pragma solidity ^0.8.0;
-interface IERC20 { function approve(address,uint256) external returns (bool); }
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract DApp {
+    using SafeERC20 for IERC20;
     IERC20 public token;
 
     function changeSpender(address spender, uint256 newAmount) external {
-        require(token.approve(spender, 0));
-        require(token.approve(spender, newAmount));
+        token.safeApprove(spender, 0);      // reset first; SafeERC20 handles non-standard tokens (e.g. USDT)
+        token.safeApprove(spender, newAmount);
     }
 }
 ```

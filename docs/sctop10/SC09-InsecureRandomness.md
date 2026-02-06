@@ -13,11 +13,11 @@ Random number generators are essential for applications like gambling, game-winn
 *Insecure Mechanisms Create Random Numbers in Solidity: Developers often use block-related methods to generate random numbers, such as:*
   - block.timestamp: Current block timestamp.
   - blockhash(uint blockNumber): Hash of a given block (only for the last 256 blocks).
-  - block.difficulty: Current block difficulty.
+  - block.difficulty: Current block difficulty (post-merge/PoS: deprecated; use `block.prevrandao` instead — both are insecure for value-at-stake randomness).
   - block.number: Current block number.
-  - block.coinbase: Address of the current block’s miner.
+  - block.coinbase: Address of the current block's proposer/validator (post-merge: no miners).
     
-These methods are insecure because miners can manipulate them, affecting the contract’s logic.
+These methods are insecure because validators (or miners on PoW chains) can manipulate them, affecting the contract's logic.
 
 ### Example (Vulnerable contract):
 ```
@@ -45,7 +45,7 @@ contract Solidity_InsecureRandomness {
 - Insecure randomness can be exploited by attackers to gain an unfair advantage in games, lotteries, and any other contracts that rely on random number generation. By predicting or manipulating the supposedly random outcomes, attackers can influence the results in their favor. This can lead to unfair wins, financial losses for other participants, and a general lack of trust in the smart contract's integrity and fairness. 
 
 ### Remediation:
-- Using oracles (Oraclize) as external sources of randomness. Care should be taken while trusting the Oracle. Multiple Oracles can also be used.
+- Using oracles (e.g., Chainlink VRF, Provable — formerly Oraclize) as external sources of randomness. Care should be taken while trusting the Oracle. Multiple Oracles can also be used.
 - Using Commitment Schemes — A cryptographic primitive that uses a commit-reveal approach can be followed. It also has wide applications in coin flipping, zero-knowledge proofs, and secure computation. E.g.: RANDAO.
 - Chainlink VRF — It is a provably fair and verifiable random number generator (RNG) that enables smart contracts to access random values without compromising security or usability.
 - The Signidice Algorithm — Suitable for PRNG in applications involving two parties using cryptographic signatures.
@@ -57,7 +57,7 @@ contract Solidity_InsecureRandomness {
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol"; // Note: Chainlink VRF V1 is deprecated; use VRF V2 (VRFConsumerBaseV2) in production
 
 contract Solidity_InsecureRandomness is VRFConsumerBase {
     bytes32 internal keyHash;

@@ -40,7 +40,7 @@ pragma solidity ^0.8.0;
 contract InsecureSignatureExample {
     address public owner;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
@@ -62,7 +62,7 @@ pragma solidity ^0.8.0;
 contract SecureSignatureExample {
     address public owner;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 

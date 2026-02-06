@@ -74,13 +74,13 @@ contract SecureProxy {
     }
 
     modifier upgradeable() {
-        require(now >= lastUpgradeTime + upgradeDelay, "Upgrade not allowed yet");
+        require(block.timestamp >= lastUpgradeTime + upgradeDelay, "Upgrade not allowed yet");
         _;
     }
 
     function setImplementation(address _implementation) public onlyOwner upgradeable {
         implementation = _implementation;
-        lastUpgradeTime = now; // Update the last upgrade time
+        lastUpgradeTime = block.timestamp; // Update the last upgrade time
     }
 
     function () public payable {

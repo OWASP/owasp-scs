@@ -46,12 +46,13 @@ contract CentralizedGovernance {
 
     function upgradeContract(address newContract) public {
         require(msg.sender == owner, "Only owner can upgrade");
-        // ❌ Only a single owner can perform critical actions
+        // Only a single owner can perform critical actions
     }
 
     function withdrawFunds(address payable recipient, uint256 amount) public {
         require(msg.sender == owner, "Only owner can withdraw funds");
-        recipient.transfer(amount); // ❌ No multisig verification
+        (bool ok, ) = recipient.call{value: amount}("");
+        require(ok, "Transfer failed"); // ❌ No multisig verification
     }
 }
 ```

@@ -25,6 +25,8 @@ In Solidity, mappings (`mapping(address => uint256)`) do not store key-value pai
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     mapping(address => uint256) public balances;
 
@@ -47,6 +49,8 @@ contract Example {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 contract SecureExample {
     mapping(address => uint256) public balances;
     address[] private users;

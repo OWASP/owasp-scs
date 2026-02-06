@@ -27,11 +27,31 @@ Relying on a single externally owned account (EOA) as contract admin creates a s
 
 ### Vulnerable
 ```solidity
-address public admin; // single EOA with full control
+pragma solidity ^0.8.0;
+
+contract Gov {
+    address public admin; // single EOA — key loss or compromise = no recovery
+
+    modifier onlyAdmin() { require(msg.sender == admin, "not admin"); _; }
+    function upgrade(address impl) external onlyAdmin { /* ... */ }
+}
 ```
 
 ### Fixed
 ```solidity
-// admin = timelock + multisig; rotation procedure enforced
+pragma solidity ^0.8.0;
+
+contract Gov {
+    IMultisig public admin;     // 2-of-3 multisig with hardware keys
+    ITimelock public timelock;  // 48h delay for upgrades
+
+    function proposeUpgrade(address impl) external {
+        require(admin.isOwner(msg.sender), "not owner");
+        timelock.schedule(impl);
+    }
+    function executeUpgrade() external {
+        timelock.execute(); // only after delay; supports key rotation
+    }
+}
 ```
 

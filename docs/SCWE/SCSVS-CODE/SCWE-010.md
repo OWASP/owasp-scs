@@ -34,7 +34,7 @@ Shadowing variables or functions is a scenario where a local variable or functio
 ### Example of Shadowing Variables and Functions
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract ShadowingExample {
     uint public balance;
@@ -49,7 +49,7 @@ contract ShadowingExample {
 contract Test {
     ShadowingExample example;
 
-    constructor() public {
+    constructor() {
         example = new ShadowingExample();
     }
 
@@ -63,7 +63,7 @@ In the above example, the parameter `balance` in the `deposit` function shadows 
 ### Fixed Code
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract ShadowingExample {
     uint public balance;
@@ -77,7 +77,7 @@ contract ShadowingExample {
 contract Test {
     ShadowingExample example;
 
-    constructor() public {
+    constructor() {
         example = new ShadowingExample();
     }
 

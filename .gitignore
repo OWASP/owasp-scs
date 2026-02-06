@@ -17,4 +17,5 @@ __handlers__
 *.apk
 drafts/
 Payload/
+site/
 .vscode/

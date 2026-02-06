@@ -27,7 +27,7 @@ ERC4626 vaults that do not guard against free-asset donations can skew `totalAss
 
 ### Vulnerable
 ```solidity
-// totalAssets rises from donation; shares minted at stale price benefit attacker
+// totalAssets() uses balanceOf; donations inflate it and skew share price
 function mint(uint256 shares) external {
     uint256 assets = previewMint(shares);
     asset.transferFrom(msg.sender, address(this), assets);
@@ -37,11 +37,21 @@ function mint(uint256 shares) external {
 
 ### Fixed
 ```solidity
-function mint(uint256 shares) external {
-    uint256 assets = previewMint(shares); // uses up-to-date totalAssets
-    asset.transferFrom(msg.sender, address(this), assets);
-    _mint(msg.sender, shares);
+uint256 private _accountedAssets; // internal balance; excludes direct transfers
+
+function totalAssets() public view override returns (uint256) {
+    return _accountedAssets; // donations do not affect share price
 }
-// plus sweep or adjust for unsolicited donations before preview math
+
+function deposit(uint256 assets, address receiver) public override returns (uint256 shares) {
+    uint256 before = asset.balanceOf(address(this));
+    shares = super.deposit(assets, receiver);
+    _accountedAssets += (asset.balanceOf(address(this)) - before);
+}
+
+function withdraw(uint256 assets, address receiver, address owner) public override returns (uint256 shares) {
+    shares = super.withdraw(assets, receiver, owner);
+    _accountedAssets -= assets;
+}
 ```
 

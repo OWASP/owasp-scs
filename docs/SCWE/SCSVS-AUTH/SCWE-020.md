@@ -40,7 +40,7 @@ contract NoTimeLock {
     address public owner;
     uint public funds;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
         funds = 1000;
     }
@@ -64,18 +64,18 @@ contract TimeLockExample {
     uint public lastWithdrawalTime;
     uint public withdrawalDelay = 1 weeks;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
         funds = 1000;
-        lastWithdrawalTime = now;
+        lastWithdrawalTime = block.timestamp;
     }
 
     // Critical function with time-lock
     function withdrawFunds(uint amount) public {
         require(msg.sender == owner, "Not the owner");
-        require(now >= lastWithdrawalTime + withdrawalDelay, "Time lock not expired");
+        require(block.timestamp >= lastWithdrawalTime + withdrawalDelay, "Time lock not expired");
         
-        lastWithdrawalTime = now;
+        lastWithdrawalTime = block.timestamp;
         funds -= amount;
     }
 }

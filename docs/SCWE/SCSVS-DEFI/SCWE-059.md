@@ -24,6 +24,8 @@ To mitigate this vulnerability, ensure that gas estimation and proper gas limits
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract GasGriefing {
     address public owner;
 
@@ -40,6 +42,8 @@ contract GasGriefing {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract GasGriefingSafe {
     address public owner;
 
@@ -49,8 +53,8 @@ contract GasGriefingSafe {
 
     function transferFunds(address payable recipient, uint256 amount) public {
         require(msg.sender == owner, "Not the owner");
-        bool success = recipient.send(amount);  // Safe transfer with gas estimation
-        require(success, "Transfer failed due to insufficient gas");
+        (bool success, ) = recipient.call{value: amount}("");
+        require(success, "Transfer failed");
     }
 }
 ```

@@ -68,21 +68,17 @@ contract Example {
     function withdraw(uint _amount) public {
         require(balances[msg.sender] >= _amount, "Insufficient funds");
 
-        uint beforeBalance = address(this).balance;
         (bool success, ) = payable(msg.sender).call{value: _amount}("");
-        uint afterBalance = address(this).balance;
-
         require(success, "Transfer failed");
 
-        uint actualWithdrawn = beforeBalance - afterBalance;
-        balances[msg.sender] -= actualWithdrawn;
+        balances[msg.sender] -= _amount;
 
-        // Logs the correct amount actually withdrawn
-        emit Withdraw(msg.sender, actualWithdrawn);
+        // Logs the amount actually withdrawn (equals _amount on success)
+        emit Withdraw(msg.sender, _amount);
     }
 }
 ```
 ### Fixes in the Secure Code
 - Uses `call{value: _amount}("")` to send funds safely and ensures success before updating the balance.
-- Calculates the actual withdrawn amount `(beforeBalance - afterBalance)` to ensure accurate logging.
-- Prevents false event emissions by only logging an event if the transaction succeeds.
+- Updates state and emits the event only after a successful transfer; logs `_amount` (the actual withdrawn amount on success).
+- Prevents false event emissions by reverting on transfer failure before any state change or event.

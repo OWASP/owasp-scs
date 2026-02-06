@@ -23,6 +23,8 @@ To mitigate this vulnerability, ensure that all functions, variables, and logic 
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Vulnerable {
     uint public value;
 
@@ -41,6 +43,8 @@ contract Vulnerable {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Fixed {
     uint public value;
 

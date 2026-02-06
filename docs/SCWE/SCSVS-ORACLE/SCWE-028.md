@@ -53,7 +53,8 @@ Price Oracle manipulation refers to the exploitation of vulnerabilities in price
         function withdraw(uint amount) external {
             require(balances[msg.sender] >= amount, "Insufficient balance");
             balances[msg.sender] -= amount;
-            payable(msg.sender).transfer(amount / priceOracle.getPrice()); // Uses current price
+            (bool ok, ) = msg.sender.call{value: amount / priceOracle.getPrice()}(""); // Uses current price
+            require(ok, "Transfer failed");
         }
     }
     ```
@@ -63,7 +64,7 @@ Why is this vulnerable?
 - Flash loan attack: The attacker can manipulate the price before calling withdraw(), draining funds.
 - No validation mechanism to reject manipulated prices.
 
-- **Protected Against Oracle Manipulation**- Fixed Code: Using TWAP & Price Guards
+- **Protected Against Oracle Manipulation** — Fixed Code: Price Deviation Guards
 
     ```solidity
     pragma solidity ^0.8.0;
@@ -89,18 +90,21 @@ Why is this vulnerable?
         }
 
         function deposit() external payable {
+            updatePrice(); // refresh price before use
             balances[msg.sender] += msg.value * lastValidPrice;
         }
 
         function withdraw(uint amount) external {
+            updatePrice(); // refresh price before use
             require(balances[msg.sender] >= amount, "Insufficient balance");
             balances[msg.sender] -= amount;
-            payable(msg.sender).transfer(amount / lastValidPrice);
+            (bool ok, ) = msg.sender.call{value: amount / lastValidPrice}("");
+            require(ok, "Transfer failed");
         }
     }
     ```
 
 Fixes:
-- Uses TWAP (Time-Weighted Average Price) instead of relying on instantaneous price updates.
-- Implements price guards to prevent extreme price fluctuations.
+- Implements price deviation guards (5% max change) to reject manipulated or stale prices.
+- Calls `updatePrice()` before deposit/withdraw to ensure `lastValidPrice` is current.
 ---

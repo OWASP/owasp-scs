@@ -21,7 +21,7 @@ Cross-chain handlers that accept payloads without checking the source `chainId` 
 ## Remediation
 - Bind every inbound message to an expected source chain/domain and trusted sender.
 - Include `chainId`/domain separators in signed payloads and verify them before execution.
-- Maintain replay protection (nonces) per source chain.
+- Maintain replay protection (nonces) per (sourceChain, sourceSender).
 
 ## Examples
 
@@ -41,13 +41,13 @@ contract BridgeReceiver {
 pragma solidity ^0.8.0;
 
 contract BridgeReceiver {
-    mapping(uint256 => uint256) public nonce;
+    mapping(uint256 => mapping(address => uint256)) public nonce; // per (chainId, sender)
     address public trustedSender;
     uint256 public trustedChainId;
 
     function receiveMessage(uint256 srcChainId, address src, uint256 n, bytes calldata data) external {
         require(srcChainId == trustedChainId && src == trustedSender, "unauthorized source");
-        require(n == nonce[srcChainId]++, "replay");
+        require(n == nonce[srcChainId][src]++, "replay");
         _execute(data);
     }
 }

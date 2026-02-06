@@ -32,7 +32,7 @@ Hardcoded constants refer to values that are embedded directly into the code and
 ### Contract with Hardcoded Constants
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract HardcodedConstants {
     address public owner = 0x1234567890abcdef1234567890abcdef12345678; // Hardcoded address
@@ -52,14 +52,13 @@ In this example, the `owner` address and `maxSupply` are hardcoded values that c
 
 ### Improved Contract with External Configuration
 ```solidity
-
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract ConfigurableContract {
     address public owner;
     uint public maxSupply;
 
-    constructor(address initialOwner, uint initialMaxSupply) public {
+    constructor(address initialOwner, uint initialMaxSupply) {
         owner = initialOwner;
         maxSupply = initialMaxSupply;
     }

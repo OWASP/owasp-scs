@@ -42,7 +42,8 @@ contract TightlyCoupledContract {
     function withdraw(uint amount) public {
         require(balances[msg.sender] >= amount, "Insufficient funds");
         balances[msg.sender] -= amount;
-        payable(msg.sender).transfer(amount);
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");
     }
 
     function transfer(address to, uint amount) public {
@@ -89,7 +90,8 @@ library BalanceLibrary {
     function withdraw(Data storage self, address user, uint amount) internal {
         require(self.balances[user] >= amount, "Insufficient funds");
         self.balances[user] -= amount;
-        payable(user).transfer(amount);
+        (bool ok, ) = payable(user).call{value: amount}("");
+        require(ok, "Transfer failed");
     }
 }
 

@@ -7,7 +7,7 @@ profiles: [L1]
 mappings:
   scsvs-cg: [SCSVS-ARCH]
   scsvs-scg: [SCSVS-ARCH-3]
-  cwe: [937]
+  cwe: [116]
 status: new
 ---
 
@@ -39,7 +39,7 @@ pragma solidity ^0.8.0;
 
 contract InsecureABI {
     function hashValues(string memory str, uint256 num) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(str, num)); // ❌ Collision risk
+        return keccak256(abi.encodePacked(str, num)); // Collision risk
     }
 }
 ```
@@ -53,7 +53,7 @@ pragma solidity ^0.8.0;
 
 contract SecureABI {
     function hashValues(string memory str, uint256 num) public pure returns (bytes32) {
-        return keccak256(abi.encode(str, num)); // ✅ Unique encoding, no collision
+        return keccak256(abi.encode(str, num)); // Unique encoding, no collision
     }
 }
 ```

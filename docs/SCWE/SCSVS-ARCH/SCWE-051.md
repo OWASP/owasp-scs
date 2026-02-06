@@ -26,6 +26,8 @@ To prevent misuse of `CREATE2`:
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Factory {
     function deploy(bytes32 salt, bytes memory bytecode) public {
         address deployed;
@@ -45,6 +47,8 @@ contract Factory {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 contract SecureFactory {
     function deploy(bytes32 salt, bytes memory bytecode) public returns (address) {
         require(bytecode.length > 0, "Bytecode cannot be empty");

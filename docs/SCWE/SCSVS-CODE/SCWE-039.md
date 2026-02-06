@@ -46,7 +46,7 @@ Insecure use of inline assembly refers to vulnerabilities that arise when low-le
 - If value = 257, it becomes 1 (256 is lost).
 - Attackers can bypass security checks if truncation affects authentication or balance checks.
 
-- **Secure High-Level Code- Restricted Use of Assembly with Input Validation**
+- **Secure Alternative — High-Level Code with Bounds Checking**
     ```solidity
     pragma solidity ^0.8.0;
 
@@ -57,8 +57,8 @@ Insecure use of inline assembly refers to vulnerabilities that arise when low-le
         }
     }
     ```
-Fixes
+Fixes:
 - Bounds checking (require) prevents unintended truncation.
-- Uses inline assembly only when absolutely necessary.
+- Prefer high-level Solidity over assembly when possible; if assembly is required, validate inputs first.
 
 ---

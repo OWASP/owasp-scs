@@ -16,12 +16,12 @@ status: new
   [https://cwe.mitre.org/data/definitions/20.html](https://cwe.mitre.org/data/definitions/20.html)  
 
 ## Description
-The `blockhash` function is often misused to generate randomness in smart contracts. However, `blockhash` is publicly available and can be influenced by miners, making it an unreliable and insecure source of randomness.
+The `blockhash` function is often misused to generate randomness in smart contracts. However, `blockhash` is publicly available and can be influenced by validators (or miners on PoW chains), making it an unreliable and insecure source of randomness.
 
 Attackers can manipulate `blockhash` by controlling which transactions are included in a block, reordering transactions, or discarding unfavorable blocks. This can lead to predictable random outcomes, allowing malicious actors to exploit lotteries, gaming, and other randomness-dependent mechanisms.
 
 **Attack Scenarios**
-- Lottery Manipulation: A miner can withhold or reorder transactions to ensure a favorable `blockhash` that lets them win.
+- Lottery Manipulation: A validator (or miner on PoW) can withhold or reorder transactions to ensure a favorable `blockhash` that lets them win.
 - Game Exploitation: If a game outcome depends on `blockhash`, an attacker can predict future results and place bets accordingly.
 
 ## Remediation
@@ -39,7 +39,7 @@ contract InsecureRandomness {
 }
 ```
 **Why is this insecure?**
-- Miners control block production - They can reorder or discard blocks to manipulate `blockhash`.
+- Validators (or miners on PoW) control block production — they can reorder or discard blocks to manipulate `blockhash`.
 - Predictability - Attackers can call this function for past block numbers, making randomness guessable.
 
 
@@ -48,7 +48,7 @@ contract InsecureRandomness {
 ```solidity
 pragma solidity ^0.8.0;
 
-import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol"; // Note: Chainlink VRF V1 is deprecated; use VRF V2 (VRFConsumerBaseV2) in production
 
 contract SecureLottery is VRFConsumerBase {
     address[] public players;
@@ -79,12 +79,13 @@ contract SecureLottery is VRFConsumerBase {
 
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         uint256 index = randomness % players.length;
-        payable(players[index]).transfer(address(this).balance);
+        (bool ok, ) = payable(players[index]).call{value: address(this).balance}("");
+        require(ok, "Transfer failed");
     }
 }
 ```
 
 **Why is this secure?**
 - Uses `Chainlink VRF` (Verifiable Random Function), which provides unpredictable, tamper-proof randomness.
-- Miners cannot manipulate the randomness as it is derived from a verifiable external source.
+- Validators (or miners on PoW) cannot manipulate the randomness as it is derived from a verifiable external source.
 - Players cannot predict the outcome before participating.

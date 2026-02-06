@@ -18,8 +18,8 @@ contract Proxy {
         owner = msg.sender;
     }
 
-    function forward(address callee, bytes _data) public {
-        require(callee.delegatecall(_data)); // Unchecked external call vulnerability
+    function forward(address callee, bytes memory _data) public {
+        require(callee.delegatecall(_data)); // Unchecked: no validation of callee; delegatecall executes in caller context
     }
 }
 ```
@@ -32,7 +32,6 @@ contract Proxy {
 
 ### Remediation
 
-
-- Use safer methods such as transfer() over send() when transferring Ether. The transfer() function reverts automatically if the call fails.
-- For low-level functions like call and delegatecall, always check the return value and handle failures appropriately.
+- For low-level functions like `call`, `delegatecall`, and `staticcall`, always check the return value and handle failures with `require(success, "message")`.
+- For ETH transfers, prefer `call{value}("")` with explicit success checks over `transfer()` or `send()` (see SCWE-079); `transfer()` has a 2300 gas stipend and can cause DoS when the recipient is a contract.
 - Limit interactions with untrusted contracts and ensure robust validation before performing critical operations.

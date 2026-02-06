@@ -22,7 +22,7 @@ Insecure use of selfdestruct refers to vulnerabilities that arise when the `self
 - Exploitation of vulnerabilities in contract logic.
 
 ## Remediation
-- **Restrict access:** Ensure only authorized addresses can call `selfdestruct`.
+- **Restrict access:** Ensure only authorized addresses can call `selfdestruct`. Note: `selfdestruct` is deprecated per EIP-6049 (Solidity 0.8.24+); prefer migration patterns where possible.
 - **Implement circuit breakers:** Add mechanisms to halt operations in case of suspicious activity.
 - **Test thoroughly:** Conduct extensive testing to ensure `selfdestruct` is used securely.
 

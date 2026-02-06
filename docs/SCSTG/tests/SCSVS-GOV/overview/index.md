@@ -12,7 +12,8 @@ Business logic and economic security in smart contracts ensure that the contract
 // Push-based withdrawal process (vulnerable)
 function withdraw(uint256 amount) public {
     require(balance[msg.sender] >= amount, "Insufficient balance");
-    payable(msg.sender).transfer(amount); // Push-based transfer
+    (bool ok, ) = msg.sender.call{value: amount}("");
+    require(ok, "Transfer failed"); // Push-based transfer (prefer pull-based; see SCWE-079)
     balance[msg.sender] -= amount;
 }
 ```

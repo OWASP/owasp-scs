@@ -25,6 +25,8 @@ To avoid unnecessary assertion failures, use `require` for input validation and 
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Vulnerable {
     uint public balance;
 
@@ -41,6 +43,8 @@ contract Vulnerable {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Secure {
     uint public balance;
 

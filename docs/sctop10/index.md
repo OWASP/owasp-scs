@@ -48,7 +48,7 @@ It serves as a reference to ensure that smart contracts are secured against the 
 * SC07:2025 - [Flash Loan Attacks](SC07-FlashLoanAttacks.md)
 * SC08:2025 - [Integer Overflow and Underflow](SC08-IntegerOverUnderFlow.md)
 * SC09:2025 - [Insecure Randomness](SC09-InsecureRandomness.md)
-* SC10:2025 - [Denial of Service (DoS) Attacks](SC10-DenailOfService.md)
+* SC10:2025 - [Denial of Service (DoS) Attacks](SC10-DenialOfService.md)
 
 ### Overview
 

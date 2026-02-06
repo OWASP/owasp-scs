@@ -27,12 +27,16 @@ Ignoring revert data (e.g., using `require(ok)` without bubbling reason) hides t
 
 ### Vulnerable
 ```solidity
+pragma solidity ^0.8.0;
+
 (bool ok, ) = target.call(payload);
 require(ok, "call failed"); // hides real reason
 ```
 
 ### Fixed
 ```solidity
+pragma solidity ^0.8.0;
+
 (bool ok, bytes memory data) = target.call(payload);
 if (!ok) {
     assembly {

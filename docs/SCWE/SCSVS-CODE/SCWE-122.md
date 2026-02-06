@@ -27,6 +27,8 @@ Functions that `abi.decode` calldata without first checking expected length can 
 
 ### Vulnerable
 ```solidity
+pragma solidity ^0.8.0;
+
 function execute(bytes calldata data) external {
     (address to, uint256 amount) = abi.decode(data, (address, uint256));
     // ...
@@ -35,6 +37,8 @@ function execute(bytes calldata data) external {
 
 ### Fixed
 ```solidity
+pragma solidity ^0.8.0;
+
 function execute(bytes calldata data) external {
     require(data.length == 64, "bad length"); // selector handled elsewhere
     (address to, uint256 amount) = abi.decode(data, (address, uint256));

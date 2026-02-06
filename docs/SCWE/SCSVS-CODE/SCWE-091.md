@@ -33,9 +33,9 @@ Common risks include:
 - **Vulnerable Code (No Zero Value Check)**  
     ```solidity
     // SPDX-License-Identifier: MIT
-    pragma solidity ^0.7.0;
+    pragma solidity ^0.8.0;
 
-    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol"; // OZ 5.x: token/ERC20/utils/SafeERC20.sol
 
     contract ExampleContract {
         using SafeERC20 for IERC20;
@@ -52,9 +52,9 @@ Common risks include:
 - **Safe Code (With Zero Value Check)**  
     ```solidity
     // SPDX-License-Identifier: MIT
-    pragma solidity ^0.7.0;
+    pragma solidity ^0.8.0;
 
-    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol"; // OZ 5.x: token/ERC20/utils/SafeERC20.sol
 
     contract ExampleContract {
         using SafeERC20 for IERC20;
@@ -71,9 +71,9 @@ Common risks include:
 - **Alternative Safe Pattern (No‑op on Zero)**  
     ```solidity
     // SPDX-License-Identifier: MIT
-    pragma solidity ^0.7.0;
+    pragma solidity ^0.8.0;
 
-    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+    import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol"; // OZ 5.x: token/ERC20/utils/SafeERC20.sol
 
     contract ExampleContract {
         using SafeERC20 for IERC20;

@@ -49,7 +49,8 @@ contract Vault {
     function withdraw(uint256 amount) external {
         // add proper access control or business checks here
         balance -= amount;
-        payable(msg.sender).transfer(amount);
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");
     }
 }
 ```

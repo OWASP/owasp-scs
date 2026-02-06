@@ -16,7 +16,7 @@ status: new
   [https://cwe.mitre.org/data/definitions/400.html](https://cwe.mitre.org/data/definitions/400.html)  
 
 ## Description
-The use of `.transfer()` and` .send() `for Ether transfers in Solidity is insecure because they impose a fixed gas limit of 2300 gas. This restriction can cause transactions to fail unexpectedly when the receiving contract has complex logic that requires more gas. Additionally, it can result in a Denial of Service (DoS) vulnerability if the receiving contract cannot execute due to insufficient gas.
+The use of `.transfer()` and `.send()` for Ether transfers in Solidity is insecure because they impose a fixed gas limit of 2300 gas. This restriction can cause transactions to fail unexpectedly when the receiving contract has complex logic that requires more gas. Additionally, it can result in a Denial of Service (DoS) vulnerability if the receiving contract cannot execute due to insufficient gas.
 
 This issue is especially problematic in upgradable smart contracts or protocol interactions, where the gas requirements of a receiving contract might change over time.
 
@@ -27,6 +27,8 @@ Instead of `.transfer()` and `.send()`, use `.call{value: msg.value}("")`, which
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function transferEther(address payable _to) public payable {
         // Fixed gas limit of 2300 gas can cause unintended failures
@@ -41,6 +43,8 @@ contract Example {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function transferEther(address payable _to) public payable {
         // Use call() for better gas flexibility and proper error handling

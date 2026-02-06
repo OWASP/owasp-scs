@@ -32,7 +32,8 @@ pragma solidity ^0.8.0;
 contract Distributor {
     function airdrop(address[] calldata users) external {
         for (uint256 i = 0; i < users.length; i++) {
-            payable(users[i]).transfer(1 ether); // can run out of gas
+            (bool ok, ) = payable(users[i]).call{value: 1 ether}("");
+            require(ok, "Transfer failed"); // can run out of gas with large arrays
         }
     }
 }
@@ -49,7 +50,8 @@ contract Distributor {
         uint256 end = last + max;
         if (end > users.length) end = users.length;
         for (uint256 i = last; i < end; i++) {
-            payable(users[i]).transfer(1 ether);
+            (bool ok, ) = payable(users[i]).call{value: 1 ether}("");
+            require(ok, "Transfer failed");
         }
         last = end;
     }

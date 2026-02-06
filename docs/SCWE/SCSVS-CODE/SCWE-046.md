@@ -31,14 +31,15 @@ Reentrancy attacks occur when a contract allows untrusted external calls during 
 ### Vulnerable Contract Example (Reentrancy)
 
 ```solidity
-pragma solidity ^0.4.0;
+pragma solidity ^0.8.0;
 
 contract Vulnerable {
     mapping(address => uint) public balances;
 
     function withdraw(uint _amount) public {
         require(balances[msg.sender] >= _amount);
-        msg.sender.call.value(_amount)(); // Vulnerable external call
+        (bool success, ) = msg.sender.call{value: _amount}(""); // Vulnerable: external call before state update (reentrancy)
+        require(success, "Transfer failed");
         balances[msg.sender] -= _amount;
     }
 
@@ -52,7 +53,7 @@ contract Vulnerable {
 
 ```solidity
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; // OZ 5.x: utils/ReentrancyGuard.sol
 
 contract Secure is ReentrancyGuard {
     mapping(address => uint) public balances;

@@ -32,7 +32,7 @@
 
 * **Token Standard** – Specifications that define how tokens should function on a blockchain. Common standards include ERC20 for fungible tokens, ERC721 for non-fungible tokens, and ERC1155 for multi-token standards.
 
-* **Transaction Confirmation** – The process by which a transaction is validated and recorded on the blockchain. A transaction must be confirmed by miners to be considered final and irreversible.
+* **Transaction Confirmation** – The process by which a transaction is validated and recorded on the blockchain. A transaction must be confirmed by validators (or miners on PoW chains) to be considered final and irreversible.
 
 * **Vulnerability** – A weakness in a smart contract that can be exploited by an attacker, leading to unauthorized access, data breaches, or financial loss.
 

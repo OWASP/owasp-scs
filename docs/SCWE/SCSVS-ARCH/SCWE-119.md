@@ -27,12 +27,33 @@ Using the same key to control both the proxy admin (upgrade rights) and logic co
 
 ### Vulnerable
 ```solidity
-// single EOA controls everything
-address constant ADMIN = 0x123...;
+pragma solidity ^0.8.0;
+
+contract Proxy {
+    address public admin; // same key for upgrades and logic owner
+    address public implementation;
+
+    modifier onlyAdmin() { require(msg.sender == admin, "not admin"); _; }
+
+    function upgrade(address impl) external onlyAdmin { implementation = impl; }
+    function setParam(uint256 x) external onlyAdmin { /* ... */ }
+}
 ```
 
 ### Fixed
 ```solidity
-// proxy admin = timelock multisig; logic owner = operations multisig
+pragma solidity ^0.8.0;
+
+contract Proxy {
+    address public proxyAdmin;   // timelock + multisig; upgrade rights only
+    address public logicOwner;  // separate multisig; operational params only
+    address public implementation;
+
+    modifier onlyProxyAdmin() { require(msg.sender == proxyAdmin, "not proxy admin"); _; }
+    modifier onlyLogicOwner() { require(msg.sender == logicOwner, "not logic owner"); _; }
+
+    function upgrade(address impl) external onlyProxyAdmin { implementation = impl; }
+    function setParam(uint256 x) external onlyLogicOwner { /* ... */ }
+}
 ```
 

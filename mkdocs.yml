@@ -75,7 +75,7 @@ nav:
     - SC07:2025 - Flash Loan Attacks: sctop10/SC07-FlashLoanAttacks.md
     - SC08:2025 - Integer Overflow and Underflow: sctop10/SC08-IntegerOverUnderFlow.md
     - SC09:2025 - Insecure Randomness: sctop10/SC09-InsecureRandomness.md
-    - SC10:2025 - Denial of Service (DoS) Attacks: sctop10/SC10-DenailOfService.md
+    - SC10:2025 - Denial of Service (DoS) Attacks: sctop10/SC10-DenialOfService.md
 
   - SCSTG:
       - SCSTG/index.md

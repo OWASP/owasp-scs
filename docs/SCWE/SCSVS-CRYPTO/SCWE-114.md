@@ -34,7 +34,14 @@ Reusing the same ECDSA nonce (`k`) across signatures (or using predictable nonce
 
 ### Fixed
 ```solidity
-// Use libraries/wallets that follow RFC6979 and never reuse k.
-// No on-chain code change prevents k reuse; the contract must allow key rotation.
+// Off-chain: Use libraries/wallets that follow RFC6979; never reuse k.
+// On-chain: Support key rotation so compromised keys can be revoked.
+mapping(address => bool) public revokedSigners;
+
+function execute(bytes calldata payload, bytes calldata sig) external {
+    address signer = _recoverSigner(payload, sig);
+    require(!revokedSigners[signer], "key revoked");
+    // ...
+}
 ```
 

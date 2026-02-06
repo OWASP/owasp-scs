@@ -27,6 +27,8 @@ To optimize storage packing:
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract InefficientStorage {
     uint256 a;  // Occupies full 32-byte slot
     bool b;     // Occupies another 32-byte slot (wasteful)
@@ -42,6 +44,8 @@ contract InefficientStorage {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 contract OptimizedStorage {
     uint256 a;   // Occupies one full 32-byte slot
     uint256 d;   // Placed next to 'a' to use another full slot

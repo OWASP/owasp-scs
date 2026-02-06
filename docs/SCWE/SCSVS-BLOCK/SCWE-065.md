@@ -16,10 +16,10 @@ status: new
   [https://cwe.mitre.org/data/definitions/20.html](https://cwe.mitre.org/data/definitions/20.html)  
 
 ## Description
-Using block values (such as `block.timestamp`, `block.number`, or `block.difficulty`) as a proxy for time in Ethereum smart contracts can be problematic. Block values are determined by miners and can be manipulated within certain limits, making them unreliable for time-sensitive logic. Relying on these values for critical decisions like deadlines or expiration dates can result in unexpected behaviors, such as manipulations by miners or unintended contract states.
+Using block values (such as `block.timestamp`, `block.number`, or `block.difficulty` / `block.prevrandao` post-merge) as a proxy for time in Ethereum smart contracts can be problematic. Block values are determined by validators (or miners on PoW chains) and can be manipulated within certain limits, making them unreliable for time-sensitive logic. Relying on these values for critical decisions like deadlines or expiration dates can result in unexpected behaviors, such as manipulations by validators (or miners on PoW chains) or unintended contract states.
 
 ## Remediation
-To mitigate this vulnerability, avoid using block values as a direct proxy for time-based logic. Instead, consider using external oracles that provide reliable and tamper-proof time data or incorporate additional checks to prevent miner manipulation. Where necessary, combine block values with other data points to reduce the risk of exploitation.
+To mitigate this vulnerability, account for the manipulation bounds of block values. `block.timestamp` can vary by ~15 seconds per block; design deadlines and time checks with this tolerance in mind. Time oracles are uncommon; the standard approach is to use `block.timestamp` with appropriate buffers. Where precision is critical, consider commit-reveal or multi-block confirmation.
 
 ### Vulnerable Contract Example
 ```solidity
@@ -38,19 +38,20 @@ contract TimeSensitive {
 
 ### Fixed Contract Example
 ```solidity
-contract TimeSensitive {
-    uint public deadline;
-    address public oracle;
+pragma solidity ^0.8.0;
 
-    constructor(uint _deadline, address _oracle) {
-        deadline = _deadline;
-        oracle = _oracle;
+contract TimeSensitive {
+    uint public constant DEADLINE_BUFFER = 15; // seconds — accounts for block.timestamp manipulation
+    uint public deadline;
+
+    constructor(uint _deadline) {
+        // Set deadline with buffer so expiry is robust to ~15s timestamp variance
+        deadline = _deadline + DEADLINE_BUFFER;
     }
 
     function hasExpired() public view returns (bool) {
-        // Use a trusted oracle for time verification
-        uint currentTime = Oracle(oracle).getCurrentTime();
-        return currentTime > deadline;
+        return block.timestamp > deadline;
     }
 }
 ```
+**Mitigation:** Add a buffer when setting deadlines to account for the ~15 second manipulation window of `block.timestamp`. Avoid relying on sub-minute precision.

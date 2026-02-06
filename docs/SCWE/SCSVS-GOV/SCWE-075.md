@@ -53,24 +53,32 @@ contract IncorrectBalanceTracking {
 ### Fixed Contract Example
 
 ```solidity
-// ✅ Secure implementation that tracks actual balance correctly
-contract CorrectBalanceTracking {
-    function deposit() public payable {}
+pragma solidity ^0.8.0;
 
-    function withdraw(uint _amount) public {
-        require(address(this).balance >= _amount, "Insufficient funds");  // ✅ Correct balance check
-        payable(msg.sender).transfer(_amount);
+// ✅ Secure implementation: per-user accounting + address(this).balance for consistency
+contract CorrectBalanceTracking {
+    mapping(address => uint) public balances;
+
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
     }
 
-    // Optional: Prevent direct Ether transfers
+    function withdraw(uint _amount) public {
+        require(balances[msg.sender] >= _amount, "Insufficient funds");
+        require(address(this).balance >= _amount, "Contract balance insufficient");
+        balances[msg.sender] -= _amount;
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        require(success, "Transfer failed");
+    }
+
     receive() external payable {
         revert("Direct deposits not allowed");
     }
 }
 ```
 **Why is this secure?**
-- Uses `address(this).balnce` for accurate balance tracking.
-- Prevents external deposits unless explicitly intended.
-- No manual `balance` variable, reducing risk of inconsistencies.
+- Per-user `balances` mapping ensures only depositors can withdraw their funds.
+- Reconciles with `address(this).balance` before transfer to detect unexpected inflows (e.g. `selfdestruct`).
+- Uses `call{value}` for flexible gas; `receive()` reverts on direct deposits.
 
 ---

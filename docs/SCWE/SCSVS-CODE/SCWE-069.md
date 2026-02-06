@@ -25,6 +25,8 @@ To avoid state variable shadowing, use unique names for state variables in deriv
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Base {
     uint public balance;
 
@@ -44,6 +46,8 @@ contract Derived is Base {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Base {
     uint public balance;
 

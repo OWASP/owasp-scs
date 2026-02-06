@@ -19,10 +19,12 @@ status: new
 Some Solidity functions and features have been deprecated over time due to security risks, inefficiencies, or better alternatives being introduced in newer versions of Solidity. Using deprecated functions can expose contracts to known vulnerabilities and potential attacks. Examples include `suicide()`, which was replaced by `selfdestruct()`, and `sha3()`, which was replaced by `keccak256()`.
 
 ## Remediation
-Always check the Solidity documentation to ensure that the functions you're using are not deprecated. If a function is deprecated, replace it with its recommended alternative to maintain the contract’s security and ensure compatibility with future Solidity versions.
+Always check the Solidity documentation to ensure that the functions you're using are not deprecated. If a function is deprecated, replace it with its recommended alternative to maintain the contract's security and ensure compatibility with future Solidity versions. **Note:** As of EIP-6049 (Solidity 0.8.24+), `selfdestruct` is deprecated and will be removed in a future EVM version.
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function oldFunction() public {
         // Using deprecated function `suicide`
@@ -33,9 +35,11 @@ contract Example {
 
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function oldFunction() public {
-        // Correctly using the recommended alternative `selfdestruct`
+        // Correctly using the recommended alternative `selfdestruct` (deprecated per EIP-6049; prefer migration patterns)
         selfdestruct(payable(msg.sender));  // Replacing deprecated `suicide` with `selfdestruct`
     }
 }

@@ -31,7 +31,7 @@ Lack of clear parameter names can lead to:
 - Enforce naming conventions with linters and code review checklists.  
 
 ## Examples  
-- **❌ Vulnerable Code (Unnamed parameters reduce clarity)**  
+- **Vulnerable Code (Unnamed parameters reduce clarity)**  
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.0;

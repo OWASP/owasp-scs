@@ -56,10 +56,11 @@ contract UpdatedUsage {
     address public owner;
     uint public balance;
 
-    // Replaced with safer, modern methods
+    // Replaced with call{value} — avoids 2300 gas limit of transfer/send
     function sendTransaction(address recipient, uint amount) public {
-        payable(recipient).transfer(amount);
+        (bool success, ) = payable(recipient).call{value: amount}("");
+        require(success, "Transfer failed");
     }
 }
 ```
-In this improved example, the contract uses the latest version of Solidity (0.8.0), which has better support and security features. The `transfer` method is also updated to be more compatible with the latest Solidity practices.
+In this improved example, the contract uses `call{value}` instead of deprecated `transfer`/`send`, avoiding the 2300 gas limit that can cause DoS when the recipient is a contract (see SCWE-079).

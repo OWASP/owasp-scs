@@ -27,12 +27,16 @@ Using mixed rounding strategies (floor vs. ceil vs. truncation) across mint/burn
 
 ### Vulnerable
 ```solidity
+pragma solidity ^0.8.0;
+
 shares = amount * totalShares / totalAssets;      // truncates
 assets = shares * totalAssets / totalShares + 1;  // rounds up
 ```
 
 ### Fixed
 ```solidity
+pragma solidity ^0.8.0;
+
 // consistently round down (or up) and state it explicitly
 shares = amount * totalShares / totalAssets;
 assets = shares * totalAssets / totalShares;

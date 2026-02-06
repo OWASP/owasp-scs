@@ -25,6 +25,8 @@ Bitwise operations (e.g., `&`, `|`, `^`, `<<`, `>>`) can be efficient alternativ
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     function shiftLeft(uint8 input) public pure returns (uint8) {
         return input << 8;  // ❌ Shifting beyond `uint8` capacity leads to zero
@@ -43,6 +45,8 @@ contract Example {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 contract SecureExample {
     function safeShiftLeft(uint8 input) public pure returns (uint8) {
         require(input < 32, "Shift too large");  // ✅ Validate shift range

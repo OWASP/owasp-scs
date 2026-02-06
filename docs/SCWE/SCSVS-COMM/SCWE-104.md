@@ -43,14 +43,20 @@ contract Rewards {
 ### Fixed
 ```solidity
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; // OZ 5.x: utils/ReentrancyGuard.sol
+
+interface IERC20 {
+    function transfer(address to, uint256 amount) external returns (bool);
+}
 
 contract Rewards is ReentrancyGuard {
+    mapping(address => bool) public allowedTokens; // only non-ERC777 tokens
     uint256 public totalPaid;
 
     function claim(address token, uint256 amount) external nonReentrant {
+        require(allowedTokens[token], "token not allowed"); // block ERC777
         totalPaid += amount;
-        IERC20(token).transfer(msg.sender, amount); // use ERC20 or block ERC777
+        IERC20(token).transfer(msg.sender, amount);
     }
 }
 ```

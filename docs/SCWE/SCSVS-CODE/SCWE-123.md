@@ -27,6 +27,8 @@ Inline assembly that writes to memory without preserving the Solidity free-memor
 
 ### Vulnerable
 ```solidity
+pragma solidity ^0.8.0;
+
 assembly {
     mstore(0x40, add(0x40, 0x20)) // advances but later writes may clobber
     mstore(0x00, value)
@@ -36,6 +38,8 @@ assembly {
 
 ### Fixed
 ```solidity
+pragma solidity ^0.8.0;
+
 assembly {
     let memPtr := mload(0x40)
     mstore(memPtr, value)

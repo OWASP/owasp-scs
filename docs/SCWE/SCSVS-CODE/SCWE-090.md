@@ -29,7 +29,7 @@ This weakness occurs when smart contracts execute token swaps through DEX router
 function swapTokens(address tokenIn, address tokenOut, uint256 amountIn) external {
     IERC20(tokenIn).approve(address(uniswapRouter), amountIn);
 
-    address ;
+    address[] memory path = new address[](2);
     path[0] = tokenIn;
     path[1] = tokenOut;
 
@@ -54,7 +54,7 @@ function swapTokensWithSlippage(
 ) external {
     IERC20(tokenIn).approve(address(uniswapRouter), amountIn);
 
-    address ;
+    address[] memory path = new address[](2);
     path[0] = tokenIn;
     path[1] = tokenOut;
 

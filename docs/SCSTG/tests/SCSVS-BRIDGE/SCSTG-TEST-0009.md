@@ -41,13 +41,18 @@ contract DataStorage {
 ```solidity
 contract SecureDataStorage {
     uint256 public value;
+    address public owner;
 
-    modifier onlyAuthorized() {
-        require(msg.sender == tx.origin, "Unauthorized");
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Unauthorized");
         _;
     }
 
-    function updateValue(uint256 newValue) public onlyAuthorized {
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function updateValue(uint256 newValue) public onlyOwner {
         value = newValue;
     }
 }
@@ -68,10 +73,13 @@ contract ExternalData {
     uint256 public externalValue;
 
     function updateExternalData(address oracle) public {
-        externalValue = oracle.call("getData()");  // Unsafe call
+        // Vulnerable: call returns (bool, bytes); no success check; invalid assignment
+        (bool success, bytes memory data) = oracle.call(abi.encodeWithSignature("getData()"));
+        if (data.length >= 32) {
+            externalValue = abi.decode(data, (uint256));  // Proceeds without checking success
+        }
     }
 }
-
 ```
 
 ### **Why It’s Vulnerable**
@@ -84,6 +92,10 @@ contract ExternalData {
 #### Fixed:
 
 ```solidity
+interface IOracle {
+    function getData() external view returns (uint256);
+}
+
 contract SecureExternalData {
     uint256 public externalValue;
     address public oracle;
@@ -101,7 +113,6 @@ contract SecureExternalData {
         externalValue = IOracle(oracle).getData();  // Safe interaction with oracle interface
     }
 }
-
 ```
 
 

@@ -29,12 +29,19 @@ TWAP oracles that use very short windows or a single cumulative observation can 
 ```solidity
 pragma solidity ^0.8.0;
 
-contract PriceFeed {
-    IUniswapV2Pair public pair;
+interface IUniswapV3Pool {
+    function observe(uint32[] calldata secondsAgos)
+        external view returns (int56[] memory tickCumulatives, uint160[] memory);
+}
 
-    function twap() external view returns (uint256) {
-        (uint price0,,,) = pair.observe(0); // single short observation
-        return price0;
+contract PriceFeed {
+    IUniswapV3Pool public pool;
+
+    function twap() external view returns (int56) {
+        uint32[] memory secondsAgos = new uint32[](1);
+        secondsAgos[0] = 0; // single observation at current block — manipulatable in same block
+        (int56[] memory tickCumulatives,) = pool.observe(secondsAgos);
+        return tickCumulatives[0];
     }
 }
 ```
@@ -43,14 +50,22 @@ contract PriceFeed {
 ```solidity
 pragma solidity ^0.8.0;
 
-contract PriceFeed {
-    IUniswapV2Pair public pair;
+interface IUniswapV3Pool {
+    function observe(uint32[] calldata secondsAgos)
+        external view returns (int56[] memory tickCumulatives, uint160[] memory);
+}
 
-    function twap() external view returns (uint256) {
-        (uint price0,,) = pair.currentCumulativePrices();
-        // ensure enough time elapsed between checkpoints
-        // and use multiple observations before trusting
-        return price0;
+contract PriceFeed {
+    IUniswapV3Pool public pool;
+    uint32 public constant TWAP_WINDOW = 1 hours;
+
+    function twap() external view returns (int24) {
+        uint32[] memory secondsAgos = new uint32[](2);
+        secondsAgos[0] = TWAP_WINDOW; // start of window
+        secondsAgos[1] = 0;           // current block
+        (int56[] memory tickCumulatives,) = pool.observe(secondsAgos);
+        int56 tickDelta = tickCumulatives[1] - tickCumulatives[0];
+        return int24(tickDelta / int56(uint56(TWAP_WINDOW)));
     }
 }
 ```

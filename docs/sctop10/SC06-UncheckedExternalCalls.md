@@ -22,7 +22,7 @@ contract Solidity_UncheckedExternalCall {
         owner = msg.sender;
     }
 
-    function forward(address callee, bytes _data) public {
+    function forward(address callee, bytes memory _data) public {
         require(callee.delegatecall(_data));
     }
 }
@@ -31,8 +31,8 @@ contract Solidity_UncheckedExternalCall {
 - Unchecked external calls can result in failed transactions, causing the intended operations to not be completed successfully. This can lead to the loss of funds, as the contract may proceed under the false assumption that the transfer was successful. Additionally, it can create an incorrect contract state, making the contract vulnerable to further exploits and inconsistencies in its logic.
 
 ### Remediation:
-- Whenever possible, use transfer() instead of send(), as transfer() reverts the transaction if the external call fails.
-- Always check the return value of send() or call() functions to ensure proper handling if they return false.
+- Always check the return value of low-level calls (`call`, `delegatecall`, `staticcall`) and `send()` — do not assume success. Use `require(success, "message")` after `(bool success, ) = target.call{...}(...)`.
+- For ETH transfers, prefer `call{value}("")` with explicit success checks over `transfer()` or `send()` (see SCWE-079); `transfer()` has a 2300 gas stipend and can cause DoS when the recipient is a contract.
 
 ### Example (Fixed version):
 ```

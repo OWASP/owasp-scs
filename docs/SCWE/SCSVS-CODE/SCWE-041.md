@@ -26,6 +26,8 @@ To prevent unsafe downcasting:
 
 ### Vulnerable Contract Example  
 ```solidity
+pragma solidity ^0.8.0;
+
 contract UnsafeDowncasting {
     function truncateValue(uint256 largeNumber) public pure returns (uint8) {
         return uint8(largeNumber);  // ⚠️ Potential data loss if largeNumber > 255
@@ -41,6 +43,8 @@ contract UnsafeDowncasting {
 ### Fixed Contract Example
 
 ```solidity
+pragma solidity ^0.8.0;
+
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 contract SafeDowncasting {

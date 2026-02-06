@@ -23,6 +23,8 @@ Always initialize storage pointers to avoid potential vulnerabilities. Ensure th
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract Example {
     uint[] public data;
 
@@ -45,7 +47,9 @@ contract Example {
 
 ### Fixed Contract Example
 ```solidity
-  contract Example {
+pragma solidity ^0.8.0;
+
+contract Example {
       uint[] public data;
 
       function addData(uint _value) public {

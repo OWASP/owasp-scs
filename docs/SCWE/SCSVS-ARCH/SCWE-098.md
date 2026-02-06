@@ -47,10 +47,11 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 contract UpgradeableVault is Initializable {
     address public owner;
 
-    function initialize(address _owner) public initializer {
-        require(msg.sender == _owner, "not authorized");
+    function initialize(address _owner, address deployer) public initializer {
+        require(msg.sender == deployer, "only deployer");
         owner = _owner;
     }
 }
 ```
+Deployer (or factory) deploys the proxy and calls `initialize(owner, address(this))` in the same transaction — no window for front-running.
 

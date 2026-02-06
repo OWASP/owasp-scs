@@ -16,10 +16,10 @@ status: new
   [https://cwe.mitre.org/data/definitions/703.html](https://cwe.mitre.org/data/definitions/703.html)  
 
 ## Description
-The use of floating pramas (e.g., `^0.8.0`) in smart contract development can lead to unexpected issues when new versions of the Solidity compiler are released. Floating versions allow the contract to automatically use newer versions of the compiler within the specified range, which may introduce breaking changes, unexpected bugs, or security vulnerabilities. To avoid this, it is important to specify fixed versions to ensure the contract works reliably and consistently across different environments.
+The use of floating pragmas (e.g., `^0.8.0`) in smart contract development can lead to unexpected issues when new versions of the Solidity compiler are released. Floating versions allow the contract to automatically use newer versions of the compiler within the specified range, which may introduce breaking changes, unexpected bugs, or security vulnerabilities. To avoid this, it is important to specify fixed versions to ensure the contract works reliably and consistently across different environments.
 
 ## Remediation
-To mitigate this vulnerability, always specify a fixed compiler version in the contract to avoid using floating pramas. This ensures that the contract is compiled using a known and tested version of the compiler, preventing unexpected behavior from new, untested releases.
+To mitigate this vulnerability, always specify a fixed compiler version in the contract to avoid using floating pragmas. This ensures that the contract is compiled using a known and tested version of the compiler, preventing unexpected behavior from new, untested releases.
 
 ### Vulnerable Contract Example
 ```solidity

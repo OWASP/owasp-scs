@@ -41,7 +41,8 @@ contract UnusedVariables {
     uint public balance;
     uint public unusedVariable; // This variable is not used anywhere
 
-    function deposit(uint amount) public {
+    function deposit(uint amount) public payable {
+        require(msg.value == amount, "ETH amount mismatch");
         balance += amount;
     }
     
@@ -61,12 +62,16 @@ pragma solidity ^0.4.0;
 contract FixedUnusedVariables {
     uint public balance;
 
-    function deposit(uint amount) public {
+    function deposit(uint amount) public payable {
+        require(msg.value == amount, "ETH amount mismatch");
         balance += amount;
     }
     
     function withdraw(uint amount) public {
+        require(balance >= amount, "Insufficient balance");
         balance -= amount;
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Transfer failed");
     }
 }
 

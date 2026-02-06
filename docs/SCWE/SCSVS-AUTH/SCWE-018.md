@@ -36,7 +36,7 @@ pragma solidity ^0.8.0;
 contract Vulnerable {
     address public owner;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
@@ -57,7 +57,7 @@ pragma solidity ^0.8.0;
 contract Secure {
     address public owner;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 

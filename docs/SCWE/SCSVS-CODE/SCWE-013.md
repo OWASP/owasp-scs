@@ -7,7 +7,7 @@ profiles: [L1]
 mappings:
   scsvs-cg: [SCSVS-GOV]
   scsvs-scg: [SCSVS-GOV-2]
-  cwe: [494]
+  cwe: [233]
 status: new
 ---
 

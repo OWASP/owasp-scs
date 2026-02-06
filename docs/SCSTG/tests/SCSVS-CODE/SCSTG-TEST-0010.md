@@ -61,11 +61,12 @@ contract Example {
 ```solidity
 pragma solidity ^0.4.24;
 
+// Example: ETH vault (sends Ether, not ERC20 tokens). Variable names simplified for clarity.
 contract Token {
     string public name = "Token";
-    uint public totalSupply = 1000000;
+    uint public totalSupply = 1000000;  // Tracks remaining withdrawable ETH
 
-    // Deprecated function in Solidity 0.4.x
+    // Deprecated: uses transfer() for Ether; deprecated in Solidity 0.5+
     function transfer(address recipient, uint amount) public {
         require(msg.sender != recipient, "Cannot transfer to yourself");
         require(amount <= totalSupply, "Amount exceeds total supply");
@@ -88,6 +89,7 @@ contract Token {
 ```solidity
 pragma solidity ^0.8.0;
 
+// ETH vault example: sends Ether via call{value} (see SCWE-079)
 contract Token {
     string public name = "Token";
     uint public totalSupply = 1000000;

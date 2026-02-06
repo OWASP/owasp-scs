@@ -35,7 +35,8 @@ contract EtherWallet {
     }
     
     function withdraw(uint amount) public {
-        payable(msg.sender).transfer(amount);  // No access control
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");  // No access control
     }
 }
 ```
@@ -56,7 +57,8 @@ contract EtherWallet {
     }
     
     function withdraw(uint amount) public onlyOwner {
-        payable(msg.sender).transfer(amount);  // Access control added
+        (bool ok, ) = msg.sender.call{value: amount}("");
+        require(ok, "Transfer failed");  // Access control added
     }
 }
 ```

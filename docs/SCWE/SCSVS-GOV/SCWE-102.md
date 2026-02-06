@@ -43,7 +43,7 @@ contract Payout {
 ### Fixed
 ```solidity
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol"; // OZ 5.x: utils/ReentrancyGuard.sol
 
 contract Payout is ReentrancyGuard {
     mapping(address => uint256) public balances;

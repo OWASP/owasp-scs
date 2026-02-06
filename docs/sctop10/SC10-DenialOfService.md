@@ -38,6 +38,7 @@ contract Solidity_DOS {
   
 ### Remediation:
 - Ensure smart contracts can handle consistent failures, such as asynchronous processing of potentially failing external calls, to maintain contract integrity and prevent unexpected behavior.
+- Use **pull-over-push** pattern: instead of pushing ETH to the previous king (which can fail if they are a contract with a reverting fallback), record their pending balance and let them withdraw via a separate `withdraw()` function.
 - Be cautious when using `call` for external calls, loops, and traversals to avoid excessive gas consumption, which could lead to failed transactions or unexpected costs.
 - Avoid over-authorizing a single role in contract permissions. Instead, divide permissions reasonably and use multi-signature wallet management for roles with critical permissions to prevent permission loss due to private key compromise.
 
@@ -49,21 +50,32 @@ pragma solidity ^0.8.24;
 contract Solidity_DOS {
     address public king;
     uint256 public balance;
+    mapping(address => uint256) public pendingWithdrawals;
 
-    // Use a safer approach to transfer funds, like transfer, which has a fixed gas stipend.
-    // This avoids using call and prevents issues with malicious fallback functions.
     function claimThrone() external payable {
         require(msg.value > balance, "Need to pay more to become the king");
 
         address previousKing = king;
         uint256 previousBalance = balance;
 
-        // Update the state before transferring Ether to prevent reentrancy issues.
+        // Update state first
         king = msg.sender;
         balance = msg.value;
 
-        // Use transfer instead of call to ensure the transaction doesn't fail due to a malicious fallback.
-        payable(previousKing).transfer(previousBalance);
+        // Pull-over-push: record pending withdrawal instead of pushing ETH.
+        // The previous king withdraws via withdraw() — no external call during claimThrone,
+        // so a malicious fallback cannot cause DoS.
+        if (previousKing != address(0)) {
+            pendingWithdrawals[previousKing] = previousBalance;
+        }
+    }
+
+    function withdraw() external {
+        uint256 amount = pendingWithdrawals[msg.sender];
+        require(amount > 0, "Nothing to withdraw");
+        pendingWithdrawals[msg.sender] = 0;
+        (bool sent,) = msg.sender.call{value: amount}("");
+        require(sent, "Transfer failed");
     }
 }
 ```

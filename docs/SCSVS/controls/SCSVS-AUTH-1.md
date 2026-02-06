@@ -23,7 +23,7 @@ Implement role-based access control to manage permissions and ensure that only a
 
 | **SCSVS&nbsp;VR&nbsp;ID**          | Requirement                                                                 | L1 | L2 | L3 | SCWE |
 | ------------ | --------------------------------------------------------------------------- | -- | -- | -- | --- |
-| S4.1.C1      | Use msg.sender instead of tx.origin for authorization to avoid potential abuse from malicious contracts; include checks like require(tx.origin == msg.sender) to ensure the sender is an EOA. |    | ✓  | ✓  |     |
+| S4.1.C1      | Use msg.sender (not tx.origin) for authorization to avoid phishing via malicious intermediary contracts. Optionally, require(tx.origin == msg.sender) restricts callers to EOAs only — use only when EOA-only access is explicitly required. |    | ✓  | ✓  |     |
 | S4.1.C2      | Certain addresses might be blocked or restricted from receiving tokens (e.g., LUSD). Ensure that address restrictions are properly managed and verified. |    | ✓  | ✓  |     |
 | S4.1.C3      | Ensure that Guard’s hooks (e.g., checkTransaction(), checkAfterExecution()) are executed to enforce critical security checks. |    | ✓  | ✓  |     |
 | S4.1.C4      | Ensure that access controls are implemented correctly to determine who can use certain functions, and avoid unauthorized changes or withdrawals. |    | ✓  | ✓  |     |

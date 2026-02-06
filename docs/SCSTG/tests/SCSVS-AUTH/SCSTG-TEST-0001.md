@@ -71,7 +71,8 @@ contract MultiSigWallet {
         require(approvalCount >= requiredApprovals, "Not enough approvals");
 
         transactions[_txIndex].executed = true;
-        payable(transactions[_txIndex].to).transfer(transactions[_txIndex].value);
+        (bool ok, ) = payable(transactions[_txIndex].to).call{value: transactions[_txIndex].value}("");
+        require(ok, "Transfer failed");
     }
 
     receive() external payable {}

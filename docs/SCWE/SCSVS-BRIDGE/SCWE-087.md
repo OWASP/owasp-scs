@@ -32,6 +32,9 @@ This weakness arises when smart contracts performing cross-chain messaging fail 
 
 ❌ **Vulnerable Code (No Payload Size Validation)**
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 // SourceChain.sol
 event Locked(address indexed user, uint256 amount, bytes payload);
 function lockTokens(uint256 amount, bytes calldata merkleProof) external {
@@ -46,6 +49,9 @@ function lockTokens(uint256 amount, bytes calldata merkleProof) external {
 ```
 Destination Chain: Decode and Mint
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 // DestinationChain.sol
 function mintFromPayload(bytes calldata payload) external {
     // Will revert if payload is too large for decode!
@@ -57,6 +63,9 @@ function mintFromPayload(bytes calldata payload) external {
 ```
 ✅  Safe Code (With Payload Size Validation)
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 // SourceChain.sol
 event Locked(address indexed user, uint256 amount, bytes payload);
 function lockTokens(uint256 amount, bytes calldata merkleProof) external {
@@ -72,6 +81,9 @@ function lockTokens(uint256 amount, bytes calldata merkleProof) external {
 ```
 Destination Chain: Decode and Mint (Optional Double Check)
 ```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
 // DestinationChain.sol
 function mintFromPayload(bytes calldata payload) external {
     require(payload.length <= 10_000, "Payload too large");

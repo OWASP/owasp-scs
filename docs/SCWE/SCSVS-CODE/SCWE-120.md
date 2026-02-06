@@ -27,12 +27,16 @@ Low-level calls that decode return values without checking `returndatasize` can 
 
 ### Vulnerable
 ```solidity
+pragma solidity ^0.8.0;
+
 (bool ok, bytes memory data) = token.staticcall(abi.encodeWithSignature("balanceOf(address)", user));
 uint256 bal = abi.decode(data, (uint256)); // assumes length >= 32
 ```
 
 ### Fixed
 ```solidity
+pragma solidity ^0.8.0;
+
 (bool ok, bytes memory data) = token.staticcall(abi.encodeWithSignature("balanceOf(address)", user));
 require(ok && data.length == 32, "bad returndata");
 uint256 bal = abi.decode(data, (uint256));

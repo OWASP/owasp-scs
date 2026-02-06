@@ -23,6 +23,8 @@ To mitigate TOD vulnerabilities, ensure that the contract's logic does not depen
 
 ### Vulnerable Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract TODExample {
     address public winner;
     
@@ -34,6 +36,8 @@ contract TODExample {
 ```
 ### Fixed Contract Example
 ```solidity
+pragma solidity ^0.8.0;
+
 contract FixedTODExample {
     address public winner;
     uint public highestBid;
