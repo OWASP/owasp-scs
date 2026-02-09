@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if page.meta.source %}
+    <span>Available at: </span><a href="{{ page.meta.source }}"> {{ page.meta.source }}</a>
+    <br><br>
+    {% endif %}
+
+    {% if page.meta.last_updated %}
+    <em><small style="color: darkgrey;">Last updated: {{ page.meta.last_updated }}</small></em>
+    <br><br>
+    {% endif %}
+
+    <script>
+        SCSVS_COLORS = {
+            "SCSVS-ARCH": "7D9AE6",
+            "SCSVS-CODE": "5FACD3",
+            "SCSVS-GOV": "F4A261",
+            "SCSVS-AUTH": "317CC0",
+            "SCSVS-COMM": "6FAF97",
+            "SCSVS-CRYPTO": "F65928",
+            "SCSVS-ORACLE": "D77A61",
+            "SCSVS-BLOCK": "9299A4",
+            "SCSVS-BRIDGE": "BF71B1",
+            "SCSVS-DEFI": "FCCF4D",
+            "SCSVS-COMP": "4F82B9"
+        }
+
+        var keys = Object.keys(SCSVS_COLORS);
+        var elements = document.querySelectorAll('.md-nav__link, .md-tag');
+        
+        if (elements.length > 0) {
+            for (const element of elements) {
+                if (element.innerHTML.trim().includes("SCSVS-")) {
+                    var elementKey = element.innerHTML.trim();
+                    if (elementKey.includes("\n")) {
+                        for (const part of elementKey.split('\n')) {
+                            if (part.trim().includes("SCSVS-")) {
+                                elementKey = RegExp(/SCSVS-(ARCH|CODE|GOV|AUTH|COMM|CRYPTO|ORACLE|BLOCK|BRIDGE|DEFI|COMP)(-\d)?/).exec(part.trim())[0];
+                            }
+                        }
+                    }
+                    if (keys.some(key => elementKey.startsWith(key))) {
+                        var color = "";
+                        if (elementKey.split("-").length === 3) {
+                            var keyParts = elementKey.split('-');
+                            var category = keyParts.slice(0, keyParts.length - 1).join('-');
+                            
+                            if (element.classList.contains("md-tag")) {
+                                color = SCSVS_COLORS[category];
+
+                            }
+                            else {
+                                color = SCSVS_COLORS[category] + "b0";
+                                element.style.margin = "0.5em 0.5em 0.5em 0.2em";
+                                element.style.borderRadius = "5px";
+                                element.style.padding = "0.3em";
+                                if (element.classList.contains("md-nav__link--active")) {
+                                    element.style.height = "6em";
+                                }
+                            }
+                        }
+                        else {
+                            color = SCSVS_COLORS[elementKey];
+                            element.style.fontWeight = "bold";
+                            
+                            if (!element.classList.contains("scsvs-category")) {
+                                element.style.fontSize = "1.2em";
+                            }
+                            element.style.margin = "0.5em 0.5em 0.5em 0.2em";
+                            element.style.borderRadius = "5px";
+                            element.style.padding = "0.3em";
+                            if (element.classList.contains("md-nav__link--active")) {
+                                element.style.height = "6em";
+                            }
+                        }
+                        element.style.backgroundColor = "#" + color;
+                        element.style.color = "white";
+                    }
+                }
+                if (element.innerHTML.trim().includes("SCSTG-")) {
+                    element.style.color = "#aaaaaa";
+                    // add tooltip to say that these IDs are deprecated
+                    element.title = "This ID is deprecated. Please use the SCSVS v2 IDs instead.";
+                }
+            }
+        }
+    </script>
+
+    {{ super() }}
+{% endblock %}
+

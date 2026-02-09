@@ -1,0 +1,3208 @@
+metadata:
+  title: OWASP SCS Checklist
+  version: v1.0
+  description: Interactive security checklist for verifying compliance with OWASP
+    SCSVS controls.
+categories:
+- id: SCSVS-ARCH
+  title: Architecture, Design, and Threat Modeling
+  slug: arch
+  icon: material/domain
+  color: cyan
+  description: This group focuses on the design and architecture of smart contracts,
+    ensuring that they are secure by design and built with modularity, upgradability,
+    and separation of concerns in mind. It emphasizes the importance of threat modeling
+    to identify and mitigate risks early in the design phase.
+  items:
+  - id: ARCH-001
+    point: Verify modularity and upgradability.
+    priority: Optional
+    level: L2
+    severity: Best Practice
+    details: '- Are the smart contracts using import statements to include other contracts
+      and libraries?
+
+      - Are functions within the contract logically separated and grouped into different
+      contracts or libraries?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0005
+    rid: S1.1.A1
+  - id: ARCH-002
+    point: Ensure secure and controlled updates.
+    priority: Optional
+    level: L2
+    severity: High
+    details: '- Is the contract using a proxy pattern (e.g., Transparent Proxy or
+      UUPS Proxy) for upgradability?
+
+      - Are the upgradeTo or similar functions protected with onlyOwner or onlyAdmin
+      modifiers?
+
+      - Are there migration functions to safely transfer state variables to the new
+      contract version?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0006
+    rid: S1.1.A2
+  - id: ARCH-003
+    point: Check module boundaries and dependencies.
+    priority: Optional
+    level: L2
+    severity: Medium
+    details: '- Are interfaces and abstract contracts used to define boundaries between
+      modules?
+
+      - Are external calls to other modules made through well-defined interfaces?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0006
+    rid: S1.1.A3
+  - id: ARCH-004
+    point: Ensure changes to storage variables are managed.
+    priority: Optional
+    level: L2
+    severity: High
+    details: '- Is there a well-documented storage layout for the contract?
+
+      - Are storage variables added in storage gaps to avoid conflicts?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0006
+    rid: S1.1.A4
+  - id: ARCH-005
+    point: Verify critical privilege transfers.
+    priority: Optional
+    level: L2
+    severity: Critical
+    details: '- Is there a two-step process for transferring ownership using transferOwnership
+      and claimOwnership?
+
+      - Are there events emitted for each step of the transfer process?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0006
+    rid: S1.1.A5
+  - id: ARCH-006
+    point: Verify data location handling in function overrides.
+    priority: Optional
+    level: L2
+    severity: High
+    details: '- Are memory and storage keywords correctly used for parameters and
+      return variables in overridden functions?
+
+      - Are there tests covering function overrides to ensure no invalid virtual function
+      calls?'
+    control: SCSVS-ARCH-1
+    test: SCSTG-TEST-0006
+    rid: S1.1.A6
+  - id: ARCH-007
+    point: Verify separation of different functionalities.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are the contracts modular with clearly defined responsibilities?
+
+      - Is there a single responsibility per contract or module?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B1
+  - id: ARCH-008
+    point: Ensure minimal dependencies between modules.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are modules loosely coupled?
+
+      - Is each module''s responsibility clearly defined and limited?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B2
+  - id: ARCH-009
+    point: Check for cross-module dependencies.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are there dependencies that could introduce security vulnerabilities?
+
+      - Is each module''s responsibility clearly defined and limited?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B3
+  - id: ARCH-010
+    point: Ensure consistent operation during privilege transfers.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are edge cases considered during privilege transfers?
+
+      - Is there a fallback mechanism in case of transfer failure?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B4
+  - id: ARCH-011
+    point: Verify proxy contract initialization.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are proxy contracts using the onlyInitializing modifier?
+
+      - Is there a check to prevent re-initialization?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B5
+  - id: ARCH-012
+    point: Verify storage layout consistency.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are storage layouts compatible across different contract versions?
+
+      - Is there documentation for storage layout changes?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B6
+  - id: ARCH-013
+    point: Ensure immutable variable consistency.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are immutable variables properly defined and documented?
+
+      - Is there a verification process for consistency across upgrades?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B7
+  - id: ARCH-014
+    point: Verify consistency in logic implementation.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is logic implemented consistently across the contract?
+
+      - Is there a review process for verifying consistency?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B8
+  - id: ARCH-015
+    point: Ensure separate handling of ETH and WETH.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are ETH and WETH treated as distinct entities?
+
+      - Are there checks in place to handle ETH and WETH appropriately?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B9
+  - id: ARCH-016
+    point: Verify proxy setup for contracts with constructors.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are contracts designed without constructors for proxy setups?
+
+      - Is initializer logic implemented and verified?'
+    control: SCSVS-ARCH-1
+    rid: S1.1.B10
+  - id: ARCH-017
+    point: Verify implementation of upgrade mechanisms.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the contract using a well-known proxy pattern such as Transparent
+      Proxy or UUPS Proxy?
+
+      - Are there unit tests verifying the upgrade functionality?
+
+      - Is the upgrade mechanism designed to be easily extensible for future upgrades?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A1
+  - id: ARCH-018
+    point: Ensure safeguards against unauthorized upgrades.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is the upgradeTo function protected by onlyOwner or onlyAdmin modifiers?
+
+      - Are access controls and ownership mechanisms properly tested and reviewed?
+
+      - Are multi-signature wallets or other advanced access control mechanisms used
+      for upgrade authorization?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A2
+  - id: ARCH-019
+    point: Review and document the upgrade mechanism.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Is the upgrade mechanism thoroughly documented in the project documentation?
+
+      - Has the upgrade mechanism undergone a formal security audit?
+
+      - Are there guidelines and best practices documented for performing upgrades?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A3
+  - id: ARCH-020
+    point: Verify consistency of immutable variables.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are immutable variables defined and documented across all contract
+      versions?
+
+      - Is there a validation process to ensure consistency of immutable variables
+      during upgrades?
+
+      - Are there automated tests checking the state of immutable variables before
+      and after upgrades?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A4
+  - id: ARCH-021
+    point: Verify use of selfdestruct and delegatecall in proxy setup.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a review process for identifying and mitigating risks associated
+      with selfdestruct and delegatecall?
+
+      - Are there unit tests covering scenarios involving selfdestruct and delegatecall?
+
+      - Is the use of selfdestruct and delegatecall documented and justified in the
+      contract?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A5
+  - id: ARCH-022
+    point: Protect UUPSUpgradeable contracts.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are UUPSUpgradeable contracts tested for initialization-related vulnerabilities?
+
+      - Is there a mechanism to ensure that implementation contracts are properly
+      initialized before use?
+
+      - Are there security reviews focused on initialization and upgrade vulnerabilities
+      in UUPSUpgradeable contracts?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.A6
+  - id: ARCH-023
+    point: Verify handling of deprecated contract versions.
+    priority: Essential
+    level: L1
+    severity: Low
+    details: '- Are deprecated contract versions clearly marked with appropriate deprecation
+      notices in the code and documentation?
+
+      - Is there a mechanism to disable functionality in deprecated contracts while
+      maintaining state integrity?
+
+      - Are deprecated contracts archived and isolated from the main deployment pipeline
+      to prevent accidental usage?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.B1
+  - id: ARCH-024
+    point: Ensure restriction or disabling of access to deprecated versions.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are access controls updated to restrict interactions with deprecated
+      contract versions?
+
+      - Is there a revocation process in place to revoke permissions or keys associated
+      with deprecated contracts?
+
+      - Are deprecated contracts audited to ensure no critical functions remain accessible
+      post-deprecation?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.B2
+  - id: ARCH-025
+    point: Check security of migration paths from deprecated versions.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a documented and tested migration plan for transitioning
+      from deprecated to new contract versions?
+
+      - Are migration scripts and tools audited for security vulnerabilities that
+      could compromise the migration process?
+
+      - Is there a rollback mechanism in case the migration encounters issues, ensuring
+      no loss of state or functionality?'
+    control: SCSVS-ARCH-2
+    rid: S1.2.B3
+  - id: ARCH-026
+    point: Verify implementation of high-priority risk mitigations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are there specific mitigations in place for reentrancy attacks, such
+      as the use of checks-effects-interactions pattern or reentrancy guards?
+
+      - Are overflow and underflow checks implemented using SafeMath or Solidity''s
+      built-in overflow protection?
+
+      - Are access controls and role-based permissions thoroughly tested to prevent
+      unauthorized access?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.C1
+  - id: ARCH-027
+    point: Ensure documentation and testing of mitigation strategies.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are all mitigation strategies documented with clear explanations of
+      how they address specific vulnerabilities?
+
+      - Are there unit and integration tests specifically designed to validate the
+      effectiveness of each mitigation strategy?
+
+      - Is there a process for continuously updating the documentation and tests as
+      new threats and mitigations are identified?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.C2
+  - id: ARCH-028
+    point: Review and validate effectiveness of implemented mitigations.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are periodic security audits conducted to review and validate the
+      effectiveness of implemented mitigations?
+
+      - Are there automated tools and scripts in place to continuously monitor the
+      security posture of the smart contracts?
+
+      - Is there a feedback loop for integrating audit findings and monitoring results
+      into the mitigation strategy?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.C3
+  - id: ARCH-029
+    point: Understanding Protocol Actors
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Have all actors and their interactions within the protocol been clearly
+      identified and documented?
+
+      - Are the roles and permissions of each actor clearly defined and appropriate?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.G1
+  - id: ARCH-030
+    point: Verify Function Overriding
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract inherit functions from parent contracts?
+
+      - Are functions that override parent contract functions explicitly marked with
+      the override keyword?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.G1
+  - id: ARCH-031
+    point: Verify Sybil Attack Protection
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the protocol''s quorum mechanism or rewarding system designed to
+      resist Sybil attacks? Verify the criteria used for participation or rewards.
+
+      - How does the contract ensure that actions or decisions are not unduly influenced
+      by Sybil attacks?
+
+      - Are there checks or balances in place to validate the legitimacy of addresses
+      participating in quorum or rewarding mechanisms?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.G3
+  - id: ARCH-032
+    point: Verify Front-Running Protection for Initializer
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract use a factory pattern or other mechanism to prevent
+      front-running of the initializer function?
+
+      - Is the initializer function protected from being called by unauthorized parties
+      immediately after deployment?
+
+      - Have you implemented safeguards to ensure the initializer cannot be front-run
+      to alter critical access controls?'
+    control: SCSVS-ARCH-3
+    rid: S1.3.G4
+- id: SCSVS-CODE
+  title: Policies, Procedures, and Code Management
+  slug: code
+  icon: material/code-braces
+  color: blue
+  description: TBD
+  items:
+  - id: CODE-001
+    point: Ensure adherence to latest compiler recommendations.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are the smart contracts compiled using the latest stable version of
+      the Solidity compiler?
+
+      - Are there automated checks in the CI/CD pipeline to enforce the use of specific
+      compiler versions?
+
+      - Is there documentation and enforcement of the project''s policy on compiler
+      versioning?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.A1
+  - id: CODE-002
+    point: Verify non-usage of deprecated functions.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are deprecated functions identified and removed from the codebase
+      during code reviews?
+
+      - Are automated static analysis tools used to detect the usage of deprecated
+      functions?
+
+      - Is there a process to update the codebase to replace deprecated functions
+      with their recommended alternatives?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.A2
+  - id: CODE-003
+    point: Independent expert code review.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are pull requests (PRs) for smart contract changes reviewed and approved
+      by at least two developers with smart contract security expertise?
+
+      - Is there documentation of the review process, including comments and approvals
+      from the reviewers?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.B1
+  - id: CODE-004
+    point: Incorporate automated static analysis tools.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are automated static analysis tools, such as MythX or Slither, integrated
+      into the CI/CD pipeline for smart contract code reviews?
+
+      - Are all issues flagged by these tools documented and resolved or justified
+      before merging the code?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.B2
+  - id: CODE-005
+    point: Thorough analysis for vulnerabilities.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are code reviews checking for potential reentrancy vulnerabilities,
+      such as unprotected external calls within functions?
+
+      - Are integer overflow and underflow vulnerabilities being checked using SafeMath
+      or Solidity''s built-in overflow protection?
+
+      - Is the code reviewed for proper access control mechanisms, ensuring that only
+      authorized addresses can perform sensitive operations?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.B3
+  - id: CODE-006
+    point: Adherence to development standards.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Are smart contracts using SafeMath libraries for all arithmetic operations
+      to prevent overflows and underflows?
+
+      - Is the use of design patterns like checks-effects-interactions consistently
+      applied to mitigate reentrancy attacks?
+
+      - Are fallback and receive functions implemented securely, with proper checks
+      to prevent misuse?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.B4
+  - id: CODE-007
+    point: Checklist for common vulnerabilities.
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Is there a comprehensive checklist of common smart contract vulnerabilities
+      (e.g., reentrancy, integer overflows, unchecked external calls) used during
+      code reviews?
+
+      - Are all items on the checklist reviewed and marked as addressed in the code
+      review process?
+
+      - Are the checklist and review process updated regularly to incorporate new
+      vulnerabilities and best practices?'
+    control: SCSVS-CODE-1
+    test: TBD
+    rid: S2.1.B5
+  - id: CODE-008
+    point: Verify Inherited Function Implementation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Have all required functions specified by parent contracts been implemented
+      in the derived contract?
+
+      - Are there any missing implementations that could affect the functionality
+      or purpose of inheritance?
+
+      - Is the inherited contract’s behavior consistent with the parent contract’s
+      expectations?'
+    control: SCSVS-CODE-1
+    rid: S2.1.G1
+  - id: CODE-009
+    point: Verify Interface Implementation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract correctly implement all functions defined in the
+      interface it adheres to?
+
+      - Have you verified that the interface methods are fully implemented and operational?
+
+      - Are there any discrepancies between the interface specification and the contract
+      implementation?'
+    control: SCSVS-CODE-1
+    rid: S2.1.G2
+  - id: CODE-010
+    point: Verify Correct Inheritance Order
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the inheritance chain ordered from the most base-like contract
+      to the most derived contract?
+
+      - Have you verified that the inheritance order does not affect variable initialization
+      or functionality?
+
+      - Are there any issues with storage layout or state variable initialization
+      due to incorrect inheritance order?'
+    control: SCSVS-CODE-1
+    rid: S2.1.G3
+  - id: CODE-011
+    point: Verify Initializable Usage
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract use the onlyInitializing modifier if it is intended
+      to be inherited?
+
+      - Is the initializer modifier used appropriately and not exposed to inherited
+      contracts?
+
+      - Have you ensured that initialization is restricted correctly to avoid unauthorized
+      access?'
+    control: SCSVS-CODE-1
+    rid: S2.1.G4
+  - id: CODE-012
+    point: Verify Comment Accuracy
+    priority: Essential
+    level: L1
+    severity: Low
+    details: '- Are comments and documentation reviewed and updated regularly to match
+      the current implementation?
+
+      - Does the code review process include verification of comment accuracy and
+      relevance?
+
+      - Are there automated tools or practices in place to flag outdated or inconsistent
+      comments?'
+    control: SCSVS-CODE-1
+    rid: S2.1.G5
+- id: SCSVS-GOV
+  title: Business Logic and Economic Security
+  slug: gov
+  icon: material/gavel
+  color: purple
+  description: TBD
+  items:
+  - id: GOV-001
+    point: Verify correct handling of operational pauses and liquidations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol prevent liquidations during operational pauses or
+      interruptions?
+
+      - Are there mechanisms to handle user intentions to increase collateral during
+      such pauses?
+
+      - How does the system manage collateral and liquidation processes during temporary
+      pauses?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G1
+  - id: GOV-002
+    point: Verify resumption of paused liquidations without issues.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- What specific procedures are in place for resuming liquidations after
+      a pause?
+
+      - How is solvency monitored and maintained during and after a liquidation pause?
+
+      - Are there mechanisms to ensure that resumed liquidations do not disrupt system
+      stability?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G2
+  - id: GOV-003
+    point: Verify fair distribution of small position incentives.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Does the protocol provide adequate incentives for liquidators to address
+      small positions?
+
+      - How are incentives structured to ensure small positions are effectively managed?
+
+      - Are there measures in place to prevent neglect of small liquidation opportunities?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G3
+  - id: GOV-004
+    point: Verify correct interest rate calculations in LTV computations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is accrued interest included in the Loan-to-Value (LTV) calculations?
+
+      - How does the system ensure that interest is factored into credit evaluations
+      accurately?
+
+      - Are there checks to confirm that interest calculations do not affect LTV assessments?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G4
+  - id: GOV-005
+    point: Verify consistency in liquidation and repayment logic.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can the liquidation and repaying mechanisms be independently enabled
+      or disabled?
+
+      - What controls are in place to ensure consistent operation of both mechanisms?
+
+      - How does the protocol prevent operational discrepancies between liquidation
+      and repaying functions?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G5
+  - id: GOV-006
+    point: Verify accuracy of liquidation return calculations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a mechanism to ensure that liquidation returns are consistent
+      and predictable?
+
+      - How does the protocol handle discrepancies in liquidation returns?
+
+      - What steps are taken to ensure that liquidators receive the expected returns?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G6
+  - id: GOV-007
+    point: Verify mitigation of perpetual debt risks.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can users be trapped in perpetual debt due to protocol conditions
+      or system design?
+
+      - What safeguards are in place to prevent users from being unable to repay their
+      loans?
+
+      - How does the protocol address situations where repayment becomes unfeasible?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G7
+  - id: GOV-008
+    point: Verify prevention of arbitrary exchange rate settings in withdrawals.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can an arbitrary exchange rate be set during the processing of queued
+      withdrawals?
+
+      - Does the protocol ensure that the exchange rate used during withdrawal matches
+      the rate at the time of withdrawal request?
+
+      - Are there safeguards to prevent manipulation of the exchange rate during withdrawal
+      processing?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G8
+  - id: GOV-009
+    point: Verify security of time lock amplification.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can users extend another user’s time lock duration by stacking tokens
+      on their behalf?
+
+      - If token stacking is possible, are there checks to prevent unintended extensions
+      of time locks?
+
+      - Are there controls to ensure that time locks cannot be manipulated through
+      token stacking?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G9
+  - id: GOV-010
+    point: Verify fairness of reward distribution mechanisms.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can reward distribution be manipulated to delay or accelerate payouts?
+
+      - If rewards are distributed, are there controls to ensure timely and correct
+      distribution?
+
+      - Are there mechanisms to prevent premature or delayed reward claims?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G10
+  - id: GOV-011
+    point: Verify security of update rewards function.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the updateRewards function get called appropriately before relevant
+      operations?
+
+      - Can the reward update function be overlooked or missed in any use-case scenarios?
+
+      - Are there checks to ensure that rewards are up-to-date in all relevant cases?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G11
+  - id: GOV-012
+    point: Verify financial operation consistency.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does calling a function multiple times with smaller amounts produce
+      the same contract state as calling it once with the aggregate amount?
+
+      - Are there inconsistencies or unintended discrepancies when performing financial
+      operations in parts versus as a whole?
+
+      - If variations exist, are they intentional and well-documented, or do they
+      indicate potential issues?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G12
+  - id: GOV-013
+    point: Verify correct enforcement of AAVE protocol pauses.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- What happens to protocol interactions if the AAVE protocol is paused?
+
+      - Are there contingency plans or alternative mechanisms in place if AAVE is
+      paused?
+
+      - Does the protocol handle the paused state of AAVE without causing disruptions?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G13
+  - id: GOV-014
+    point: Verify removal of deprecated pools.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- What mechanisms are in place to handle pools that become deprecated?
+
+      - If a pool is deprecated, how does the protocol adjust or manage its operations?
+
+      - Are there fallback strategies for deprecated pools to avoid service interruptions?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G14
+  - id: GOV-015
+    point: Verify correct classification of eMode category assets.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- What are the rules or limitations when lending or borrowing assets
+      within the same eMode category?
+
+      - Does the protocol handle transactions involving assets in the same eMode category
+      without issues?
+
+      - Are there constraints in place for interacting with assets in the same eMode
+      category?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G15
+  - id: GOV-016
+    point: Verify accuracy of flash loan pool index calculations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Do flash loans impact the pool index, and if so, how is this managed?
+
+      - Are there mechanisms to mitigate the effects of flash loans on the pool index?
+
+      - How does the protocol address the maximum number of flash loans per block
+      affecting the pool index?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G16
+  - id: GOV-017
+    point: Verify correct implementation of on-chain slippage calculations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is slippage calculated on-chain?
+
+      - Can users specify the slippage parameter in the asset amount?
+
+      - What measures are in place to ensure accurate slippage calculation?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G17
+  - id: GOV-018
+    point: Verify minimization of intermediate swap slippage.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the slippage parameter enforced at the last step before transferring
+      funds to users?
+
+      - How is slippage enforced during the final fund transfer step?
+
+      - Does the system check the slippage parameter before completing transactions?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G18
+  - id: GOV-019
+    point: Verify enforcement of zero denominator checks.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a non-zero check for the denominator before division or modulo
+      operations?
+
+      - How does the system handle division or modulo by zero in Yul/inline assembly?
+
+      - What measures are in place to prevent division or modulo by zero?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G19
+  - id: GOV-020
+    point: Verify Two Transaction Actions Frontrunning
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are two-transaction actions designed with measures to prevent frontrunning?
+      Verify if there are checks or locks between transactions.
+
+      - How does the protocol ensure that critical two-step actions are not vulnerable
+      to attack during the intermediary state?
+
+      - Are there safeguards to prevent malicious actors from intervening between
+      the two transactions?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G20
+  - id: GOV-021
+    point: Verify Dust Transactions Reversion
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Can users front-run transactions with negligible amounts to cause
+      reverts? Verify the contract’s handling of such scenarios.
+
+      - Are there checks to prevent transactions with minimal amounts from impacting
+      the contract''s state or execution flow?
+
+      - How does the contract manage or mitigate the effects of dust transactions
+      on legitimate operations?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G21
+  - id: GOV-022
+    point: Verify Unexpected Rewards Handling
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are there additional rewards accruing for user deposited assets?
+
+      - Does the protocol track and manage all potential rewards for user deposits?
+
+      - Are users provided with clear methods to claim or manage unexpected rewards?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G22
+  - id: GOV-023
+    point: Ensure Stability for Pegged Tokens
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are the protocol tokens pegged to any other asset?
+
+      - Have you tested the protocol’s behavior when the pegged asset depegs?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G23
+  - id: GOV-024
+    point: Verify Visibility Modifier
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is the visibility of each function limited to the strictest level
+      necessary (private or internal)?
+
+      - Are there any functions that are currently public or external but could be
+      restricted to internal or private?
+
+      - Does the contract expose any sensitive operations or state changes to external
+      parties that should be restricted?'
+    control: SCSVS-GOV-1
+    rid: S3.1.G24
+  - id: GOV-025
+    point: Verify ERC20 Compliance
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are the token''s transfer functions (transfer, transferFrom) fully
+      compliant with the EIP20 standard, including returning a boolean flag and reverting
+      on failure?
+
+      - Are safe transfer functions (safeTransfer, safeTransferFrom) consistently
+      used throughout the contract?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G1
+  - id: GOV-026
+    point: Verify Approval Race Condition
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a risk of race conditions in the approval process that could
+      lead to unexpected fund loss for the signer?
+
+      - Are there mechanisms in place to prevent double-spending or front-running
+      attacks?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G2
+  - id: GOV-027
+    point: Verify Decimal Discrepancies
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Could differences in the number of decimals between various ERC20
+      tokens lead to calculation or interpretation errors?
+
+      - Are there any conversions or calculations that might be affected by differing
+      decimal places?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G3
+  - id: GOV-028
+    point: Verify Caller Checking
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the function restrict calls to only externally owned accounts
+      (EOA) or only contract addresses as intended?
+
+      - Are there access control checks in place to differentiate between EOA and
+      contract callers when required?
+
+      - Has the protocol been reviewed to ensure it meets the intended caller requirements?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G4
+  - id: GOV-029
+    point: Verify Address Checks
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the token implement any forms of address whitelisting, blacklisting,
+      or validation checks that could introduce issues?
+
+      - Are there any hardcoded addresses in the contract that could pose security
+      risks?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G5
+  - id: GOV-030
+    point: Verify Transfer Fees
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the token impose a fee on transfers, resulting in the receiver
+      getting less than the specified amount?
+
+      - How are transfer fees calculated and collected?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G6
+  - id: GOV-031
+    point: Verify ERC777 Compatibility
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can the token also function as an ERC777 token, which includes hooks
+      that execute code before and after transfers, potentially leading to reentrancy
+      attacks?
+
+      - Are there safeguards in place to handle the hooks securely?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G7
+  - id: GOV-032
+    point: Verify Solmate's ERC20.safeTransferLib Usage
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol utilize Solmate''s ERC20.safeTransferLib, which
+      does not check for the existence of a contract and could be exploited for honeypot
+      attacks?
+
+      - Are there alternative libraries or methods that could enhance security?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G8
+  - id: GOV-033
+    point: Verify Zero Amount Transfers
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- What is the token''s behavior when transferring a zero amount? Does
+      it revert, and could this cause issues in certain integrations and operations?
+
+      - Are there any edge cases related to zero-amount transfers?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G9
+  - id: GOV-034
+    point: Verify ERC2612 Implementation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the token an ERC2612 implementation, and is the DOMAIN_SEPARATOR()
+      function properly implemented to avoid vulnerabilities?
+
+      - How is the permit() function implemented, and are there any potential issues?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G10
+  - id: GOV-035
+    point: Verify Permit Function Replay Protection
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the permit() function have adequate replay protection, or could
+      someone reuse a permit signature multiple times to authorize multiple transfers?
+
+      - Is the nonces mapping updated correctly, and does the implementation properly
+      prevent replays?'
+    control: SCSVS-GOV-2
+    rid: S3.2.G11
+  - id: GOV-036
+    point: Verify Token Donation Manipulation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract rely on balance or balanceOf for determining token
+      balances or ownership? If so, are there safeguards against manipulation through
+      token donations?
+
+      - Are token balances verified against internal accounting records rather than
+      solely using balanceOf?
+
+      - Does the contract implement additional validation to ensure donated tokens
+      do not alter accounting in unexpected ways?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G1
+  - id: GOV-037
+    point: Detect On-Chain Slippage Manipulation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is slippage calculated directly on-chain?
+
+      - Can the slippage calculation be influenced or manipulated by attackers?
+
+      - Is there a mechanism to allow users to specify slippage based on off-chain
+      calculations?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G2
+  - id: GOV-038
+    point: Ensure Slippage is Enforced at All Stages
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is the slippage parameter enforced at all stages of the swap process,
+      including the final step?
+
+      - Can users receive less than the specified minimum if the final step does not
+      enforce slippage?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G3
+  - id: GOV-039
+    point: Verify Initial Deposit Behavior
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the initial deposit set parameters or conditions for subsequent
+      deposits?
+
+      - Have you tested to ensure that the first deposit initializes parameters correctly?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G4
+  - id: GOV-040
+    point: Verify Read-Only Reentrancy
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are there view functions that could be reentered in a way that might
+      return stale or inconsistent values?
+
+      - Does the contract have measures to prevent reentrancy issues in view functions,
+      such as extending reentrancy guards?
+
+      - How does the protocol ensure that read-only functions do not lead to inconsistent
+      state or unintended actions?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G5
+  - id: GOV-041
+    point: Prevent Flashloan-Based Withdrawals
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is it possible to withdraw in the same transaction as the deposit?
+
+      - Does the protocol have protections against flashloan-based deposit-harvest-withdraw
+      cycles?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G6
+  - id: GOV-042
+    point: Ensure Liquidation Resilience in Volatile Markets
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the liquidation mechanism include logic to handle extreme price
+      drops effectively?
+
+      - Is there a safeguard to ensure liquidation occurs even when price volatility
+      is high?
+
+      - How is the liquidation trigger threshold adjusted during rapid market downturns?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G7
+  - id: GOV-043
+    point: Manage Risks in Liquidation Processes
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a mechanism to automatically trigger liquidation if a position''s
+      collateral falls below the required threshold?
+
+      - Are there specific conditions that can prevent liquidation, and how are these
+      managed?
+
+      - How does the system handle outstanding loans when the collateral value drops
+      significantly?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G8
+  - id: GOV-044
+    point: Prevent Self-Liquidation Abuse
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there validation to prevent users from exploiting self-liquidation
+      for profit?
+
+      - How are self-liquidation scenarios tested for potential vulnerabilities?
+
+      - Are there limits or conditions imposed on self-liquidation to prevent abuse?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G9
+  - id: GOV-045
+    point: Verify Parent Contract Visibility
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Have you reviewed the visibility of functions in parent contracts
+      to ensure they are appropriately exposed?
+
+      - Are there any public or external functions in parent contracts that should
+      be restricted or hidden in the derived contract?
+
+      - Is the visibility of inherited functions aligned with the desired access levels?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G10
+  - id: GOV-046
+    point: Verify Commit Reveal Scheme
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol implement a commit-reveal scheme to protect against
+      front-running? Verify the presence of both commit and reveal phases.
+
+      - How does the protocol ensure that the commit-reveal pattern is followed to
+      prevent adversaries from gaining insight into actions before they are finalized?
+
+      - Are there mechanisms in place to ensure confidentiality and integrity of actions
+      until the reveal phase?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G11
+  - id: GOV-047
+    point: Ensure Dynamic Slippage Implementation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is slippage implemented as a hardcoded value in the contract?
+
+      - Have you ensured that slippage can be adjusted dynamically based on market
+      conditions?
+
+      - Is there functionality allowing users to specify slippage parameters based
+      on their own calculations?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G12
+  - id: GOV-048
+    point: Validate Deadline Protection Mechanisms
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol implement deadline protection to prevent transactions
+      from being manipulated?
+
+      - Is there an option for users to set deadlines for their transactions?
+
+      - Have you validated that transactions cannot be processed outside the specified
+      deadline?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G13
+  - id: GOV-049
+    point: Ensure Proper Reserve Validation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a validation check in place for protocol reserves?
+
+      - Have you ensured that reserves are verified before being used or lent out?
+
+      - Does the protocol include mechanisms to safeguard against reserve depletion?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G14
+  - id: GOV-050
+    point: Ensure Slippage Protection
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a mechanism to protect against excessive slippage in trades?
+
+      - Can users specify their own slippage parameters to manage risk?
+
+      - Are there safeguards to prevent losses from large price deviations?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G15
+  - id: GOV-051
+    point: Ensure Reliable Min Amount Out Calculation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol calculate minAmountOut before executing swaps?
+
+      - Is the source of rates for minAmountOut reliable and protected from manipulation?
+
+      - Have you validated the minAmountOut logic to prevent unfavorable rates and
+      potential vulnerabilities?'
+    control: SCSVS-GOV-3
+    rid: S3.3.G16
+- id: SCSVS-AUTH
+  title: Access Control and Authentication
+  slug: auth
+  icon: material/shield-account
+  color: green
+  description: TBD
+  items:
+  - id: AUTH-001
+    point: Verify Authorization Using msg.sender
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract use tx.origin in validation? If yes, this must be
+      avoided as tx.origin phishing attacks are possible and can be exploited.
+
+      - Are proper authorization mechanisms in place using msg.sender to ensure secure
+      and accurate access control?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G1
+  - id: AUTH-002
+    point: Verify Role-Based Access Control Implementation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are there different roles that have been assigned and have different
+      access control mechanisms?
+
+      - If yes, check and verify that correct access control mechanisms are implemented
+      and least privilege policy is implemented.'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G2
+  - id: AUTH-003
+    point: Verify Modifier Logic
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are all custom modifiers correctly implemented and applied to the
+      intended functions?
+
+      - Are there any modifiers that contain redundant or conflicting logic?
+
+      - Have the modifiers been reviewed and tested for potential vulnerabilities?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G3
+  - id: AUTH-004
+    point: Verify debit function validation.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the _debitFrom function properly verify token ownership and transfer
+      permissions?
+
+      - Are there any gaps in validation that could impact token security?
+
+      - How does the function ensure that only authorized transfers occur?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G4
+  - id: AUTH-005
+    point: Verify presence of required code components.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is it checked if the target address of a call has code deployed?
+
+      - How does the system handle calls to addresses without code?
+
+      - What mechanisms are in place to verify code presence before making calls?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G5
+  - id: AUTH-006
+    point: Verify Access Control Implementation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are there any functions lacking access control mechanisms?
+
+      - Are there any public functions that should have a more restricted visibility
+      (e.g., internal, private)?
+
+      - Are access controls correctly implemented to prevent unauthorized access or
+      modifications?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G6
+  - id: AUTH-007
+    point: Verify Admin Asset Pull Privilege
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can the admin of the protocol pull assets from the protocol? Verify
+      the extent of the admin''s privileges and access controls.
+
+      - Are there constraints or timelocks in place to regulate admin access to protocol
+      funds?
+
+      - How does the protocol track and report admin actions that involve user funds?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G7
+  - id: AUTH-008
+    point: Verify Timelocks for Critical Functions
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are timelocks implemented for all critical functions in the smart
+      contract?
+
+      - What is the duration of the timelock for each critical function? Is it adequate
+      for review purposes?
+
+      - Can timelocks be bypassed or modified? If so, under what conditions?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G8
+  - id: AUTH-009
+    point: Verify Whitelisting Implementation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are certain addresses required to be whitelisted to interact with
+      the contract?
+
+      - Is the whitelisting mechanism properly implemented and enforced?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G9
+  - id: AUTH-010
+    point: Verify Contract Initialization Functions
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are initialization functions properly marked as internal?
+
+      - Is there a mechanism in place to ensure initialization functions cannot be
+      executed more than once?
+
+      - Are there any fallback functions that might unintentionally allow reinitialization?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G10
+  - id: AUTH-011
+    point: Verify Secure Privilege Transfer
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol allow the transfer of privileges?
+
+      - If yes, is the transfer process secure and includes a two-step (request and
+      confirmation) mechanism?
+
+      - What happens during the transfer of privileges?'
+    control: SCSVS-AUTH-1
+    rid: S4.1.G11
+  - id: AUTH-012
+    point: Verify Critical Function Access Control
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract have the specified functions?
+
+      - If yes, are proper access control measures in place?'
+    control: SCSVS-AUTH-2
+    rid: S4.2.G1
+  - id: AUTH-013
+    point: Prevent Arbitrary Calls Execution
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can the contract make arbitrary calls based on user input?
+
+      - Have you validated and sanitized user inputs to prevent executing unintended
+      calls?
+
+      - Is there a mechanism to prevent execution of arbitrary code based on user
+      input?'
+    control: SCSVS-AUTH-2
+    rid: S4.2.G2
+  - id: AUTH-014
+    point: Verify Caller Address in Callbacks
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the integrating contract verify the caller address in its callback
+      functions?
+
+      - Have you implemented checks to validate the address of the calling contract
+      in callback functions?
+
+      - Is there a review of callback logic to ensure it prevents unauthorized access
+      or manipulation?'
+    control: SCSVS-AUTH-2
+    rid: S4.2.G3
+  - id: AUTH-015
+    point: Mitigate Risks from Excessively High Allowances
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol implement safeguards against excessively high allowances?
+
+      - Is there a revert mechanism in place for overly high approval values?'
+    control: SCSVS-AUTH-2
+    rid: S4.2.G4
+- id: SCSVS-COMM
+  title: Secure Interactions and Communications
+  slug: comm
+  icon: material/communication
+  color: orange
+  description: TBD
+  items:
+  - id: COMM-001
+    point: Verify protection of exchange rates from sandwich attacks.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol allow instant withdrawals that could be exploited
+      through sandwich attacks?
+
+      - Can an attacker manipulate the exchange rate through immediate deposits and
+      withdrawals?
+
+      - Is there a mechanism to prevent front-running and back-running attacks affecting
+      ETH drainage from the protocol?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G1
+  - id: COMM-002
+    point: Verify front-running protections for oracle price updates.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can oracle price updates be front-run to manipulate outcomes?
+
+      - If oracle price updates are vulnerable to front-running, are there protections
+      in place?
+
+      - Are there mechanisms to safeguard the protocol from front-running attacks
+      on oracle price updates?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G2
+  - id: COMM-003
+    point: Verify enforcement of Balancer flash loan fees.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol currently use Balancer''s flash loans, and how are
+      potential fees handled?
+
+      - If Balancer implements flash loan fees in the future, how will the protocol
+      manage these fees?
+
+      - Are there mechanisms to ensure the repayment of fees along with the original
+      debt in the receiveFlashLoan function?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G3
+  - id: COMM-004
+    point: Verify accuracy of Balancer oracle pricing.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol rely on Balancer''s Oracle for pricing?
+
+      - If Balancer''s Oracle is used, are there safeguards against price updates
+      that do not reflect the true asset value?
+
+      - What are the potential risks of using Balancer''s Oracle, and how are they
+      mitigated?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G4
+  - id: COMM-005
+    point: Verify security of Balancer boosted pool supply calculations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol use Balancer''s Boosted Pool, and if so, does it
+      use virtualSupply correctly?
+
+      - How is the total BPT supply in circulation determined in the context of Balancer''s
+      Boosted Pool?
+
+      - Are there any discrepancies in using virtualSupply versus totalSupply?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G5
+  - id: COMM-006
+    point: Verify Balancer vault pool liquidity security.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol use Balancer vault pool liquidity status for pricing
+      or other calculations?
+
+      - How is the protocol protected against manipulation of token balances and BPT
+      supply in Balancer pools?
+
+      - Are there precautions in place to prevent inaccuracies caused by manipulation
+      of external queries?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G6
+  - id: COMM-007
+    point: Verify correct Chainlink VRF parameter configurations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are all parameters thoroughly verified before calling Chainlink VRF
+      to ensure correct results?
+
+      - What mechanisms are in place to validate parameters for Chainlink VRF calls?
+
+      - How does the protocol handle potential issues with parameter verification
+      in Chainlink VRF?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G7
+  - id: COMM-008
+    point: Verify secure Chainlink VRF subscription mechanisms.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is it ensured that sufficient LINK is maintained in the Chainlink
+      VRF subscription to avoid pending states?
+
+      - How does the protocol handle scenarios where the subscription is low on LINK?
+
+      - What measures are in place to prevent vulnerabilities related to insufficient
+      LINK in the Chainlink VRF subscription?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G8
+  - id: COMM-009
+    point: Verify security of confirmation number selection.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is the number of confirmations chosen appropriate for the chain''s
+      history and risks?
+
+      - How does the choice of confirmations address past reorg events?
+
+      - Are there any adjustments made based on the chain''s reorg vulnerabilities?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G9
+  - id: COMM-010
+    point: Verify correct cbETH rate control.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- How is control over the cbETH/ETH rate determined?
+
+      - Are there specific addresses with control due to the onlyOracle modifier?
+
+      - Can centralization risks or manipulations arise from this control?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G10
+  - id: COMM-011
+    point: Verify security of direct pool swap usage.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is pool.swap() used directly in the application?
+
+      - What security mechanisms are bypassed by using pool.swap() directly?
+
+      - Does the system use the Router contract for swaps to enhance security?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G11
+  - id: COMM-012
+    point: Verify correct use of Uniswap math libraries.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is unchecked used appropriately with Uniswap''s TickMath and FullMath
+      libraries?
+
+      - How does the application ensure compliance with Solidity version specifics
+      regarding unchecked?
+
+      - Are there any safety concerns with the current usage of unchecked?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G12
+  - id: COMM-013
+    point: Verify protection against Slot0 manipulation.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is pool.slot0 used for calculating sensitive information like current
+      price and exchange rates?
+
+      - What alternatives are used for sensitive calculations to avoid manipulation
+      risks?
+
+      - Are secure mechanisms like UniswapV3 TWAP or Chainlink Price Oracle used for
+      price and rate calculations?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G13
+  - id: COMM-014
+    point: Verify removal of hardcoded fee tiers.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is there a hard-coded fee tier parameter in swap functions?
+
+      - Can users specify the fee tier parameter when initiating Uniswap V3 swaps?
+
+      - What impact does hard-coding the fee tier have on swap functionality?'
+    control: SCSVS-COMM-1
+    rid: S5.1.G14
+  - id: COMM-015
+    point: Verify Untrusted External Contract Calls
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are there any state changes after interactions with untrusted external
+      contracts? Verify if these interactions are securely managed.
+
+      - Does the contract use the check-effects-interactions pattern or reentrancy
+      guards to handle external contract calls?
+
+      - How does the protocol handle potential issues arising from external contract
+      callbacks, such as multiple withdrawals or event order?'
+    control: SCSVS-COMM-2
+    rid: S5.2.G1
+  - id: COMM-016
+    point: Verify Input Validation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are all function inputs validated for type, range, and format before
+      processing?
+
+      - Is there validation logic for boundary values and unexpected input scenarios?
+
+      - Are there checks in place to prevent unauthorized or malicious data from being
+      processed?'
+    control: SCSVS-COMM-2
+    rid: S5.2.G2
+  - id: COMM-017
+    point: Verify Output Validation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are outputs validated for correctness and consistency before being
+      returned or used?
+
+      - Does the contract include checks to ensure outputs do not introduce security
+      vulnerabilities or logical errors?
+
+      - Is there validation to confirm that outputs are within expected ranges and
+      formats?'
+    control: SCSVS-COMM-2
+    rid: S5.2.G3
+  - id: COMM-018
+    point: Verify Price Manipulation Vectors
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- How does the protocol obtain asset prices? Verify if the method is
+      susceptible to manipulation through flash loans or donations.
+
+      - Are there external or decentralized price oracles used to mitigate risks associated
+      with price manipulation?
+
+      - Does the contract include mechanisms to verify the accuracy and integrity
+      of price data?'
+    control: SCSVS-COMM-2
+    rid: S5.2.G4
+  - id: COMM-019
+    point: Verify Arbitrary Input and Low-Level Calls
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are all low-level calls restricted or validated to prevent exploitation
+      with arbitrary user input?
+
+      - Does the contract include checks to ensure that arbitrary data used in low-level
+      calls does not lead to unintended behavior?
+
+      - Is there a mechanism to sanitize and validate user input before passing it
+      to low-level calls?'
+    control: SCSVS-COMM-3
+    rid: S5.3.G1
+  - id: COMM-020
+    point: Verify External Contract Interaction Safety
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the contract use the check-effects-interactions pattern to ensure
+      safe interactions with external contracts?
+
+      - Are there fallback mechanisms in place to handle failures or unexpected results
+      from external contract interactions?
+
+      - How does the contract ensure that external dependencies do not affect its
+      core functionality or state?'
+    control: SCSVS-COMM-3
+    rid: S5.3.G2
+- id: SCSVS-CRYPTO
+  title: Cryptographic Practices
+  slug: crypto
+  icon: material/key
+  color: amber
+  description: TBD
+  items:
+  - id: CRYP-001
+    point: Verify protection against reentrancy in reward withdrawals.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the reward or withdrawal code of the protocol handle ETH transfers
+      or NFT minting in a manner that prevents re-entrancy attacks?
+
+      - Are all state changes completed before external calls to prevent re-entrancy
+      vulnerabilities?
+
+      - Can re-entrancy be exploited in the reward distribution or withdrawal process
+      due to improper sequencing of operations?'
+    control: SCSVS-CRYPTO-1
+    rid: S6.1.G1
+  - id: CRYP-002
+    point: Verify EVM opcode compatibility.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are the EVM opcodes and operations used by the protocol compatible
+      across all targeted chains?
+
+      - What steps are taken to ensure compatibility with chains like Arbitrum and
+      Optimism?
+
+      - How does the system handle unsupported EVM operations?'
+    control: SCSVS-CRYPTO-1
+    rid: S6.1.G2
+  - id: CRYP-003
+    point: Verify Failed Transaction Replay Protection
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a mechanism in place to prevent replay attacks on failed
+      transactions? Verify the use of nonces or other protections.
+
+      - How does the contract ensure that each transaction can only be executed once,
+      even if it fails initially?
+
+      - Are there specific measures to differentiate between unique and replayed transactions?'
+    control: SCSVS-CRYPTO-2
+    rid: S6.2.G1
+  - id: CRYP-004
+    point: Verify Signature Replay Protection
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a protection mechanism to prevent signatures from being replayed
+      on different chains? Verify the use of domain separators or chain-specific parameters.
+
+      - How does the protocol ensure that signatures are only valid on the intended
+      chain?
+
+      - Are there safeguards to prevent cross-chain replay attacks on signed transactions?'
+    control: SCSVS-CRYPTO-2
+    rid: S6.2.G2
+  - id: CRYP-005
+    point: Verify Event Emitting on State Change
+    priority: Essential
+    level: L1
+    severity: Low
+    details: '- Are events emitted for all critical state changes and function executions
+      to ensure traceability?
+
+      - Is there a comprehensive list of all state-changing functions that should
+      emit events?
+
+      - Does the contract''s event logging cover edge cases and error scenarios effectively?'
+    control: SCSVS-CRYPTO-2
+    rid: S6.2.G3
+- id: SCSVS-ORACLE
+  title: Arithmetic and Logic Security
+  slug: oracle
+  icon: material/database
+  color: teal
+  description: TBD
+  items:
+  - id: ORAC-001
+    point: Verify security of lending and borrowing the same token.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are there constraints to prevent lending and borrowing the same token
+      within a single transaction?
+
+      - How does the protocol handle rapid price changes or flash loans involving
+      the same token?
+
+      - What measures are in place to prevent manipulation by exploiting lend-borrow
+      actions?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G1
+  - id: ORAC-002
+    point: Verify minimization of precision loss in calculations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol avoid precision loss in deposit, withdrawal, and
+      reward calculations?
+
+      - Are there any instances of division before multiplication or rounding errors
+      that could affect calculations?
+
+      - How does the protocol handle precision and rounding to prevent inaccuracies
+      in financial operations?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G2
+  - id: ORAC-003
+    point: Verify decimal precision consistency.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can variations in decimal precision from different price feeds lead
+      to inaccuracies?
+
+      - If decimal precision varies, does the contract handle these variations correctly?
+
+      - Are there measures to standardize decimal precision across different price
+      feeds?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G3
+  - id: ORAC-004
+    point: Verify avoidance of off-by-one errors.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can off-by-one errors occur in the contract, such as using <= instead
+      of <?
+
+      - If variables are set to the length of a list or the length minus one, is this
+      done correctly?
+
+      - Are there any potential off-by-one errors in iterations or boundary conditions?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G4
+  - id: ORAC-005
+    point: Verify prevention of rounding errors.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are there rounding errors that can be magnified or cause significant
+      issues?
+
+      - If rounding errors occur, can they be amplified through repeated function
+      invocations or specific conditions?
+
+      - Are there safeguards to prevent rounding errors from adversely affecting the
+      system or its users?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G5
+  - id: ORAC-006
+    point: Verify secure reward claims implementation.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol properly implement AAVE/COMP reward claims?
+
+      - Are there any discrepancies in the implementation of reward claims for AAVE/COMP?
+
+      - How is the accuracy of reward claims ensured and tested?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G6
+  - id: ORAC-007
+    point: Verify correct handling of request confirmation numbers.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is the request confirmation number chosen high enough to account for
+      potential chain re-orgs?
+
+      - What considerations are made to evaluate the chain''s vulnerability to re-orgs?
+
+      - Are there adjustments made to the request confirmation number based on re-org
+      risk assessments?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G7
+  - id: ORAC-008
+    point: Verify front-running protections for VRF calls.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are there measures implemented to prevent frontrunning of VRF calls?
+
+      - How does the protocol ensure user interactions are closed before initiating
+      a VRF call?
+
+      - What safeguards are in place to prevent exploitation of VRF call timing?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G8
+  - id: ORAC-009
+    point: Verify correct nonce increments in exec transactions.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the execTransactionFromModule() function increment the nonce
+      appropriately?
+
+      - What mechanisms are in place to ensure the nonce is incremented?
+
+      - Can issues arise if the nonce is not incremented in this function?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G9
+  - id: ORAC-010
+    point: Verify enforcement of Ethereum Beacon Chain penalties.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Does the application account for potential penalties or slashes from
+      validator misbehavior?
+
+      - How are these potential penalties or slashes reflected in the value of rETH?
+
+      - Are there mechanisms to manage or mitigate the impact of such penalties on
+      rETH?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G10
+  - id: ORAC-011
+    point: Verify secure management of staking rewards.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- How does the system manage rewards accrued from staking?
+
+      - Are these rewards properly accounted for in the management of rETH?
+
+      - What mechanisms are in place to ensure accurate distribution of staking rewards?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G11
+  - id: ORAC-012
+    point: Verify correct handling of Rocket Pool deposit burns.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system handle potential reverts in the burn() function when
+      there is insufficient ether in the RocketDepositPool?
+
+      - Is there a mechanism to prevent or manage failures in the burn() function?
+
+      - Can the application gracefully handle a revert due to insufficient ether?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G12
+  - id: ORAC-013
+    point: Verify validation of precompiled code return sizes.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a check on the return data size when calling precompiled
+      code?
+
+      - How does the system handle calls to precompiled code that return a size of
+      0?
+
+      - What checks are in place for detecting failures in precompiled code calls?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G13
+  - id: ORAC-014
+    point: Verify Variable Bounds Handling
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Have you ensured that variables do not exceed their bounds and cause
+      reverts, even in versions greater than 0.8.0?
+
+      - Are there explicit checks to prevent variable underflows and overflows in
+      all critical operations?
+
+      - Is there any logic to handle boundary conditions for variables to avoid unintended
+      reverts?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G14
+  - id: ORAC-015
+    point: Ensure Correct Handling of Unsigned Integer Values
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are you aware of and have you ensured that unsigned integers are never
+      assigned negative values?
+
+      - Is there validation in place to prevent negative values from being assigned
+      to unsigned integers?
+
+      - Have you reviewed all assignments to ensure that only non-negative values
+      are used for unsigned integers?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G15
+  - id: ORAC-016
+    point: Verify Unchecked Blocks Usage
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Have you reviewed all usages of the unchecked{} block to ensure they
+      are applied correctly?
+
+      - Is there a clear guarantee that no overflow or underflow occurs within unchecked{}
+      blocks?
+
+      - Are there sufficient tests to confirm that operations inside unchecked{} blocks
+      do not cause unintended behavior?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G16
+  - id: ORAC-017
+    point: Prevent Time Units Overflow
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract use time units (like days) and handle them as uint8?
+
+      - Have you verified that all calculations involving time units are checked for
+      potential overflow, considering their range?
+
+      - Are there safeguards in place to prevent overflow in time-related calculations
+      using uint8?'
+    control: SCSVS-ORACLE-1
+    rid: S7.1.G17
+  - id: ORAC-018
+    point: Verify Low Decimal Token Handling
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract handle tokens with low decimal precision appropriately?
+      Verify if rounding issues are addressed.
+
+      - Are there checks to ensure that transactions involving low decimal tokens
+      do not result in unintended failures or errors?
+
+      - How does the contract handle rounding or precision issues to maintain accurate
+      token transactions?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G1
+  - id: ORAC-019
+    point: Verify Precision in Summation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the summing of variables done accurately compared to separate calculations?
+      Verify the approach used for summation.
+
+      - How does the contract handle precision issues in financial calculations or
+      other critical computations?
+
+      - Are there tests in place to verify the accuracy of summation logic and address
+      any discrepancies?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G2
+  - id: ORAC-020
+    point: Verify Mathematical Calculation Accuracy
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Have all mathematical calculations been reviewed to ensure accuracy
+      and adherence to established rules?
+
+      - Is there a clear and documented approach to handle mathematical operations
+      in the contract?
+
+      - Are there any potential sources of error or miscalculation that need to be
+      addressed?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G3
+  - id: ORAC-021
+    point: Verify Handling of Precision Loss
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there potential for loss of precision in any calculations, especially
+      those involving frequent or large numbers?
+
+      - Are appropriate data types used to minimize precision loss and ensure accurate
+      results?
+
+      - Have rounding methods and precision handling been correctly applied and verified?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G4
+  - id: ORAC-022
+    point: Verify Safe Data Type Conversion
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Have you verified that expressions like 1 day are explicitly cast
+      to avoid unintended conversions (e.g., to uint24)?
+
+      - Are there any expressions in the contract where implicit type conversions
+      could lead to unexpected behavior or overflow?
+
+      - Is type conversion handled explicitly to prevent data loss or overflow issues?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G6
+  - id: ORAC-023
+    point: Verify Multiplication Before Division
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract ensure that multiplication occurs before division
+      in calculations to preserve precision?
+
+      - Are there any instances where division is performed before multiplication,
+      potentially causing precision loss?
+
+      - Have you reviewed all calculations to confirm that multiplication precedes
+      division where necessary?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G7
+  - id: ORAC-024
+    point: Verify Correct Rounding Direction
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the rounding direction considered and correctly applied in accounting
+      operations?
+
+      - Does the rounding direction align with the protocol’s requirements and user
+      share calculations?
+
+      - Have you verified that rounding is handled consistently across all relevant
+      operations?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G8
+  - id: ORAC-025
+    point: Verify Division by Zero Protection
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is there a check in place to prevent division by zero in any calculations?
+
+      - Have you reviewed all divisions to ensure that denominators are never zero?
+
+      - Are there safety checks implemented to handle potential division by zero scenarios?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G9
+  - id: ORAC-026
+    point: Check for Correct Inequality Usage
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- In comparisons involving < or >, have you ensured that the correct
+      operators (≤ or ≥) are used where appropriate?
+
+      - Are all edge cases covered to avoid unexpected behavior due to incorrect inequality
+      operators?
+
+      - Have you reviewed the logic to confirm that the appropriate comparison operators
+      are applied?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G10
+  - id: ORAC-027
+    point: Validate Inline Assembly Operations
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Have you thoroughly tested and verified all mathematical operations
+      performed in inline assembly?
+
+      - Is there an awareness of how inline assembly handles division by zero, overflow,
+      or underflow differently from high-level constructs?
+
+      - Are there checks in place to handle potential issues with inline assembly
+      operations?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G11
+  - id: ORAC-028
+    point: Ensure Edge Case Coverage in Calculations
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Have you tested calculations with minimum and maximum values for all
+      terms to ensure accurate outcomes?
+
+      - Are edge cases handled correctly to prevent unexpected results in complex
+      calculations?
+
+      - Is there a thorough review of calculations involving numerous terms to validate
+      behavior with extreme values?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G12
+  - id: ORAC-029
+    point: Validate Type Casting Operations
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there any forced type casting in the contract?
+
+      - Have you ensured that all forced type casting operations are validated to
+      avoid overflow or underflow issues?
+
+      - Is there a review of all type casting to confirm that values fall within the
+      acceptable range for the target type?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G13
+  - id: ORAC-030
+    point: Check for Rounding Errors in Calculations
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are rounding issues addressed in the AMM''s product constant formulas?
+
+      - Have you verified that rounding does not introduce inaccuracies in token swaps?
+
+      - Is there a review of mathematical operations to ensure proper handling of
+      rounding?'
+    control: SCSVS-ORACLE-2
+    rid: S7.2.G14
+- id: SCSVS-BLOCK
+  title: Denial of Service (DoS)
+  slug: block
+  icon: material/cube
+  color: indigo
+  description: TBD
+  items:
+  - id: BLOC-001
+    point: Verify secure iteration over operators and validators.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol avoid iterating over the entire set of operators
+      or validators to prevent gas limit issues?
+
+      - Are there mechanisms to manage large sets of operators or validators without
+      causing denial of service?
+
+      - How does the protocol handle large numbers of operators or validators to maintain
+      efficiency and avoid out-of-gas errors?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G1
+  - id: BLOC-002
+    point: Verify handling of oracle reverts.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system handle potential oracle reverts effectively?
+
+      - If an oracle revert occurs, are there safeguards to prevent Denial-of-Service
+      conditions?
+
+      - Are there alternative strategies in place to address oracle reverts?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G2
+  - id: BLOC-003
+    point: Verify blocking mechanism security.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system use blocking or non-blocking mechanisms?
+
+      - Can the use of a blocking mechanism lead to a DoS attack?
+
+      - What are the risks associated with the current mechanism used?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G3
+  - id: BLOC-004
+    point: Verify protocol stability without overreliance on reserves.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is there excessive reliance on pool reserves?
+
+      - What alternative methods or checks are implemented to mitigate risks associated
+      with pool reserves?
+
+      - Can pool reserves be manipulated through techniques like flashloans?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G4
+  - id: BLOC-005
+    point: Verify Front-Running Risk
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are there safeguards to prevent front-running attacks by ensuring
+      fair transaction processing?
+
+      - Does the protocol include measures to handle transactions in a way that mitigates
+      the risk of priority manipulation?
+
+      - Is there a mechanism to protect against attacks that exploit transaction ordering
+      or timing?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G5
+  - id: BLOC-006
+    point: Verify correct pausing functionality.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can functionality be bypassed if a related pause check is missing
+      in one of the functions?
+
+      - Are all functions that should be paused during a system-wide pause consistently
+      checked for the paused state?
+
+      - Is there a mechanism to ensure all related functions respect the pause state
+      uniformly?'
+    control: SCSVS-BLOCK-1
+    rid: S8.1.G6
+  - id: BLOC-007
+    point: Verify Queue Processing DoS Risks
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a limit on the size or number of queued transactions to prevent
+      denial of service? Verify that the contract enforces these limits.
+
+      - Does the contract implement measures to prevent abuse of queue processing,
+      such as rate limiting or prioritization?
+
+      - How does the protocol handle excessive queue sizes or frequent updates to
+      prevent system overload?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G1
+  - id: BLOC-008
+    point: Prevent Same-Block Withdrawal Attacks
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are withdrawals disabled within the same block as other significant
+      actions?
+
+      - Does the protocol prevent flashloan attacks by implementing a delay or restriction
+      on withdrawals within the same block?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G2
+  - id: BLOC-009
+    point: Verify DoS in Loops
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a potential for a Denial-of-Service (DoS) attack in loops?
+      Verify if external calls or user inputs could impact the loop execution.
+
+      - How does the contract ensure that a failure in a single iteration does not
+      affect the overall operation?
+
+      - Are there mechanisms to handle or mitigate the impact of failed or problematic
+      iterations in loops?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G3
+  - id: BLOC-010
+    point: Verify msg.value in Loop
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Is msg.value used within a loop? Verify if msg.value is accessed multiple
+      times within a loop.
+
+      - How does the contract manage msg.value to ensure consistent accounting throughout
+      the transaction?
+
+      - Are there potential issues or mistakes in accounting if msg.value is used
+      in a loop?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G7
+  - id: BLOC-011
+    point: Verify Batch Fund Transfer
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a loop to handle batch fund transfers? Verify how the mechanism
+      handles residual or leftover funds.
+
+      - How does the contract ensure that all funds are transferred correctly, including
+      any residual amounts?
+
+      - Are there specific checks or logic to handle the last transfer in a batch
+      to account for dust funds?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G8
+  - id: BLOC-012
+    point: Verify Block Timestamp Manipulation
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is block.timestamp used for critical logic where precision is crucial?
+      Verify that it is used appropriately.
+
+      - How does the contract account for potential inaccuracies or manipulations
+      in block.timestamp?
+
+      - Are there alternative mechanisms or fallback strategies used when precise
+      timing is required?'
+    control: SCSVS-BLOCK-2
+    rid: S8.2.G9
+- id: SCSVS-BRIDGE
+  title: Blockchain Data and State Management
+  slug: bridge
+  icon: material/bridge
+  color: pink
+  description: TBD
+  items:
+  - id: BRID-001
+    point: Verify handling of stale data in proof-of-reserves oracle.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol verify the freshness of data retrieved from the
+      Proof of Reserves Oracle?
+
+      - Can the protocol process stale data due to lack of timestamp validation from
+      the Oracle?
+
+      - What measures are in place to ensure the data from the Proof of Reserves Oracle
+      is current and reliable?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G1
+  - id: BRID-002
+    point: Verify removal of deprecated Chainlink functions.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is the protocol using deprecated Chainlink functions like latestAnswer()
+      that may return stale data?
+
+      - Are there updated Chainlink methods in use to ensure accurate and current
+      data retrieval?
+
+      - How does the protocol handle deprecated functions to maintain data integrity?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G2
+  - id: BRID-003
+    point: Verify secure updating of price feed addresses.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are price feed addresses hard-coded in the contract?
+
+      - If price feed addresses are hard-coded, is there a mechanism to update them
+      if they become deprecated?
+
+      - Can the contract manage risks associated with outdated or inaccurate hard-coded
+      price feed addresses?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G3
+  - id: BRID-004
+    point: Verify correct cETH token integration.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol use the cETH token, and if so, how is the absence
+      of underlying() handled?
+
+      - If cETH token integration is utilized, are there any issues or errors due
+      to the absence of the underlying() function?
+
+      - Are integration tests performed to ensure proper functionality with the cETH
+      token?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G4
+  - id: BRID-005
+    point: Verify management of cbETH rate decreases.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- How does the system handle potential decreases in the cbETH/ETH rate?
+
+      - What mechanisms are in place to inform users about significant rate changes?
+
+      - Can users be affected by a dramatic decrease in the cbETH/ETH rate?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G5
+  - id: BRID-006
+    point: Verify secure sfrxETH detachment handling.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system handle potential detachment of sfrxETH from frxETH
+      during reward transfers?
+
+      - Is there transparency regarding actions of the Frax team''s multi-sig contract
+      in managing sfrxETH and frxETH?
+
+      - Are mechanisms in place to alert users about discrepancies between sfrxETH
+      and frxETH?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G6
+  - id: BRID-007
+    point: Verify stability of sfrxETH rate calculations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system guarantee the stability of the sfrxETH/ETH rate, or
+      can it change in the future?
+
+      - Are users informed about potential changes to the sfrxETH/ETH rate?
+
+      - Is there documentation available regarding the stability and future changes
+      of the sfrxETH/ETH rate?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G7
+  - id: BRID-008
+    point: Verify handling of stETH rebasing mechanisms.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the application aware of the rebasing nature of stETH?
+
+      - Does the system consider using wstETH for simpler DeFi integrations?
+
+      - Are there mechanisms in place to handle complexities introduced by rebasing
+      tokens?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G8
+  - id: BRID-009
+    point: Verify correct handling of stETH withdrawals.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system account for overheads when withdrawing stETH or wstETH?
+
+      - Are there mechanisms in place to handle queue time and limits associated with
+      withdrawals?
+
+      - How does the protocol address issues related to NFT receipt and withdrawal
+      amount limits?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G9
+  - id: BRID-010
+    point: Verify secure stETH-wstETH conversions.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system handle conversions between stETH and wstETH accurately?
+
+      - Are the rebasing characteristics of stETH managed correctly during conversions?
+
+      - What measures are in place to ensure correct handling of stETH to wstETH conversions?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G10
+  - id: BRID-011
+    point: Verify consistency of token order.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the order of token0 and token1 consistent across different chains?
+
+      - What steps are taken to verify token order when interacting with various chains?
+
+      - Can inconsistencies in token order impact functionality?'
+    control: SCSVS-BRIDGE-1
+    rid: S9.1.G11
+  - id: BRID-012
+    point: Verify blockchain compatibility.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Has the protocol been reviewed for compatibility with target chains?
+
+      - What steps are taken to address differences between chains?
+
+      - How does the system ensure compatibility with various chains?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G1
+  - id: BRID-013
+    point: Verify secure contract upgradability.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Have contract upgradability implications been evaluated for different
+      chains?
+
+      - What upgradability characteristics are documented for each chain?
+
+      - How does the system address upgradability differences across chains?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G2
+  - id: BRID-014
+    point: Verify security of cross-chain messaging.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Have cross-chain messaging implementations been thoroughly reviewed
+      for permissions and functionality?
+
+      - What security checks are in place for cross-chain messaging?
+
+      - How does the system ensure correct permissions for cross-chain messages?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G3
+  - id: BRID-015
+    point: Verify handling of unsupported chain messages.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a whitelist of compatible chains for message handling?
+
+      - What measures are in place to block messages from unsupported chains?
+
+      - How does the system handle messages from non-whitelisted chains?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G4
+  - id: BRID-016
+    point: Verify correct PUSH0 opcode support.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the PUSH0 opcode supported for Solidity version >=0.8.20 on the
+      target chain?
+
+      - What compatibility checks are performed for the PUSH0 opcode?
+
+      - How does the system handle chains that do not support PUSH0?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.5
+  - id: BRID-017
+    point: Prevent Accounting Issues from Direct Transfers
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Could direct transfers of assets affect the protocol''s internal accounting?
+
+      - Does the protocol rely on balanceOf or address.balance for accounting purposes?
+
+      - Have you ensured that direct transfers do not disrupt the protocol’s logic
+      or accounting?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G6
+  - id: BRID-018
+    point: Handle Small Residual Balances
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- What happens if a small residual amount (e.g., 1 wei) remains in the
+      pool?
+
+      - Does the protocol handle minimal residual amounts appropriately?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G7
+  - id: BRID-019
+    point: Verify Array Deletion Method
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- How does the protocol remove an item from an array? Verify the method
+      used for array element removal.
+
+      - Does the contract handle array reordering or element shifting after an item
+      is deleted?
+
+      - Are there mechanisms in place to update the array length or manage gaps created
+      by delete?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G8
+  - id: BRID-020
+    point: Verify Array Index Usage
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does any function get an index of an array as an argument? Verify
+      if this index is used in contexts where the array might be modified.
+
+      - How does the contract handle index-based access in arrays where elements might
+      be added or removed?
+
+      - Are there checks to ensure that index values are valid and consistent with
+      the current state of the array?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G9
+  - id: BRID-021
+    point: Verify Unique Array Validation
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is it acceptable to have duplicate items in the array? Verify the
+      expected behavior of the array regarding uniqueness.
+
+      - How does the protocol validate and handle duplicate entries in arrays, particularly
+      user input arrays?
+
+      - Are there checks or validations to enforce array uniqueness where required?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G10
+  - id: BRID-022
+    point: Verify Loop Edge Cases
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there any issue with the first and last iteration of loops? Verify
+      if these iterations have different logic or edge cases.
+
+      - How does the contract ensure consistent behavior throughout all iterations,
+      including the initial and final ones?
+
+      - Are there specific tests for the edge cases of loop iterations to prevent
+      potential vulnerabilities?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G11
+  - id: BRID-023
+    point: Verify Loop Control Statements
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a break or continue statement inside a loop? Verify how these
+      statements are used within the loop.
+
+      - How does the contract ensure that the use of break or continue does not lead
+      to unexpected behaviors or logic errors?
+
+      - Are there tests to cover scenarios where loop control statements might affect
+      the loop''s functionality?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G13
+  - id: BRID-024
+    point: Verify State Variable Initialization
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are all important state variables explicitly initialized in the constructor
+      or initialization functions?
+
+      - Have you reviewed the contract to ensure no uninitialized state variables
+      could lead to vulnerabilities or errors?
+
+      - Is there a clear initialization strategy for all state variables used in the
+      contract?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G14
+  - id: BRID-025
+    point: Verify Proper Deletion of Nested Structures
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Does the deletion logic ensure that all nested fields within a structure
+      are properly handled and reset?
+
+      - Are there mechanisms in place to delete or reset nested fields before removing
+      the top-level field?
+
+      - Have you verified that nested structures are correctly managed to avoid residual
+      data issues?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G15
+  - id: BRID-026
+    point: Verify External State Changes Impact
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract rely on external states that can be modified by
+      other actors? Verify how these external changes impact critical functions.
+
+      - Are there protections against state changes that could disrupt normal user
+      transactions, particularly for crucial operations like withdrawals or repayments?
+
+      - How does the contract ensure that its core functionality remains intact despite
+      potential manipulations by external actors?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G16
+  - id: BRID-027
+    point: Verify Edge Case Handling
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Are edge cases (such as zero or maximum values) specifically tested
+      to ensure the contract handles them correctly?
+
+      - Is there logic in place to handle unusual or extreme input values gracefully
+      without failure?
+
+      - Does the contract have mechanisms to validate and handle boundary values appropriately?'
+    control: SCSVS-BRIDGE-2
+    rid: S9.2.G17
+- id: SCSVS-DEFI
+  title: Gas Usage, Efficiency, and Limitations
+  slug: defi
+  icon: material/currency-usd
+  color: green
+  description: TBD
+  items:
+  - id: DEFI-001
+    point: Verify accuracy of gas estimation.
+    priority: Essential
+    level: L1
+    severity: Medium
+    details: '- Is gas estimated accurately for cross-chain messages?
+
+      - What measures are in place to validate gas estimates?
+
+      - Can inaccuracies in gas estimation lead to message failures?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G1
+  - id: DEFI-002
+    point: Verify enforcement of input data validation.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there validation on the size of the input data?
+
+      - How does the system handle input data that exceeds the expected size?
+
+      - Are there measures to revert or clean unused bits if data size is invalid?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G2
+  - id: DEFI-003
+    point: Verify security of gas fee mechanisms.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a risk of exploiting low gas fees to execute a high volume
+      of transactions?
+
+      - What measures are in place to mitigate potential attacks associated with low
+      gas fees?
+
+      - How does the system address issues related to transaction volume and gas costs?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G3
+  - id: DEFI-004
+    point: Verify consistency in block production timing.
+    priority: Essential
+    level: L1
+    severity: Low
+    details: '- Is block production consistency ensured in the protocol?
+
+      - How does the system handle potential inconsistencies in block production?
+
+      - What measures are in place to address unexpected application behaviors due
+      to block production variability?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G4
+  - id: DEFI-005
+    point: Verify Slippage Protection
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol include slippage protection mechanisms for user
+      transactions? Verify if users can set a minimum output amount.
+
+      - How does the contract handle price manipulation risks from front-running attacks?
+
+      - Are there any controls in place to prevent attackers from exploiting slippage
+      to benefit from user transactions?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G5
+  - id: DEFI-006
+    point: Verify Transaction Gas Limit
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is there a possibility of iterating over a huge array in a single
+      transaction? Verify the gas usage and limits associated with such operations.
+
+      - How does the contract handle scenarios where the gas limit might be exceeded
+      due to large-scale operations?
+
+      - Are there safeguards or limits in place to prevent transactions from exceeding
+      the block gas limit?'
+    control: SCSVS-DEFI-1
+    rid: S10.1.G6
+- id: SCSVS-COMP
+  title: Component-Specific Security
+  slug: comp
+  icon: material/package
+  color: blue-grey
+  description: TBD
+  items:
+  - id: COMP-001
+    point: Verify validation of zero price transactions.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Does the protocol validate that the returned price from the price
+      feed is non-zero?
+
+      - What safeguards are in place to handle zero or invalid price values?
+
+      - How does the protocol ensure that price feeds do not return zero values that
+      could affect operations?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G1
+  - id: COMP-002
+    point: Verify accuracy of price update time validation.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol validate the last update timestamp of the price
+      feed to ensure it is within an acceptable delay?
+
+      - What mechanisms are in place to compare the price feed''s update time against
+      predefined maximum delays?
+
+      - How does the protocol handle outdated price feeds to prevent inaccuracies
+      in price usage?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G2
+  - id: COMP-003
+    point: Verify enforcement of rollup sequencer validation.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol validate the operational status of the rollup sequencer
+      to ensure it is online?
+
+      - Is there a method to check if the rollup sequencer is running to prevent stale
+      price issues?
+
+      - How does the protocol handle the scenario where the rollup sequencer is offline?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G3
+  - id: COMP-004
+    point: Verify security of TWAP period calculations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can the TWAP period be adjusted to mitigate risks of price manipulation?
+
+      - If the TWAP period is set, does it align with the protocol’s requirements
+      for accurate price updates?
+
+      - Are there mechanisms in place to adjust the TWAP period based on identified
+      manipulation risks?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G4
+  - id: COMP-005
+    point: Verify consistency of price feeds across chains.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the desired price feed pair consistently appear across all deployed
+      chains?
+
+      - If there is a process to verify price feed pairs, is it effective in maintaining
+      consistency across chains?
+
+      - Are there checks in place to ensure that price feed pairs remain uniform across
+      all chains?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G5
+  - id: COMP-006
+    point: Verify appropriateness of price feed heartbeat intervals.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the heartbeat of the price feed appropriate for the protocol’s
+      specific use case?
+
+      - If the price feed heartbeat is set, does it meet the operational needs of
+      the protocol?
+
+      - Are there controls to ensure the price feed heartbeat aligns with the protocol’s
+      requirements?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G6
+  - id: COMP-007
+    point: Verify suitability of price feeds for financial operations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Are the price feeds accurately matched to the underlying assets they
+      represent?
+
+      - If using a price feed, does it correctly reflect the value of the underlying
+      asset?
+
+      - Are there checks to ensure the appropriateness of the price feeds for the
+      underlying assets?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G7
+  - id: COMP-008
+    point: Verify security of AMM spot price calculations.
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can the protocol be manipulated through AMM spot prices, especially
+      with flash loans?
+
+      - If spot prices from AMMs are used, are there additional checks to prevent
+      manipulation?
+
+      - Are there safeguards to ensure the reliability of price data from AMMs?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G8
+  - id: COMP-009
+    point: Verify mitigation of flash crash price inaccuracies.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the system have measures to handle inaccuracies in price feeds
+      during flash crashes?
+
+      - If a flash crash occurs, are price feed values validated to be within an acceptable
+      range?
+
+      - Are there safeguards to manage potential flash crash vulnerabilities in price
+      feeds?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G9
+  - id: COMP-010
+    point: Verify secure usage of LzApp functions.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the _lzSend function correctly utilized in place of direct lzEndpoint.send
+      calls?
+
+      - Are there vulnerabilities associated with using direct calls to lzEndpoint.send?
+
+      - How does the protocol ensure proper usage of _lzSend?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G10
+  - id: COMP-011
+    point: Verify correct LayerZero user application configurations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Is the ILayerZeroUserApplicationConfig interface implemented correctly?
+
+      - Does the implementation include the forceResumeReceive function?
+
+      - How does the system handle unexpected scenarios that require unblocking the
+      message queue?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G11
+  - id: COMP-012
+    point: Verify security of default contract configurations.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Are default configuration contracts used in the application?
+
+      - What steps are taken to ensure applications are configured uniquely?
+
+      - How are default settings avoided in the contract configuration?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G12
+  - id: COMP-013
+    point: Verify correct handling of refunds for failed orders.
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol issue refunds for failed or partially filled orders?
+
+      - What mechanisms are in place to handle refunds after swaps?
+
+      - Are there clear procedures for managing failed or incomplete transactions?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G13
+  - id: COMP-014
+    point: Ensure ERC20 Decimal Compatibility
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Can the protocol handle ERC20 tokens with decimals other than 18?
+
+      - Are there mechanisms in place to adjust for different decimal configurations
+      of ERC20 tokens?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G14
+  - id: COMP-015
+    point: Ensure ERC20 Token Compatibility
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the protocol support all kinds of ERC20 tokens?
+
+      - Is there a whitelist or compatibility check for ERC20 tokens?
+
+      - Are there any unsupported token types clearly documented?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G15
+  - id: COMP-016
+    point: Verify Reorg Vulnerability with CREATE
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the contract deployment process use CREATE2 instead of CREATE
+      to ensure contract stability across block reorgs?
+
+      - Is there a fallback mechanism in place to handle contract creation failures
+      due to block reorgs?
+
+      - Has the protocol been tested for resilience against block reorgs affecting
+      contract creation?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G16
+  - id: COMP-017
+    point: Validate Token Decimal Handling
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the AMM handle tokens with varying decimal places and types correctly?
+
+      - Have you verified compatibility with tokens of different decimal configurations?
+
+      - Is there validation for token types and decimal places before processing?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G17
+  - id: COMP-018
+    point: Ensure Fee-On-Transfer Token Support
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the AMM support fee-on-transfer tokens?
+
+      - Have you accounted for discrepancies between the sent and received amounts
+      with fee-on-transfer tokens?
+
+      - Is there functionality to handle or adjust for fee-on-transfer tokens appropriately?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G18
+  - id: COMP-019
+    point: Handle Rebasing Token Effects
+    priority: Essential
+    level: L1
+    severity: High
+    details: '- Does the AMM support rebasing tokens?
+
+      - Have you accounted for changes in balance due to rebasing tokens?
+
+      - Is there functionality to correctly handle rebasing tokens and their balance
+      changes?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G19
+  - id: COMP-020
+    point: Mitigate ERC4626 Flashloan Manipulation
+    priority: Essential
+    level: L1
+    severity: Critical
+    details: '- Can ERC4626 be manipulated through flashloans?
+
+      - Are there protections in place against flashloan attacks in ERC4626-related
+      operations?
+
+      - Is the protocol aware of flashloan risks and has it implemented safeguards?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G20
+  - id: COMP-021
+    point: Analyze Risks in Forked Code
+    priority: Essential
+    level: L1
+    severity: Best Practice
+    details: '- Is the AMM using code forked from known projects?
+
+      - Have you reviewed the forked code for known vulnerabilities?
+
+      - Is there a comparison of the forked code against the original to identify
+      potential security issues?'
+    control: SCSVS-COMP-1
+    rid: S11.1.G21
