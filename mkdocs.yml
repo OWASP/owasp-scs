@@ -65,17 +65,35 @@ nav:
 
   - "Smart Contract Top 10":
     - sctop10/index.md
-    - sctop10/Top10:2023.md
-    - SC01:2025 - Access Control Vulnerabilities: sctop10/SC01-AccessControlVulnerabilities.md
-    - SC02:2025 - Price Oracle Manipulation: sctop10/SC02-PriceOracleManipulation.md
-    - SC03:2025 - Logic Errors: sctop10/SC03-LogicErrors.md
-    - SC04:2025 - Lack of Input Validation: sctop10/SC04-LackOfInputValidation.md
-    - SC05:2025 - Reentrancy Attacks: sctop10/SC05-Reentrancy.md
-    - SC06:2025 - Unchecked External Calls: sctop10/SC06-UncheckedExternalCalls.md
-    - SC07:2025 - Flash Loan Attacks: sctop10/SC07-FlashLoanAttacks.md
-    - SC08:2025 - Integer Overflow and Underflow: sctop10/SC08-IntegerOverUnderFlow.md
-    - SC09:2025 - Insecure Randomness: sctop10/SC09-InsecureRandomness.md
-    - SC10:2025 - Denial of Service (DoS) Attacks: sctop10/SC10-DenialOfService.md
+    - "Alternate Top 15 - Web3 Attack Vectors": sctop10/Web3-Attack-Vectors-Top15.md
+    - "SC01:2026 - Access Control Vulnerabilities": sctop10/SC01-AccessControlVulnerabilities.md
+    - "SC02:2026 - Business Logic Vulnerabilities": sctop10/SC02-BusinessLogicVulnerabilities.md
+    - "SC03:2026 - Price Oracle Manipulation": sctop10/SC03-PriceOracleManipulation.md
+    - "SC04:2026 - Flash Loan–Facilitated Attacks": sctop10/SC04-FlashLoanAttacks.md
+    - "SC05:2026 - Lack of Input Validation": sctop10/SC05-LackOfInputValidation.md
+    - "SC06:2026 - Unchecked External Calls": sctop10/SC06-UncheckedExternalCalls.md
+    - "SC07:2026 - Arithmetic Errors (Rounding & Precision Loss)": sctop10/SC07-ArithmeticErrors.md
+    - "SC08:2026 - Reentrancy Attacks": sctop10/SC08-ReentrancyAttacks.md
+    - "SC09:2026 - Integer Overflow and Underflow": sctop10/SC09-IntegerOverflowUnderflow.md
+    - "SC10:2026 - Proxy & Upgradeability Vulnerabilities": sctop10/SC10-ProxyAndUpgradeabilityVulnerabilities.md
+    - "Methodology & Data":
+      - "Ranking Methodology": sctop10/methodology.md
+      - "Data Sources": sctop10/data-sources.md
+    - "Archive":
+      - "2025":
+        - "Top10:2025": sctop10/archive/2025/Top10:2025.md
+        - "SC01:2025 - Access Control Vulnerabilities": sctop10/archive/2025/SC01-AccessControlVulnerabilities.md
+        - "SC02:2025 - Price Oracle Manipulation": sctop10/archive/2025/SC02-PriceOracleManipulation.md
+        - "SC03:2025 - Logic Errors": sctop10/archive/2025/SC03-LogicErrors.md
+        - "SC04:2025 - Lack of Input Validation": sctop10/archive/2025/SC04-LackOfInputValidation.md
+        - "SC05:2025 - Reentrancy Attacks": sctop10/archive/2025/SC05-Reentrancy.md
+        - "SC06:2025 - Unchecked External Calls": sctop10/archive/2025/SC06-UncheckedExternalCalls.md
+        - "SC07:2025 - Flash Loan Attacks": sctop10/archive/2025/SC07-FlashLoanAttacks.md
+        - "SC08:2025 - Integer Overflow and Underflow": sctop10/archive/2025/SC08-IntegerOverUnderFlow.md
+        - "SC09:2025 - Insecure Randomness": sctop10/archive/2025/SC09-InsecureRandomness.md
+        - "SC10:2025 - Denial of Service (DoS) Attacks": sctop10/archive/2025/SC10-DenialOfService.md
+      - "2023":
+        - "Top10:2023": sctop10/archive/2023/Top10:2023.md
 
   - SCSTG:
       - SCSTG/index.md
@@ -192,7 +210,7 @@ copyright: |
     <a href="https://www.owasp.org"><img src="https://github.com/OWASP/owasp-scs/blob/main/docs/assets/OWASP_logo_white.png?raw=true" width="100px" /></a>
   </div>
   <span style="font-size: smaller">
-    &#169; OWASP Foundation 2024. This work is licensed under 
+    &#169; OWASP Foundation 2026. This work is licensed under 
     <a href="https://creativecommons.org/licenses/by/4.0">CC-BY-4.0</a>. For any reuse or distribution, you must make clear to others the license terms of this work.
   </span><br><span style="font-size: smaller">OWASP &#174; is a registered trademark of the OWASP Foundation, Inc.</span> <span>This website uses cookies to analyze our traffic and only share that information with our analytics partners. <a href="https://github.com/OWASP/owasp-scs/blob/master/about_cookies.md">Learn more</a>.</span>
   <div style="color: #6a6868; font-size: smaller"><span>Made with</span> <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>  | <i>Website Created by <a href="https://www.linkedin.com/in/pratik-lagaskar/" target="_blank">Pratik Lagaskar</a>.</i> | <i>Covers Designed by <a href="https://www.linkedin.com/in/siddharth-neekher-340519117" target="_blank">Siddharth Neekher</a>.</i></div>

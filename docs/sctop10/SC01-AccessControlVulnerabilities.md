@@ -1,57 +1,145 @@
 ---
 id: SC01
-title: SC01:2025 Access Control Vulnerabilities
+title: SC01:2026 Access Control Vulnerabilities
 hide:
   - toc
 ---
 
-## Vulnerability: Improper Access Control 
+## Vulnerability: Improper Access Control
 
-### Description:
-An access control vulnerability is a security flaw that allows unauthorized users to access or modify the contract's data or functions. These vulnerabilities arise when the contract's code fails to adequately restrict access based on user permission levels. Access control in smart contracts can relate to governance and critical logic, such as minting tokens, voting on proposals, withdrawing funds, pausing and upgrading the contracts, and changing ownership.
+### Description
 
-### Example (Vulnerable contract):
-```
+Improper access control describes any situation where a smart contract does not rigorously enforce *who* may invoke privileged behavior, *under which* conditions, and *with which* parameters. In modern DeFi systems this goes far beyond a single `onlyOwner` modifier. Governance contracts, multisigs, guardians, proxy admins, and cross‑chain routers all participate in enforcing who can mint or burn tokens, move reserves, reconfigure pools, pause or unpause core logic, or upgrade implementations. If any of these trust boundaries are weak or inconsistently applied, an attacker may be able to impersonate a privileged actor or cause the system to treat an untrusted address as if it were authorized.
+
+Few areas to focus on: 
+- **Ownership / admin controls** (e.g., `onlyOwner`, governor, multisig)
+- **Upgrade and pause mechanisms** (proxy admins, guardians)
+- **Fund movement and accounting** (mint/burn, pool reconfiguration, fee routing)
+- **Cross-chain or cross-module trust boundaries** (bridges, vault routers, L2 messengers)
+
+Attackers exploit:
+
+- **Missing modifiers or role checks** on sensitive functions
+- **Incorrect assumption of `msg.sender`** (e.g., via delegate calls or meta-transactions)
+- **Unprotected initialization / re-initialization** of contracts or proxies
+- **Privilege confusion** across modules (e.g., off-by-one checks, mistaken trusted addresses)
+
+When combined with other issues (e.g., logic bugs, upgradeability flaws), access control failures can lead to full protocol compromise.
+
+### Example (Vulnerable Contract)
+
+```solidity
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-contract Solidity_AccessControl {
+contract LiquidityPoolVulnerable {
+    address public owner;
     mapping(address => uint256) public balances;
 
-    // Burn function with no access control
-    function burn(address account, uint256 amount) public {
-        require(balances[account] >= amount, "Insufficient balance");
-        balances[account] -= amount;
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Anyone can set a new owner – critical access control bug
+    function transferOwnership(address newOwner) external {
+        owner = newOwner; // No access control
+    }
+
+    // Intended to be called only by the owner to rescue tokens
+    function emergencyWithdraw(address to, uint256 amount) external {
+        // Missing: require(msg.sender == owner)
+        require(balances[address(this)] >= amount, "insufficient");
+        balances[address(this)] -= amount;
+        balances[to] += amount;
     }
 }
 ```
-### Impact:
-- Attackers can gain unauthorized access to critical functions and data within the contract, compromising its integrity and security.
-- Vulnerabilities can lead to the theft of funds or assets controlled by the contract, causing significant financial damage to users and stakeholders.
 
-### Remediation:
-- Ensure initialization functions can only be called once and exclusively by authorized entities.
-- Use established access control patterns like Ownable or RBAC (Role-Based Access Control) in your contracts to manage permissions and ensure that only authorized users can access certain functions. This can be done by adding appropriate access control modifiers, such as `onlyOwner` or custom roles to sensitive functions.
+**Issues:**
 
-### Example (Fixed version):
-```
+- `transferOwnership` is callable by anyone, allowing arbitrary takeover.
+- `emergencyWithdraw` lacks any access control, effectively granting any caller the ability to drain the contract’s balance.
+
+### Example (Fixed Version with Role-Based Access Control)
+
+```solidity
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-// Import the Ownable contract from OpenZeppelin to manage ownership
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Solidity_AccessControl is Ownable {
+contract LiquidityPoolSecure is AccessControl {
+    bytes32 public constant GOVERNANCE_ROLE = keccak256("GOVERNANCE_ROLE");
+    bytes32 public constant GUARDIAN_ROLE = keccak256("GUARDIAN_ROLE");
+
     mapping(address => uint256) public balances;
 
-    // Burn function with proper access control, only accessible by the contract owner
-    function burn(address account, uint256 amount) public onlyOwner {
-        require(balances[account] >= amount, "Insufficient balance");
-        balances[account] -= amount;
+    event EmergencyWithdraw(address indexed to, uint256 amount, address indexed triggeredBy);
+
+    constructor(address governance, address guardian) {
+        _grantRole(DEFAULT_ADMIN_ROLE, governance);
+        _grantRole(GOVERNANCE_ROLE, governance);
+        _grantRole(GUARDIAN_ROLE, guardian);
+    }
+
+    function grantGovernance(address newGov) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(GOVERNANCE_ROLE, newGov);
+    }
+
+    function setGuardian(address newGuardian) external onlyRole(GOVERNANCE_ROLE) {
+        _grantRole(GUARDIAN_ROLE, newGuardian);
+    }
+
+    // Only governance or designated guardians can trigger emergency withdrawals
+    function emergencyWithdraw(address to, uint256 amount)
+        external
+        onlyRole(GUARDIAN_ROLE)
+    {
+        require(to != address(0), "invalid to");
+        require(balances[address(this)] >= amount, "insufficient");
+        balances[address(this)] -= amount;
+        balances[to] += amount;
+
+        emit EmergencyWithdraw(to, amount, msg.sender);
     }
 }
 ```
 
-### Examples of Smart Contracts That Fell Victim to Improper Access Control Attacks:
-1. [HospoWise Hack](https://etherscan.io/address/0x952aa09109e3ce1a66d41dc806d9024a91dd5684#code) : A Comprehensive [Hack Analysis](https://blog.solidityscan.com/access-control-vulnerabilities-in-smart-contracts-a31757f5d707)
-2. [LAND NFT Hack](https://bscscan.com/address/0x1a62fe088F46561bE92BB5F6e83266289b94C154#code) : A Comprehensive [Hack Analysis](https://blog.solidityscan.com/land-hack-analysis-missing-access-control-66fb9555a3e3)
+**Security Improvements:**
+
+- Explicit **RBAC**: `DEFAULT_ADMIN_ROLE`, `GOVERNANCE_ROLE`, and `GUARDIAN_ROLE`.
+- Only trusted roles can reconfigure privileges or perform emergency withdrawals.
+- Clear separation between configuration (governance) and emergency response (guardian).
+
+
+### 2025 Case Studies
+
+- **Balancer V2 (November 2025, ~$128M loss)**  
+  A complex multi-chain pool ecosystem suffered from flawed access control in pool configuration and ownership assumptions. The `manageUserBalance` function had improper access controls—it checked `msg.sender` against a user-provided `op.sender` value, which attackers could set to match `msg.sender` and bypass protections, allowing them to masquerade as pool controllers and execute unauthorized WITHDRAW_INTERNAL operations. This was chained with a rounding error in `_upscaleArray` to drain liquidity.  
+  Key lessons:
+  - Critical pool operations must be **guarded by explicit role checks** and on-chain governance.
+  - Any cross-chain or cross-module "owner" concept must be **verified on-chain**, not assumed from message origin.  
+  - [https://www.openzeppelin.com/news/understanding-the-balancer-v2-exploit](https://www.openzeppelin.com/news/understanding-the-balancer-v2-exploit)
+  - [https://research.checkpoint.com/2025/how-an-attacker-drained-128m-from-balancer-through-rounding-error-exploitation/](https://research.checkpoint.com/2025/how-an-attacker-drained-128m-from-balancer-through-rounding-error-exploitation/)
+  - [https://www.halborn.com/blog/post/explained-the-balancer-hack-november-2025](https://www.halborn.com/blog/post/explained-the-balancer-hack-november-2025)
+
+- **Zoth (March 2025, $8.4M loss)**  
+  Improper privilege checks around core accounting and administrative functions allowed attackers to perform unauthorized fund movements. The attacker compromised Zoth's deployer wallet (single EOA controlling admin) and performed a malicious upgrade to the USD0PPSubVaultUpgradeable proxy, deploying a malicious implementation to withdraw $8.4M. The protocol relied on brittle assumptions—a single private key controlling critical admin functions.  
+  Key lessons:
+  - Avoid **implicit trust** in addresses (e.g., "deployer is trusted forever").
+  - Use **role-based access control (RBAC)** with clear separation between operational, emergency, and upgrade roles.  
+  - [https://blog.solidityscan.com/zoth-hack-analysis-80ba3ac5076b](https://blog.solidityscan.com/zoth-hack-analysis-80ba3ac5076b)
+  - [https://www.halborn.com/blog/post/explained-the-zoth-hack-march-2025](https://www.halborn.com/blog/post/explained-the-zoth-hack-march-2025)
+
+- **Cork Protocol (May 2025, $11–12M loss)**  
+  The Uniswap V4 hook callbacks (e.g., `beforeSwap`) lacked proper access control—they did not validate that the caller was the trusted PoolManager. The `beforeSwap` function had no `onlyPoolManager` modifier. Attackers called the hook directly with arbitrary parameters, fooling the protocol into crediting them with derivative tokens. The root cause was **missing caller validation** on hook entry points.  
+  Key lessons:
+  - Hook and callback entry points must **validate the caller** (e.g., onlyPoolManager) explicitly on-chain.  
+  - [https://dedaub.com/blog/the-11m-cork-protocol-hack-a-critical-lesson-in-uniswap-v4-hook-security/](https://dedaub.com/blog/the-11m-cork-protocol-hack-a-critical-lesson-in-uniswap-v4-hook-security/)
+  - [https://www.coindesk.com/business/2025/05/28/a16z-backed-cork-protocol-suffers-usd12m-smart-contract-exploit](https://www.coindesk.com/business/2025/05/28/a16z-backed-cork-protocol-suffers-usd12m-smart-contract-exploit)
+
+
+### Best Practices & Mitigations
+
+Robust access control starts with using battle‑tested primitives such as OpenZeppelin’s `Ownable` and `AccessControl` rather than bespoke role systems. Privileged roles should be few, clearly documented, and ideally held by well‑secured multisigs or governance modules instead of EOAs. Initialization routines for upgradeable contracts must be locked after first use, with `initializer`/`reinitializer` guards and explicit versioning to prevent re‑initialization attacks. Upgrade paths for proxies and core components should be tightly controlled and observable, with events emitted for every privilege change or upgrade so that off‑chain monitoring can quickly detect abuse. Finally, access control policies should be encoded in tests, fuzzing properties, and, where possible, formal specifications, verifying properties such as “no unprivileged address can ever drain funds or seize admin control.”
+

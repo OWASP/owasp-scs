@@ -5,99 +5,115 @@ search:
   exclude: true
 ---
 
-# OWASP Smart Contract Top 10
+# OWASP Smart Contract Top 10 : 2026
 
-<img src="../assets/sctop10.png" 
+<a href="https://github.com/OWASP/www-project-smart-contract-top-10">:material-github: GitHub Repo</a> · <a href="https://owasp.org/www-project-smart-contract-top-10">:material-web: OWASP Project Page</a>
+
+<img src="../assets/OWASP-2026-Smart-Contract.png" 
      align="right" 
-     style="border-radius: 3px; margin-left: 5em; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;" 
+     style="border-radius: 3px; margin: 0 0 1em 1em; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;" 
      width="550px" 
      height="400px">
-
-<a href="https://github.com/OWASP/www-project-smart-contract-top-10">:material-github: GitHub Repo</a>
-
-<a href="https://owasp.org/www-project-smart-contract-top-10">:material-web: OWASP Project Page</a>
 
 The **OWASP Smart Contract Top 10** is a standard awareness document that aims to provide Web3 developers and security teams with insights into the top 10 vulnerabilities found in smart contracts.
 
 - **Awareness**: Understand the most common and critical vulnerabilities affecting smart contracts.
 - **Prevention**: Implement best practices to safeguard against these known issues.
 - **Standard Compliance**: A reference to ensure secure development and assessment of smart contracts.
-- **Security Audits**: Use as a checklist for penetration testing and securing smart contracts.
 
 It serves as a reference to ensure that smart contracts are secured against the most critical weaknesses exploited or discovered in recent years. The **Smart Contract Top 10** can be used alongside other smart contract security projects to ensure comprehensive risk coverage.
 
-<br>
+> Note: The current **2026** Top 10 is **forward-looking**: its ordering and category definitions are derived from **security incidents and survey data collected during 2025**, and then used to forecast which risks are expected to be most significant in the upcoming year. In other words, 2025 breach and vulnerability data provides the empirical foundation, while the 2026 list reflects how those observations are projected into the near future.  
+>  
+> This ranking is intended to raise awareness among security researchers, auditors, developers, protocol owners, and the broader industry about the 10 most commonly occurring and impactful smart contract risks.
+
+??? info "Open Call: 2026 Top 10 Survey"
+
+    **Objective:** Collect structured, anonymised, real-world signals from the Web3 security community to inform re-ordering, emerging vulnerability classes, and gaps in the current 2025 list.
+
+    **Target contributors:** Smart contract auditors, protocol security leads, L1/L2 infra teams, wallet/custody engineers, incident response, bug bounty, and red/blue team practitioners.
+
+    **Action:** [Participate in the survey](https://forms.gle/1vCRSrjYvhUgBonr8) if you have 2025 experience.
 
 <button class="scs-button" onclick="window.location.href='https://owasp.org/www-project-smart-contract-top-10/';"> Visit the Smart Contract Top 10</button>
 
-<br>
+
+### Behind the Rankings
+
+The methodology, statistics, and data sources behind the 2026 ordering are documented in:
+
+- [Ranking Methodology](methodology.md) — Elicitation model, aggregation formulas, computed statistics, and reasoning.
+- [Data Sources](data-sources.md) — Practitioner survey, 2025 incident data, and external references.
 
 ## Changes
 
+![OWASP 2025 to 2026 Mapping](../assets/Top10mapping2025-2026.png)
 
-![OWASP 2023 to 2025 Changes](../assets/Mapping2023-2025.png)
+### 2026 Ranking
 
-### Top 10
-
-* SC01:2025 - [Access Control Vulnerabilities](SC01-AccessControlVulnerabilities.md)
-* SC02:2025 - [Price Oracle Manipulation](SC02-PriceOracleManipulation.md)
-* SC03:2025 - [Logic Errors](SC03-LogicErrors.md)
-* SC04:2025 - [Lack of Input Validation](SC04-LackOfInputValidation.md)
-* SC05:2025 - [Reentrancy Attacks](SC05-Reentrancy.md)
-* SC06:2025 - [Unchecked External Calls](SC06-UncheckedExternalCalls.md)
-* SC07:2025 - [Flash Loan Attacks](SC07-FlashLoanAttacks.md)
-* SC08:2025 - [Integer Overflow and Underflow](SC08-IntegerOverUnderFlow.md)
-* SC09:2025 - [Insecure Randomness](SC09-InsecureRandomness.md)
-* SC10:2025 - [Denial of Service (DoS) Attacks](SC10-DenialOfService.md)
+* SC01:2026 - [Access Control Vulnerabilities](SC01-AccessControlVulnerabilities.md)
+* SC02:2026 - [Business Logic Vulnerabilities](SC02-BusinessLogicVulnerabilities.md)
+* SC03:2026 - [Price Oracle Manipulation](SC03-PriceOracleManipulation.md)
+* SC04:2026 - [Flash Loan–Facilitated Attacks](SC04-FlashLoanAttacks.md)
+* SC05:2026 - [Lack of Input Validation](SC05-LackOfInputValidation.md)
+* SC06:2026 - [Unchecked External Calls](SC06-UncheckedExternalCalls.md)
+* SC07:2026 - [Arithmetic Errors](SC07-ArithmeticErrors.md)
+* SC08:2026 - [Reentrancy Attacks](SC08-ReentrancyAttacks.md)
+* SC09:2026 - [Integer Overflow and Underflow](SC09-IntegerOverflowUnderflow.md)
+* SC10:2026 - [Proxy & Upgradeability Vulnerabilities](SC10-ProxyAndUpgradeabilityVulnerabilities.md)
 
 ### Overview
 
 | Title | Description |
 | -- | -- |
-| SC01 - Access Control Vulnerabilities | Access control flaws allow unauthorized users to access or modify a contract's data or functions. These vulnerabilities arise when the code fails to enforce proper permission checks, potentially leading to severe security breaches. |
-| SC02 - Price Oracle Manipulation | Price Oracle Manipulation exploits vulnerabilities in how smart contracts fetch external data. By tampering with or controlling oracle feeds, attackers can affect contract logic, leading to financial losses or system instability. |
-| SC03 - Logic Errors | Logic errors, or business logic vulnerabilities, occur when a contract's behavior deviates from its intended functionality. Examples include incorrect reward distribution, token minting issues, or flawed lending/borrowing logic. |
-| SC04 - Lack of Input Validation | Insufficient input validation can lead to vulnerabilities where an attacker may manipulate the contract by providing harmful or unexpected inputs, potentially breaking logic or causing unexpected behaviors. |
-| SC05 - Reentrancy Attacks | Reentrancy attacks exploit the ability to reenter a vulnerable function before its execution is complete. This can lead to repeated state changes, often resulting in drained contract funds or broken logic. |
-| SC06 - Unchecked External Calls | Failing to verify the success of external function calls can result in unintended consequences. When a called contract fails, the calling contract may incorrectly proceed, risking integrity and functionality. |
-| SC07 - Flash Loan Attacks | Flash loans, while useful, can be exploited to manipulate protocols by executing multiple actions in a single transaction. These attacks often result in drained liquidity, altered prices, or exploited business logic. |
-| SC08 - Integer Overflow and Underflow | Arithmetic errors due to exceeding the limits of fixed-size integers can lead to serious vulnerabilities, such as incorrect calculations or token theft. Unsigned integers wrap around on underflow, while signed integers flip between extremes. |
-| SC09 - Insecure Randomness | Due to the deterministic nature of blockchain networks, generating secure randomness is challenging. Predictable or manipulable randomness can lead to exploitation in lotteries, token distributions, or other randomness-dependent functionalities. |
-| SC10 - Denial of Service (DoS) Attacks | DoS attacks exploit vulnerabilities to exhaust contract resources, rendering it non-functional. Examples include excessive gas consumption in loops or function calls designed to disrupt normal contract operation. |
+| SC01 - Access Control Vulnerabilities | Access control flaws allow unauthorized users or roles to invoke privileged functions or modify critical state, often leading to full protocol compromise when admin, governance, or upgrade paths are exposed. |
+| SC02 - Business Logic Vulnerabilities | Design-level flaws in lending, AMM, reward, or governance logic that break intended economic or functional rules, enabling attackers to extract value even when low-level checks appear correct. |
+| SC03 - Price Oracle Manipulation | Weak oracles and unsafe price integrations that let attackers skew reference prices, enabling under-collateralized borrowing, unfair liquidations, and mispriced swaps as part of larger exploit chains. |
+| SC04 - Flash Loan–Facilitated Attacks | Attacks that use large, uncollateralized flash loans to magnify small bugs (in logic, pricing, or arithmetic) into large drains, by executing complex multi-step sequences in a single transaction. |
+| SC05 - Lack of Input Validation | Missing or weak validation of user, admin, or cross-chain inputs that allows unsafe parameters to reach core logic, corrupting state, breaking assumptions, or enabling direct fund loss. |
+| SC06 - Unchecked External Calls | Unsafe interactions with external contracts or addresses where failures, reverts, or callbacks are not safely handled, often enabling reentrancy or inconsistent state. |
+| SC07 - Arithmetic Errors | Subtle bugs in integer math, scaling, and rounding; especially in share, interest, and AMM calculations; that can be repeatedly exploited to cause precision loss, or siphon value, particularly when paired with flash loans. |
+| SC08 - Reentrancy Attacks | Situations where external calls can re-enter vulnerable functions before state is fully updated, allowing repeated withdrawals or state changes from outdated views of contract state. |
+| SC09 - Integer Overflow and Underflow | Dangerous arithmetic on platforms or code paths without robust overflow checks, leading to wrapped values, broken invariants, and potential drains of liquidity or mis-accounting. |
+| SC10 - Proxy & Upgradeability Vulnerabilities | Misconfigured or weakly governed proxy, initialization, and upgrade mechanisms that let attackers seize control of implementations or reinitialize critical state. |
 
-## Data Sources
+### Honourable Mentions
 
-### SolidityScan's Web3HackHub:
+These categories did not rank in the 2026 Top 10 but remain relevant and should be considered during design and audit:
 
-To identify and validate the OWASP Smart Contract Top 10 vulnerabilities, we incorporated insights from multiple authoritative sources, with a notable focus on **[SolidityScan's Web3HackHub](https://solidityscan.com/web3hackhub?year=2024) (2024)**. This resource provides a comprehensive database of blockchain-related incidents, offering valuable data on attack vectors, financial losses, and trends. 
+- **Permit front-running & nonce DoS** — An attacker can front-run a `permit()` call to consume the user's nonce, causing the original deposit/stake transaction to revert. Affects protocols that compose permit within larger flows; no fallback approval path can cause permanent DoS. 
+- **Front-Running & MEV** — Transaction ordering and sandwich attacks can extract value from users. Consider MEV protection (e.g., private mempools, commit–reveal) for sensitive flows.
+- **Cross-chain MEV (Symbiosis, Aug–Oct 2025)** — Source-chain event leakage enabled sandwich attacks on the destination chain before transactions reached the mempool; attackers extracted $5.27M. Demonstrates cross-chain information asymmetry and MEV in bridged flows.
+- **DoS & Griefing via Gas, Loops, and State Bloat** — Poorly bounded loops, attacker-controlled iteration, and unbounded state growth (e.g., ever-growing arrays/mappings) can make critical functions unaffordable or permanently unusable, enabling economic denial of service without direct fund theft.
+- **Governance-Specific Attack Vectors** — Malicious or rushed proposals, flash-loan-amplified voting power, timelock bypasses, and weak quorum/threshold design can be abused to seize protocol control, drain treasuries, or disable safety mechanisms under the guise of governance.
+- **Cryptographic & Signature-Scheme Vulnerabilities** — Ambiguous or non-standard signing flows (e.g., misuse of signature-related EIPs), replayable or cross-domain signatures, and incorrect domain separation can allow attackers to reuse approvals or authorizations beyond their intended scope.
 
-Web3HackHub documents breaches from 2011 onward, enabling analysis of evolving attack methods, the increasing sophistication of exploits, and lessons learned from each incident.
+### Beyond Smart Contracts: Alternate Top 15 Web3 Attack Vectors
 
+Many of the largest losses in Web3 for the year 2025 stem from **off-chain and operational** threats rather than solely smart contract bugs: multisig manipulation/hijacking, supply chain attacks, drainer malware, fake interviews, phishing, and exchange breaches. The **Alternate Top 15** catalogues these non-smart-contract attack vectors.
 
-**Key highlights from Web3HackHub for 2024 include:**
+![OWASP Web3 Attack Vectors Top 15 2026](../assets/alternateWA-top15.png)
 
-- Total Financial Impact: $1.42 billion lost across 149 documented incidents in 2024.
+<br>
 
-- Top Attack Vectors (by frequency, total losses):
-    - Access Control Vulnerabilities: $953.2M in losses.
-    - Logic Errors: $63.8M in losses.
-    - Reentrancy Attacks: $35.7M in losses.
-    - Flash Loan Attacks: $33.8M in losses.
-    - Lack of Input Validation: $14.6M in losses.
-    - Price Oracle Manipulation: $8.8M in losses. 
-    - Unchecked External Calls: $550.7K in losses.
+<button class="scs-button" onclick="window.location.href='Web3-Attack-Vectors-Top15/';"> View Alternate Top 15 Attack Vectors</button>
 
-[![web3hackhub](../assets/web3hackhub-snap.png)](https://solidityscan.com/web3hackhub)
+### Data Sources
 
-### Other Sources:
+The 2026 Top 10 is anchored in **2025 smart contract incident data** and **practitioner input**, as detailed on the dedicated Data Sources page. In summary:
 
-In addition to SolidityScan's Web3HackHub, incorporating insights from [Peter Kacherginsky's "Top 10 DeFi Attack Vectors - 2024"](https://x.com/_iphelix/status/1855855006219690233) provides valuable data for creating the OWASP Smart Contract Top 10 for 2025. Peter's analysis is instrumental in understanding the evolving threat landscape and aligning the OWASP Smart Contract Top 10 with real-world observations.
+**Key 2025 incident insights (Smart Contract-only):**
 
-By integrating data from both SolidityScan's Web3HackHub and Kacherginsky's "Top 10 DeFi Attack Vectors - 2024," we were able to provide a well-rounded justification for the 2025 rankings. 
+- **Total protocols analysed:** 122 smart-contract incidents (deduplicated).
+- **Total loss analysed:** ≈ **$905.4M** in 2025 smart-contract involved losses only.
+- **Role in the ranking:** Validates and supports the 2026 Top 10 ordering.
 
-After analyzing **149 security incidents from SolidityScan's Web3HackHub (2024)**, **Peter Kacherginsky's "Top 10 DeFi Attack Vectors - 2024"**, and the **[Immunefi Crypto Losses in 2024 Report](https://downloads.ctfassets.net/t3wqy70tc3bv/2LqNkvjajiCS5sPJmWLakc/9715af967dd95a55da05d2ad373edb0d/Immunefi_Crypto_Losses_in_2024_Report.pdf)**, which collectively document over **$1.42 billion in financial losses across decentralized ecosystems**, the **OWASP Smart Contract Top 10 for 2025** was created to address the most critical vulnerabilities in the blockchain and smart contract ecosystem.
+### SolidityScan's Web3HackHub
 
+![SolidityScan Web3HackHub 2025](../assets/solidityscan-web3hackhub2025.png)
 
+<button class="scs-button" onclick="window.location.href='data-sources/';"> View Data Sources</button>
 
 ## Licensing
-The OWASP Smart Contract Top 10 (2025) is licensed under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), the Creative Commons Attribution-ShareAlike 4.0 license. Some rights reserved.
+
+The OWASP Smart Contract Top 10 (2026) is licensed under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/), the Creative Commons Attribution-ShareAlike 4.0 license. Some rights reserved.
