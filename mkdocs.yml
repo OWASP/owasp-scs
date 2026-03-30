@@ -363,7 +363,7 @@ extra:
   generator: false 
   analytics:
     provider: google
-    property: G-KWZRJV0S4P
+    property: G-5M75MP33XQ
   social:
     - icon: fontawesome/brands/slack
       link: https://owasp.slack.com/archives/C07MNDE6TPZ
