@@ -27,7 +27,7 @@ This list **complements** the **OWASP Smart Contract Top 10 : 2026** by catalogu
 
 **Case Study: Bybit $1.5B — Largest Crypto Heist in History (Feb 2025)**  
 
-The Bybit hack remains the **largest crypto heist by amount stolen in 2025** and in recorded history (~$1.5B, ~401,000 ETH). The [FBI](https://www.bleepingcomputer.com/news/security/fbi-confirms-lazarus-hackers-were-behind-15b-bybit-crypto-heist/) attributes operation "TraderTraitor" to North Korea's Lazarus group. Bybit used Safe{Wallet} for its Ethereum multisig cold wallet. Attackers compromised Safe{Wallet}'s developer infrastructure (via a breached developer machine; AWS S3/CloudFront credentials likely exposed) and injected malicious JavaScript into app.safe.global. When Bybit's signers approved a cold-to-warm transfer, the compromised UI presented a legitimate-looking transaction but executed a delegatecall to an attacker-controlled contract instead. Funds were drained; at least $300M had been laundered by March 2025. Third-party audits (Sygnia, Verichains) confirmed the root cause was malicious code from Safe{Wallet}'s infrastructure—not Bybit's own systems. This incident illustrates how multisig hijacking can target high-value CEX custody; see also [WA07](#wa07--centralised-exchange--web225-infrastructure-breaches).
+The Bybit hack remains the **largest crypto heist by amount stolen in 2025** and in recorded history (~$1.5B, ~401,000 ETH). The [FBI](https://www.bleepingcomputer.com/news/security/fbi-confirms-lazarus-hackers-were-behind-15b-bybit-crypto-heist/) attributes operation "TraderTraitor" to North Korea's Lazarus group. Bybit used Safe{Wallet} for its Ethereum multisig cold wallet. Attackers compromised Safe{Wallet}'s developer infrastructure (via a breached developer machine; AWS S3/CloudFront credentials likely exposed) and injected malicious JavaScript into app.safe.global. When Bybit's signers approved a cold-to-warm transfer, the compromised UI presented a legitimate-looking transaction but executed a delegatecall to an attacker-controlled contract instead. Funds were drained; at least $300M had been laundered by March 2025. Third-party audits (Sygnia, Verichains) confirmed the root cause was malicious code from Safe{Wallet}'s infrastructure—not Bybit's own systems. This incident illustrates how multisig hijacking can target high-value CEX custody; see also [WA07](#wa07-centralised-exchange-web225-infrastructure-breaches).
 
 **References:**
 
@@ -113,7 +113,7 @@ The Bybit hack remains the **largest crypto heist by amount stolen in 2025** and
 **References:**
 
 - [Chainalysis — Approval Phishing Scams 2023](https://www.chainalysis.com/blog/approval-phishing-cryptocurrency-scams-2023/)
-- [Security Alliance — Using EIP-7702 (Wallet Security)](https://frameworks.securityalliance.org/wallet-security/verifying-7702/)
+- [Security Alliance — Using EIP-7702 (Wallet Security)](https://frameworks.securityalliance.org/wallet-security/signing-and-verification/verifying-7702/)
 - [Gate.io — Permit, Uniswap Permit2, and Signature Phishing](https://www.gate.io/learn/articles/is-your-wallet-safe-how-hackers-exploit-permit-uniswap-permit2-and-signatures-for-phishing/4197)
 - [MetaMask — Signature Phishing](https://support.metamask.io/privacy-and-security/staying-safe-in-web3/signature-phishing/)
 
@@ -265,10 +265,10 @@ The Bybit hack remains the **largest crypto heist by amount stolen in 2025** and
 - [Wiz — TraderTraitor: Deep Dive into North Korea’s $1.5B Crypto Heists](https://wiz.io/blog/north-korean-tradertraitor-crypto-heist)
 - [Stacklok — Dependency Hijacking: North Korea’s New Wave of DeFi-Themed Open Source Attacks](https://stacklok.com/blog/dependency-hijacking-dissecting-north-koreas-new-wave-of-defi-themed-open-source-attacks-targeting-developers)
 - [lazarusholic — Inside the GitHub Infrastructure Powering North Korea’s “Contagious Interview” npm Attacks](https://lazarus.day/reports/post/inside-the-github-infrastructure-powering-north-koreas-contagious-interview-npm-attacks-mWBsT)
-- [U.S. DOJ — Major Enforcement Actions Targeting North Korean Remote IT Worker Schemes](https://www.justice.gov/opa/pr/justice-department-announces-actions-disrupt-north-korean-it-worker-scheme)
+- [U.S. DOJ — Major Enforcement Actions Targeting North Korean Remote IT Worker Schemes](https://www.justice.gov/opa/pr/justice-department-announces-coordinated-nationwide-actions-combat-north-korean-remote)
 - [Reuters — North Koreans Use Fake Names, Scripts to Land Remote IT Work](https://www.reuters.com/technology/north-koreans-use-fake-names-scripts-land-remote-it-work-cash-2023-11-21/)
 - [CoinDesk — How North Korea Infiltrated the Crypto Industry](https://www.coindesk.com/policy/2022/04/29/how-north-korea-infiltrated-the-crypto-industry/)
-- [Chainalysis / Google Threat Intelligence / Mandiant — DPRK IT Worker Schemes (joint reporting and advisories)](https://www.chainalysis.com/blog/north-korean-it-workers-crypto-sanctions-evasion/)
+- [Chainalysis — DPRK IT Workers and North Korean Crypto-Laundering Networks](https://www.chainalysis.com/blog/dprk-it-workers-north-korea-crypto-laundering-networks/)
 
 **Key lessons:** Treat unsolicited hiring outreach and “contribution offers” with suspicion; isolate development and CI environments; enforce strict review and provenance checks on new dependencies and OSS contributions; monitor for anomalous developer activity and outbound traffic; plan for nation-state–class adversaries in threat models for high-value protocols and exchanges.
 

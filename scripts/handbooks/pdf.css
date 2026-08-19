@@ -1,0 +1,398 @@
+/* OWASP SCS Handbook Series — A4 print stylesheet for WeasyPrint. */
+:root {
+  --accent: #17a9d6;
+  --accent-dark: #0e6f8e;
+  --ink: #1b2429;
+  --muted: #5c6b74;
+  --rule: #dfe5ea;
+}
+
+@page {
+  size: A4;
+  margin: 26mm 22mm 24mm 22mm;
+  @top-left {
+    content: string(booktitle);
+    font: 400 7.8pt "Avenir Next", "Helvetica Neue", sans-serif;
+    color: #9aa4ad;
+    letter-spacing: .3px;
+  }
+  @top-right {
+    content: string(chapter);
+    font: 400 7.8pt "Avenir Next", "Helvetica Neue", sans-serif;
+    color: #9aa4ad;
+    letter-spacing: .3px;
+  }
+  @bottom-center {
+    content: counter(page);
+    font: 400 9pt "Avenir Next", "Helvetica Neue", sans-serif;
+    color: #8a939b;
+  }
+}
+
+@page cover {
+  size: A4;
+  margin: 0;
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-center { content: none; }
+}
+
+html { font-size: 11pt; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Charter", "Iowan Old Style", "Palatino", "Georgia", serif;
+  font-size: 11pt;
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.cover-page {
+  page: cover;
+  width: 210mm;
+  height: 297mm;
+  margin: 0;
+  padding: 0;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-page img {
+  display: block;
+  width: 210mm;
+  height: 297mm;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+}
+
+/* Series front matter: frontispiece, publication details, and credits. */
+h1.frontispiece-title {
+  break-before: page;
+  margin: 0 0 10mm;
+  padding: 13mm 0 6mm;
+  border-bottom: 3px solid var(--accent);
+  color: var(--accent-dark);
+  font-size: 29pt;
+}
+.frontmatter-kicker {
+  margin-bottom: 4mm;
+  color: var(--accent);
+  font: 700 8.5pt "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 1.6px;
+}
+.frontmatter-book-title {
+  max-width: 145mm;
+  margin: 0 0 13mm;
+  color: var(--ink);
+  font: 700 24pt/1.16 "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  text-align: left;
+}
+h2.frontmatter-section-title {
+  margin-top: 0;
+  color: var(--accent-dark);
+}
+h2.frontmatter-new-page {
+  break-before: page;
+  margin-top: 0;
+  padding-top: 8mm;
+}
+.frontmatter-edition {
+  display: flex;
+  align-items: center;
+  width: 62mm;
+  margin-top: 16mm;
+  padding: 5mm 6mm;
+  border-left: 5px solid var(--accent);
+  background: #f3f7f9;
+  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+}
+.frontmatter-edition__label {
+  color: var(--muted);
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.frontmatter-edition__value {
+  margin-left: auto;
+  color: var(--accent-dark);
+  font-size: 17pt;
+  font-weight: 700;
+}
+.cc-license-mark {
+  display: block;
+  width: 42mm;
+  height: auto;
+  margin: 5mm 0 6mm;
+}
+.frontmatter-credit-grid {
+  margin-top: 7mm;
+}
+.frontmatter-credit-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+.frontmatter-credit-row--centered {
+  justify-content: center;
+  margin-top: 5mm;
+}
+.frontmatter-credit-card {
+  box-sizing: border-box;
+  width: 48%;
+  min-height: 44mm;
+  padding: 6mm;
+  border-top: 4px solid var(--accent);
+  background: #f3f7f9;
+  break-inside: avoid;
+  text-align: left;
+}
+.frontmatter-credit-card + .frontmatter-credit-card { margin-left: 4%; }
+.frontmatter-credit-role {
+  min-height: 9mm;
+  margin-bottom: 3mm;
+  color: var(--muted);
+  font: 700 7.7pt "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  hyphens: none;
+  overflow-wrap: normal;
+}
+.frontmatter-credit-name {
+  min-height: 9mm;
+  margin-bottom: 0;
+  color: var(--accent-dark);
+  font: 700 14pt "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.2;
+  hyphens: none;
+  overflow-wrap: normal;
+}
+.frontmatter-credit-title {
+  margin-top: 4mm;
+  color: var(--ink);
+  font: 600 8.5pt "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.35;
+}
+.frontmatter-end { break-after: page; }
+
+p { margin: 0 0 .55em; orphans: 3; widows: 3; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--accent-dark); text-decoration: none; overflow-wrap: anywhere; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.3em 0; }
+
+h1, h2, h3, h4 {
+  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  text-align: left;
+  hyphens: none;
+  line-height: 1.2;
+}
+h1 {
+  break-before: page;
+  string-set: chapter content();
+  margin: 0 0 .8em;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent-dark);
+  font-size: 22pt;
+  font-weight: 700;
+}
+h2 {
+  break-after: avoid;
+  string-set: chapter content();
+  margin: 1.5em 0 .45em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--accent-dark);
+  font-size: 16pt;
+  font-weight: 700;
+}
+h3 { break-after: avoid; margin: 1.15em 0 .35em; color: var(--ink); font-size: 12.5pt; }
+h4 { break-after: avoid; margin: 1em 0 .3em; color: var(--muted); font-size: 11pt; }
+
+h3.pdf-wide-table-section { break-before: page; }
+
+/*
+ * Checklists are operational artifacts as well as book sections. Start each
+ * one on a clean sheet and keep unrelated prose from sharing its final page,
+ * so readers can print the checklist's page range independently.
+ */
+h2.printable-checklist-start,
+h3.printable-checklist-start,
+h4.printable-checklist-start,
+h5.printable-checklist-start,
+h6.printable-checklist-start,
+h1.after-printable-checklist,
+h2.after-printable-checklist,
+h3.after-printable-checklist,
+h4.after-printable-checklist,
+h5.after-printable-checklist,
+h6.after-printable-checklist {
+  break-before: page;
+}
+
+h1.part-opener {
+  break-before: page;
+  string-set: chapter content();
+  margin: 0 0 .2em;
+  padding-top: 34mm;
+  border: 0;
+  color: var(--accent-dark);
+  font-size: 30pt;
+}
+h1.part-opener::before {
+  display: block;
+  width: 58mm;
+  height: 6px;
+  margin-bottom: 9mm;
+  background: var(--accent);
+  content: "";
+}
+
+nav#TOC { break-before: page; break-after: page; }
+nav#TOC::before {
+  display: block;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent-dark);
+  content: "Contents";
+  font: 700 21pt "Avenir Next", sans-serif;
+}
+nav#TOC ul { margin: 0; padding: 0; list-style: none; }
+nav#TOC ul ul { padding-left: 7mm; }
+nav#TOC li { margin: 2.5pt 0; break-inside: avoid; }
+nav#TOC a { color: var(--ink); font: 400 10pt "Avenir Next", "Helvetica Neue", sans-serif; }
+nav#TOC > ul > li > a { color: var(--accent-dark); font-weight: 700; }
+nav#TOC a::after {
+  content: leader('.') " " target-counter(attr(href url), page);
+  color: #9aa4ad;
+  font-weight: 400;
+}
+
+code {
+  padding: 1px 3px;
+  border-radius: 3px;
+  background: #f3f5f7;
+  color: #14324a;
+  font: 8.6pt "Menlo", "SFMono-Regular", monospace;
+}
+pre {
+  margin: .7em 0;
+  padding: 9px 11px;
+  break-inside: avoid;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: #f7f9fa;
+  font: 8.4pt/1.4 "Menlo", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+pre code { padding: 0; background: none; color: #23303a; }
+
+table {
+  width: 100%;
+  margin: .8em 0;
+  border-collapse: collapse;
+  font: 8.8pt "Avenir Next", "Helvetica Neue", sans-serif;
+  break-inside: auto;
+}
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th, td { text-align: left; hyphens: none; overflow-wrap: anywhere; }
+th {
+  padding: 5px 8px;
+  border: 1px solid var(--accent-dark);
+  background: var(--accent-dark);
+  color: white;
+  font-weight: 600;
+}
+td { padding: 5px 8px; border: 1px solid var(--rule); vertical-align: top; }
+tr:nth-child(even) td { background: #f6f8fa; }
+
+/* Applied only to source tables explicitly flagged after rendered-PDF review. */
+.pdf-table-fit table {
+  font-size: 7.4pt;
+  line-height: 1.28;
+}
+.pdf-table-landscape table {
+  font-size: 6.25pt;
+  line-height: 1.22;
+  table-layout: auto;
+}
+.pdf-table-fit th,
+.pdf-table-fit td {
+  padding: 4px 5px;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.pdf-table-landscape th,
+.pdf-table-landscape td {
+  padding: 3px;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.pdf-table-fit td a,
+.pdf-table-fit td code,
+.pdf-table-landscape td a,
+.pdf-table-landscape td code {
+  overflow-wrap: anywhere;
+}
+.pdf-table-landscape table {
+  width: 100%;
+}
+
+img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 120mm;
+  margin: .7em auto;
+  object-fit: contain;
+  break-inside: avoid;
+}
+.figure-block {
+  margin: 1em auto;
+  break-inside: avoid;
+  text-align: center;
+}
+.figure-block > p { margin: 0; text-align: center; }
+.figure-block > p:last-child:not(:first-child) {
+  margin-top: .4em;
+  color: var(--muted);
+  font-size: 8.6pt;
+  line-height: 1.35;
+  text-align: left;
+}
+.diagram-wrap img { max-height: 168mm; }
+
+blockquote {
+  margin: .9em 0;
+  padding: 8px 14px;
+  break-inside: avoid;
+  border-left: 4px solid var(--accent);
+  background: #f6fafc;
+  color: #33454f;
+}
+
+ul.task-list { list-style: none; }
+ul.task-list > li { position: relative; break-inside: avoid; text-align: left; }
+ul.task-list > li > label { display: block; }
+ul.task-list li input[type="checkbox"] { display: none; }
+ul.task-list > li::before {
+  position: absolute;
+  top: .35em;
+  left: -1.55em;
+  width: .82em;
+  height: .82em;
+  box-sizing: border-box;
+  border: 1.3px solid var(--accent-dark);
+  border-radius: 1px;
+  background: white;
+  content: "";
+}

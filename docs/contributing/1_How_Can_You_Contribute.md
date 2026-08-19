@@ -18,7 +18,7 @@ flowchart LR
 
 ## 💬 Participate in Discussions
 
-Our GitHub [Discussions](https://github.com/OWASP/owasp-scs/discussions) are the first place to go to ask questions, give feedback, and propose new ideas. If your proposal qualifies for the SCSTG/SCSVS, we'll convert it into an "Issue" (the discussion might take a while).
+Our GitHub [issue tracker](https://github.com/OWASP/owasp-scs/issues) is the first place to ask questions, give feedback, and propose new ideas. If a proposal belongs in the SCSTG or SCSVS, maintainers will triage it into the appropriate project workflow.
 
 ## 🎯 Create Issues
 

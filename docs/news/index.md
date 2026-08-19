@@ -7,7 +7,7 @@
 ## Blogs
 
 - [OWASP Smart Contract Top 10 Security Risks and Vulnerabilities: A Deep Dive with Real-World Exploits and CredShields Contribution (SolidityScan)](https://solidityscan.com/discover/owasp-smart-contract-top-10-security-risks-and-vulnerabilities-a-deep-dive-with-real-world-exploits-and-credshields-contribution/)
-- [OWASP SC Top 10 2025 Breakdown: The Most Critical Smart Contract Risks of 2025 (Resonance Security)](https://www.resonance.security/blog-posts/owasp-sc-top-10-2025-breakdown-the-most-critical-smart-contract-risks-of-2025)
+- [OWASP SC Top 10 2025 Breakdown: The Most Critical Smart Contract Risks of 2025 (Resonance Security)](https://medium.com/@resonance.security/owasp-sc-top-10-2025-breakdown-the-most-critical-smart-contract-risks-of-2025-62889858d51d)
 - [OWASP Smart Contract Top 10 2025 (Insecure.in)](https://www.insecure.in/blog/owasp-smart-contract-top-10-2025)
 
 ## Security Newsletters
@@ -41,4 +41,3 @@
 - [Harshleen Chawla's Post](https://x.com/harshleenchawl2/status/1890359772395831593)
 - [Web3 Security Tweet](https://x.com/Web3__Security/status/1884773227370541309)
 - [7h3h4ckv157's Post](https://x.com/7h3h4ckv157/status/1887203606954184927)
-
