@@ -9,6 +9,7 @@ build
 *-temp
 logs
 *.pdf
+!docs/handbooks/pdfs/*.pdf
 *.docx
 *.epub
 __pycache__
@@ -18,4 +19,5 @@ __handlers__
 drafts/
 Payload/
 site/
+tmp/
 .vscode/

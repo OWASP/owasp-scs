@@ -16,7 +16,7 @@ You can follow and reach out to the OWASP SCS team in many ways.
 
 If you'd like to contribute, take a look at our [Contributions page](contributing.md) or reach out to the project leaders or project maintainers mentioned below.
 
-[:material-github:](https://github.com/OWASP/owasp-scs/discussions)
+[:material-github:](https://github.com/OWASP/owasp-scs/issues)
 [:material-twitter:](https://x.com/scs_owasp)
 [:material-slack:](https://owasp.slack.com/archives/C07MNDE6TPZ)
 
@@ -86,8 +86,7 @@ Nehal is a Security Engineer at FINRA, with a strong foundation in offensive and
 [:material-github:](https://github.com/nehalr777)
 [:material-twitter:](https://x.com/nehal_10_0)
 [:material-slack:](https://owasp.slack.com/team/U07PD9KBPAL)
-[:material-email:](nehalrajesh10@gmail.com)
+[:material-email:](mailto:nehalrajesh10@gmail.com)
 [:material-linkedin:](https://www.linkedin.com/in/nehal-pillai/)
 
 <br>
-

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xml:space="preserve"
+   id="Email"
+   version="1.1"
+   viewBox="0 0 529.6 452.91"
+   sodipodi:docname="Example_phishing_email.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview1"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="1.7236225"
+   inkscape:cx="140.69206"
+   inkscape:cy="286.0255"
+   inkscape:window-width="1366"
+   inkscape:window-height="697"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Email" />
+  <defs
+   id="defs1">
+    <style
+   id="style1">
+      .cls-42,
+      .cls-43 {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      .cls-46,
+      .cls-47 {
+        font-size: 12px;
+      }
+
+      .cls-46 {
+        font-family: Arial, sans-serif;
+      }
+
+      .cls-18 {
+        fill: #141414;
+      }
+
+      .cls-63 {
+        fill: #0900bc;
+      }
+    </style>
+  </defs>
+  <path
+   id="rect613"
+   d="M0 0h529.6v452.91H0z"
+   style="fill:#ffffff;fill-opacity:1" /><path
+   d="m 75.221472,149.64715 v -15.84994 h -6.70858 v 15.84994 z m -10.394608,0 v -15.84994 h -6.70858 v 15.84994 z m -3.612313,-22.4848 H 82.593537 L 71.830321,121.2647 Z m 10.689493,-20.7155 c -18.356443,0 -33.174289,14.89157 -33.174289,33.17429 0,18.35644 14.817846,33.17429 33.174289,33.17429 18.356443,0 33.174296,-14.81785 33.174296,-33.17429 0,-18.28272 -14.817853,-33.17429 -33.174296,-33.17429 z m -22.484796,48.9505 v -3.39115 h 2.285342 v -2.35905 h 2.727666 v -18.209 H 51.70459 v -4.2758 l 20.199454,-11.57414 20.273177,11.57414 v 4.2758 h -2.727666 v 18.28272 h 2.727666 v 2.35906 h 2.285341 v 3.39115 H 49.419248 Z m 36.270555,-5.7502 v -15.84994 h -6.708579 v 15.84994 z"
+   id="path1"
+   style="stroke-width:0.737207" />
+  <path
+   id="rect256"
+   d="M39.14 93.41h451.3v1.55H39.14z"
+   style="fill:#a0a0a0" />
+  <text
+   id="text260"
+   class="cls-46"
+   transform="translate(39.16,42.31)">     <tspan
+   id="tspan258"
+   x="0"
+   y="0">From: authenticationmail@trust.ameribank7.com </tspan>  </text>
+  <text
+   id="text266"
+   class="cls-46"
+   transform="translate(39.16 57.19)">
+    <tspan
+   id="tspan262"
+   x="0"
+   y="0"
+   style="letter-spacing:-.11em">T</tspan>
+    <tspan
+   id="tspan264"
+   x="6"
+   y="0">o: johnsmith@email.com </tspan>
+  </text>
+  <text
+   id="text280"
+   class="cls-47"
+   transform="translate(39.16,72.07)">     <tspan
+   id="tspan268"
+   x="0"
+   y="0"
+   style="font-family:Arial, sans-serif">Subject: <tspan
+   id="tspan1556"
+   style="font-weight:bold">A new login to your bank account</tspan>    </tspan>  </text>
+  <text
+   id="text288"
+   class="cls-46"
+   transform="translate(39.16,195.94)">     <tspan
+   id="tspan282"
+   x="0"
+   y="0">Dear account holder, </tspan>  </text>
+  <text
+   id="text292"
+   class="cls-46"
+   transform="translate(39.16,218.86)">     <tspan
+   id="tspan290"
+   x="0"
+   y="0">There has been a recent login to your bank account from a new divice: </tspan>  </text>
+  <text
+   id="text300"
+   class="cls-46"
+   transform="translate(39.16 241.78)">
+    <tspan
+   id="tspan294"
+   x="0"
+   y="0">I</tspan>
+    <tspan
+   id="tspan296"
+   x="3.33"
+   y="0"
+   style="letter-spacing:-.02em">P</tspan>
+    <tspan
+   xml:space="preserve"
+   id="tspan298"
+   x="11.12"
+   y="0"> address: 192.168.0.1 </tspan>
+  </text>
+  <text
+   id="text308"
+   class="cls-46"
+   transform="translate(39.16,264.7)">     <tspan
+   id="tspan302"
+   x="0"
+   y="0">Location: Miami, Florida</tspan></text>
+  <text
+   id="text314"
+   class="cls-47"
+   transform="translate(39.16,287.62)">     <tspan
+   id="tspan310"
+   x="0"
+   y="0"
+   style="font-weight:bold;font-family:Arial, sans-serif">4 new transactions have been made with this account since your last login.    </tspan>  </text>
+  <text
+   id="text318"
+   style="font-size:12px;font-family:Arial, sans-serif;font-weight:bold"
+   transform="translate(39.16 327.42)">
+    <tspan
+   id="tspan316"
+   x="0"
+   y="0"
+   style="font-weight:bold">If this was not you, please reset your password immediately with this link:</tspan>
+  </text>
+  <text
+   id="text324"
+   class="cls-46"
+   transform="translate(39.16,350.34)">     <tspan
+   id="tspan320"
+   x="0"
+   y="0"
+   class="cls-63">https://trust.ameribank7.com/reset-password</tspan>  </text>
+  <path
+   id="rect326"
+   d="M39.16 351.66h237.53v.84H39.16z"
+   class="cls-63" />
+  <text
+   id="text330"
+   class="cls-46"
+   transform="translate(39.16 396.2)">
+    <tspan
+   id="tspan328"
+   x="0"
+   y="0">Thank you, </tspan>
+  </text>
+  <text
+   id="text334"
+   class="cls-46"
+   transform="translate(39.16,419)">Bank America<tspan
+   id="tspan332"
+   x="0"
+   y="0"> </tspan>  </text>
+  
+<text
+   xml:space="preserve"
+   style="font-size:22.5886px;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:0.981818;stroke-width:5.33588"
+   x="116.14383"
+   y="135.87088"
+   id="text1"><tspan
+     sodipodi:role="line"
+     id="tspan1"
+     x="116.14383"
+     y="135.87088"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5886px;font-family:'Franklin Gothic Medium Cond';-inkscape-font-specification:'Franklin Gothic Medium Cond, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:5.33588">Bank of America</tspan></text></svg>

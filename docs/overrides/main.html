@@ -88,6 +88,31 @@
         }
     </script>
 
+    {% if page.file and page.file.src_uri.startswith("handbooks/") %}
+    <div class="handbook-prose">
+        {{ super() }}
+    </div>
+    {% else %}
     {{ super() }}
-{% endblock %}
+    {% endif %}
 
+    {% if page.file and page.file.src_uri.startswith("handbooks/") and page.file.src_uri != "handbooks/index.md" %}
+    {% if page.previous_page or page.next_page %}
+    <nav class="handbook-page-nav" aria-label="Handbook page navigation">
+        {% if page.previous_page and page.previous_page.url.startswith("handbooks/") %}
+        <a class="handbook-page-nav__link handbook-page-nav__link--previous" href="{{ page.previous_page.url | url }}">
+            <span class="handbook-page-nav__direction">&larr; Previous</span>
+            <span class="handbook-page-nav__title">{{ page.previous_page.title }}</span>
+        </a>
+        {% endif %}
+
+        {% if page.next_page and page.next_page.url.startswith("handbooks/") %}
+        <a class="handbook-page-nav__link handbook-page-nav__link--next" href="{{ page.next_page.url | url }}">
+            <span class="handbook-page-nav__direction">Next &rarr;</span>
+            <span class="handbook-page-nav__title">{{ page.next_page.title }}</span>
+        </a>
+        {% endif %}
+    </nav>
+    {% endif %}
+    {% endif %}
+{% endblock %}

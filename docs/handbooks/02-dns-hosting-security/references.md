@@ -1,0 +1,85 @@
+# Appendix C: References and Further Reading
+
+[Back to Handbook contents](index.md)
+
+This appendix collects every external source cited across the handbook's parts, grouped by category for easy reference.
+
+## Standards and Frameworks
+
+- [RFC 1035, Domain Names - Implementation and Specification](https://www.rfc-editor.org/rfc/rfc1035)
+- [RFC 4033, DNS Security Introduction and Requirements](https://www.rfc-editor.org/rfc/rfc4033)
+- [RFC 4034, Resource Records for the DNS Security Extensions](https://www.rfc-editor.org/rfc/rfc4034)
+- [RFC 4035, Protocol Modifications for the DNS Security Extensions](https://www.rfc-editor.org/rfc/rfc4035)
+- [RFC 5731, Extensible Provisioning Protocol (EPP) Domain Name Mapping](https://www.rfc-editor.org/rfc/rfc5731)
+- [RFC 8659, DNS Certification Authority Authorization (CAA) Resource Record](https://www.rfc-editor.org/rfc/rfc8659)
+- [RFC 9364 (BCP 237), DNS Security Extensions (DNSSEC)](https://www.rfc-editor.org/rfc/rfc9364)
+- [NIST SP 800-81-2, Secure Domain Name System (DNS) Deployment Guide](https://csrc.nist.gov/publications/detail/sp/800-81/2/final)
+- [NIST SP 800-61 Revision 2, Computer Security Incident Handling Guide](https://csrc.nist.gov/pubs/sp/800/61/r2/final)
+- [NIST SP 800-61 Revision 3, Incident Response Recommendations and Considerations for Cybersecurity Risk Management](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
+- [NIST Cybersecurity Framework (CSF) 2.0](https://www.nist.gov/cyberframework)
+- [ICANN](https://www.icann.org/)
+- [ICANN Security and Stability Advisory Committee (SSAC)](https://www.icann.org/groups/ssac)
+- [ICANN SAC115, SSAC Advisory on DNS Abuse](https://itp.cdn.icann.org/en/files/security-and-stability-advisory-committee-ssac-reports/sac-115-en.pdf)
+- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [OWASP Smart Contract Security (SCS) Project](https://scs.owasp.org/)
+- [OWASP Web3 Attack Vectors Top 15](https://scs.owasp.org/sctop10/Web3-Attack-Vectors-Top15/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
+- [MITRE ATT&CK T1078.004, Valid Accounts: Cloud Accounts](https://attack.mitre.org/techniques/T1078/004/)
+- [MITRE ATT&CK T1584.002, Compromise Infrastructure: DNS Server](https://attack.mitre.org/techniques/T1584/002/)
+- [MITRE AADAPT Cyber Threat Framework for Digital Assets, fact sheet](https://www.mitre.org/news-insights/fact-sheet/aadapt-cyber-threat-framework-digital-assets)
+- [MITRE AADAPT public matrix (GitHub)](https://github.com/mitre/AADAPT)
+- [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks)
+- [AWS Well-Architected Framework, Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html)
+- [EIP-137, Ethereum Domain Name Service - Specification](https://eips.ethereum.org/EIPS/eip-137)
+- [EIP-1577, contenthash field for ENS](https://eips.ethereum.org/EIPS/eip-1577)
+- [EIP-3668, CCIP Read: Secure offchain data retrieval](https://eips.ethereum.org/EIPS/eip-3668)
+- [ENSIP-8, Interface Discovery](https://docs.ens.domains/ensip/8)
+- [ENSIP-9, Multichain Address Resolution](https://docs.ens.domains/ensip/9)
+- [ENSIP-11, EVM-Compatible Chain Address Resolution](https://docs.ens.domains/ensip/11)
+- [ENSIP-15, ENS Name Normalization Standard](https://docs.ens.domains/ensip/15)
+- [ENSIP-17, Gasless DNS Resolution](https://docs.ens.domains/ensip/17)
+- [ENSIP-19, Multichain Primary Names](https://docs.ens.domains/ensip/19)
+- [IPFS HTTP Gateway Specification](https://specs.ipfs.tech/http-gateways/)
+- [IPFS Trustless Gateway Specification (CAR format)](https://specs.ipfs.tech/http-gateways/trustless-gateway/)
+- [Multiformats](https://multiformats.io/)
+
+## Incidents and Case Studies
+
+- [Cisco Talos, Sea Turtle DNS hijacking campaign](https://blog.talosintelligence.com/2019/04/seaturtle.html)
+- [Cisco Talos, sustained abuse of IPFS gateways](https://blog.talosintelligence.com/ipfs-abuse/)
+- [CyberScoop, Ether DNS/BGP Amazon Route 53 heist](https://cyberscoop.com/ether-dns-bgp-amazon-route-53-heist/)
+- [Internet Society, "What Happened? The Amazon Route 53 BGP Hijack"](https://www.internetsociety.org/blog/2018/04/amazons-route-53-bgp-hijack/)
+- [The Record, KlaySwap crypto users lose funds after BGP hijack](https://therecord.media/klayswap-crypto-users-lose-funds-after-bgp-hijack)
+- [CertiK, BGP Hijacking: the $1.9M KlaySwap Attack Through Manipulated Network Flow](https://www.certik.com/resources/blog/bgp-hijacking-the-usd1-9m-klayswap-attack-through-manipulated-network-flow)
+- [Decrypt, Curve Finance DNS Record Attack](https://decrypt.co/319414/curve-finance-dns-record-attack)
+- [CryptoTimes, Curve Finance Loses $570K Due to DNS Compromise](https://www.cryptotimes.io/2022/08/10/curve-finance-loses-570k-due-to-dns-compromise/)
+- [rekt.news, Curve Finance](https://rekt.news/curve-finance-rekt/)
+- [The Register, MyEtherWallet DNS Hijack](https://www.theregister.com/2018/04/24/myetherwallet_dns_hijack/)
+- [Namefi, "The 2024 Squarespace DeFi Domain Mass-Hijack"](https://namefi.io/r/en/blog/the-2024-squarespace-defi-domain-hijacks)
+- [SC Media coverage via dnsafrica.org, Squarespace-Registered DeFi Platforms Subjected to DNS Hijacking](https://www.resource.dnsafrica.org/2025/01/08/squarespace-registered-defi-platforms-subjected-to-dns-hijacking-sc-media/)
+- [Smart Contract Audit, BadgerDAO hack (2021)](https://www.smartcontractaudit.com/hacks/badger-2021)
+
+## Tools and Documentation
+
+- [crt.sh, Certificate Transparency search](https://crt.sh/)
+- [`can-i-take-over-xyz` project (GitHub)](https://github.com/EdOverflow/can-i-take-over-xyz)
+- [Storacha Network (GitHub)](https://github.com/storacha)
+- [ENS Docs: Architecture](https://docs.ens.domains/learn/architecture)
+- [ENS Docs: DNS Registry](https://docs.ens.domains/registry/dns)
+- [ENS Docs: Universal Resolver](https://docs.ens.domains/resolvers/universal)
+- [ENS Docs: Name Wrapper](https://docs.ens.domains/wrapper/overview)
+- [ENS blog, How ENS Normalization Works](https://www.ens.domains/blog/post/how-ens-normalization-works)
+- [Basenames](https://www.base.org/names)
+- [IPFS docs: content addressing](https://docs.ipfs.tech/concepts/content-addressing/)
+- [IPFS docs: IPFS gateway](https://docs.ipfs.tech/concepts/ipfs-gateway/)
+- [IPFS docs: nodes and network layer](https://docs.ipfs.tech/concepts/nodes/)
+- [IPFS docs: persistence, pinning, and garbage collection](https://docs.ipfs.tech/concepts/persistence/)
+- [APNIC Labs, DNSSEC validation measurement](https://stats.labs.apnic.net/dnssec)
+- [APNIC blog, How We Measure DNSSEC Validation](https://blog.apnic.net/2023/10/31/how-we-measure-dnssec-validation/)
+
+## Further Reading
+
+- [Wikipedia, BGP hijacking](https://en.wikipedia.org/wiki/BGP_hijacking)
+- [Wikipedia, DNS spoofing](https://en.wikipedia.org/wiki/DNS_spoofing)
+- [Wikipedia, DNSSEC](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions)
+- [Martin Fowler / Kief Morris, Immutable Server pattern](https://martinfowler.com/bliki/ImmutableServer.html)

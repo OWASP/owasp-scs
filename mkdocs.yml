@@ -95,6 +95,53 @@ nav:
       - "2023":
         - "Top10:2023": sctop10/archive/2023/Top10:2023.md
 
+  - Handbooks:
+      - handbooks/index.md
+      - "01 · CDN & Front-End Supply Chain":
+          - handbooks/01-frontend-cdn-supply-chain/index.md
+          - ... | flat | handbooks/01-frontend-cdn-supply-chain/part*.md
+          - References: handbooks/01-frontend-cdn-supply-chain/references.md
+      - "02 · DNS & Hosting Security":
+          - handbooks/02-dns-hosting-security/index.md
+          - ... | flat | handbooks/02-dns-hosting-security/part*.md
+          - References: handbooks/02-dns-hosting-security/references.md
+      - "03 · Employee Lifecycle Security":
+          - handbooks/03-employee-lifecycle-security/index.md
+          - ... | flat | handbooks/03-employee-lifecycle-security/part*.md
+          - References: handbooks/03-employee-lifecycle-security/references.md
+      - "04 · EVM Forensics & DeFi Recovery":
+          - handbooks/04-evm-forensics-defi-recovery/index.md
+          - ... | flat | handbooks/04-evm-forensics-defi-recovery/part*.md
+          - References: handbooks/04-evm-forensics-defi-recovery/references.md
+      - "05 · Hiring, Remote Work & Insider Threat":
+          - handbooks/05-hiring-remote-insider-dprk/index.md
+          - ... | flat | handbooks/05-hiring-remote-insider-dprk/part*.md
+          - References: handbooks/05-hiring-remote-insider-dprk/references.md
+      - "06 · Incident Response":
+          - handbooks/06-incident-response/index.md
+          - ... | flat | handbooks/06-incident-response/part*.md
+          - References: handbooks/06-incident-response/references.md
+      - "07 · Infrastructure Security":
+          - handbooks/07-infrastructure-security/index.md
+          - ... | flat | handbooks/07-infrastructure-security/part*.md
+          - References: handbooks/07-infrastructure-security/references.md
+      - "08 · SDK Security Testing":
+          - handbooks/08-sdk-security-testing/index.md
+          - ... | flat | handbooks/08-sdk-security-testing/part*.md
+          - References: handbooks/08-sdk-security-testing/references.md
+      - "09 · UX Security":
+          - handbooks/09-ux-security/index.md
+          - ... | flat | handbooks/09-ux-security/part*.md
+          - References: handbooks/09-ux-security/references.md
+      - "10 · Web3 Attack Vectors Mapping":
+          - handbooks/10-web3-attack-vectors-mapping/index.md
+          - ... | flat | handbooks/10-web3-attack-vectors-mapping/part*.md
+          - References: handbooks/10-web3-attack-vectors-mapping/references.md
+      - "11 · Web3 Operational Security":
+          - handbooks/11-opsec-in-web3/index.md
+          - ... | flat | handbooks/11-opsec-in-web3/part*.md
+          - References: handbooks/11-opsec-in-web3/references.md
+
   - SCSTG:
       - SCSTG/index.md
       - Intro:
@@ -192,10 +239,8 @@ nav:
      - checklists/index.md
      - "✨ Interactive Checklist": checklists/interactive.md
 
-
-
   - News:
-      - news
+      - news/index.md
   - talks.md
   - "&#11088; Contribute":
       - contributing.md
@@ -287,6 +332,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
   - stylesheets/interactive-checklist.css
+  - stylesheets/handbooks.css
   - https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css
 extra_javascript:
   - javascripts/external_links.js
@@ -317,6 +363,8 @@ markdown_extensions:
   - admonition
   - tables
   - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.superfences
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
