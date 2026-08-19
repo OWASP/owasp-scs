@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" width="500px" height="500px" xmlns="http://www.w3.org/2000/svg" stroke="#22280b" stroke-width="2.5">
+  <circle cx="250" cy="250" r="240" fill="#cdde87"/>
+  <ellipse cx="250" cy="285" rx="210" ry="185" fill="#dde9af"/>
+  <ellipse cx="250" cy="320" rx="170" ry="130" fill="#eef4d7"/>
+  <ellipse cx="250" cy="355" rx="120" ry="75" fill="#fff"/>
+  <g font-family="DejaVuSans" font-size="40px" text-anchor="middle" stroke="none">
+    <text x="250" y="70">network</text>
+    <text x="250" y="160">host</text>
+    <text x="250" y="260">application</text>
+    <text x="250" y="370">data</text>
+  </g>
+</svg>

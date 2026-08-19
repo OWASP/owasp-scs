@@ -1,0 +1,333 @@
+/* OWASP SCS handbook collection. All selectors are scoped to handbook UI. */
+
+.handbook-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.8rem 1.5rem;
+  align-items: start;
+  margin: 2rem 0 3rem;
+}
+
+.handbook-card {
+  --handbook-accent: var(--scs-blue);
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  text-align: center;
+}
+
+.handbook-card__heading {
+  display: flex;
+  min-height: 5.2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.9rem;
+}
+
+.handbook-card__number {
+  margin: 0 0 0.3rem;
+  color: var(--handbook-accent);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.handbook-card h2 {
+  margin: 0;
+  color: var(--md-default-fg-color);
+  font-size: clamp(0.86rem, 1.25vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1.28;
+}
+
+.handbook-card__cover {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  border: 1px solid color-mix(in srgb, var(--handbook-accent) 22%, var(--md-default-fg-color--lightest));
+  border-radius: 0.25rem;
+  background: #071225;
+  box-shadow: 0 0.7rem 1.7rem rgba(8, 15, 31, 0.17);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.handbook-card__cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.handbook-card__cover:hover {
+  box-shadow: 0 1.1rem 2.2rem rgba(8, 15, 31, 0.25);
+  transform: translateY(-0.25rem);
+}
+
+.handbook-card__meta {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0.75rem 0 0;
+  flex-wrap: wrap;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.62rem;
+}
+
+.handbook-card__meta span + span::before {
+  margin-right: 0.35rem;
+  color: var(--handbook-accent);
+  content: "•";
+}
+
+.handbook-card__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.handbook-card__actions a {
+  display: inline-flex;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.45rem;
+  border: 1px solid var(--handbook-accent, var(--scs-blue));
+  border-radius: 0.45rem;
+  color: var(--handbook-accent, var(--scs-blue));
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.handbook-card__actions a:first-child {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--handbook-accent), #7667f5);
+  color: #fff;
+}
+
+.handbook-card__actions a:hover {
+  background: color-mix(in srgb, var(--handbook-accent, var(--scs-blue)) 88%, #071225);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.handbook-page-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2.5rem 0 1rem;
+  padding-top: 1.25rem;
+  border-top: 0.05rem solid var(--md-default-fg-color--lightest);
+}
+
+.handbook-page-nav__link {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 0.9rem;
+  border: 0.05rem solid var(--md-default-fg-color--lightest);
+  border-radius: 0.55rem;
+  background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.handbook-page-nav__link:hover {
+  border-color: var(--scs-blue);
+  transform: translateY(-1px);
+}
+
+.handbook-page-nav__link--next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.handbook-page-nav__direction {
+  color: var(--scs-blue);
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.handbook-page-nav__title {
+  overflow: hidden;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+}
+
+.handbook-bookbar__actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.handbook-bookbar__actions a {
+  display: inline-flex;
+  min-height: 2.3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48rem 0.8rem;
+  border: 1px solid var(--handbook-accent, var(--scs-blue));
+  border-radius: 0.55rem;
+  color: var(--handbook-accent, var(--scs-blue));
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.handbook-bookbar__actions a:first-child {
+  background: var(--handbook-accent, var(--scs-blue));
+  color: #fff;
+}
+
+.handbook-bookbar__actions a:hover {
+  background: color-mix(in srgb, var(--handbook-accent, var(--scs-blue)) 88%, #071225);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.handbook-bookbar {
+  --handbook-accent: var(--scs-blue);
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 1.3rem;
+  align-items: center;
+  margin: 0.8rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--handbook-accent) 35%, var(--md-default-fg-color--lightest));
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--handbook-accent) 15%, transparent), transparent 45%),
+    var(--md-code-bg-color);
+}
+
+.handbook-bookbar img {
+  width: 8.5rem;
+  height: 10.5rem;
+  border-radius: 0.65rem;
+  object-fit: cover;
+  object-position: center 22%;
+  box-shadow: 0 0.8rem 1.8rem rgba(8, 15, 31, 0.24);
+}
+
+.handbook-bookbar__kicker {
+  margin: 0 0 0.4rem;
+  color: var(--handbook-accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.handbook-bookbar__summary {
+  max-width: 45rem;
+  margin: 0 0 1rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.handbook-series-link {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Improve scanning inside handbook prose without changing other project pages. */
+.handbook-prose p strong,
+.handbook-prose li strong,
+.handbook-prose td strong {
+  font-weight: 750;
+}
+
+.handbook-prose p a:not(.headerlink),
+.handbook-prose li a:not(.headerlink),
+.handbook-prose td a:not(.headerlink) {
+  font-weight: 550;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.16em;
+}
+
+.handbook-prose p > code,
+.handbook-prose li > code,
+.handbook-prose td > code {
+  padding: 0.08em 0.3em;
+  border: 0.05rem solid color-mix(in srgb, var(--scs-blue) 24%, var(--md-default-fg-color--lightest));
+  border-radius: 0.28rem;
+  background: color-mix(in srgb, var(--md-code-bg-color) 86%, var(--scs-blue) 14%);
+  font-size: 0.84em;
+  font-weight: 600;
+}
+
+.md-typeset .task-list-item [type="checkbox"] {
+  margin-top: 0.1em;
+}
+
+.md-typeset .task-list-item {
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 1200px) {
+  .handbook-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .handbook-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .handbook-grid {
+    width: 100%;
+    max-width: 20rem;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .handbook-bookbar {
+    grid-template-columns: 1fr;
+  }
+
+  .handbook-bookbar img {
+    width: 100%;
+    height: 12rem;
+  }
+
+  .handbook-page-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .handbook-page-nav__link--next {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .handbook-card,
+  .handbook-card__cover img,
+  .handbook-card__actions a,
+  .handbook-bookbar__actions a {
+    transition: none;
+  }
+}
