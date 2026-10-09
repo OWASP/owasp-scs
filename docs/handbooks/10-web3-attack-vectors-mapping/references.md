@@ -10,6 +10,8 @@ This appendix consolidates every external source cited across the Handbook's fiv
 - [MITRE ATT&CK Design and Philosophy / Data and Tools](https://attack.mitre.org/resources/attack-data-and-tools/)
 - [MITRE ATT&CK Version History](https://attack.mitre.org/resources/versions/)
 - [MITRE ATT&CK Tactic TA0001: Initial Access](https://attack.mitre.org/tactics/TA0001/)
+- [MITRE ATT&CK Tactic TA0002: Execution](https://attack.mitre.org/tactics/TA0002/)
+- [MITRE ATT&CK Tactic TA0004: Privilege Escalation](https://attack.mitre.org/tactics/TA0004/)
 - [MITRE ATT&CK Tactic TA0005: Defense Evasion](https://attack.mitre.org/tactics/TA0005/)
 - [MITRE ATT&CK Tactic TA0006: Credential Access](https://attack.mitre.org/tactics/TA0006/)
 - [MITRE ATT&CK Tactic TA0009: Collection](https://attack.mitre.org/tactics/TA0009/)
@@ -57,6 +59,7 @@ This appendix consolidates every external source cited across the Handbook's fiv
 - [Reuters: Coincheck hack coverage, January 2018](https://www.reuters.com/)
 - [Sygnia: Investigation into the Bybit hack](https://www.sygnia.co/blog/sygnia-investigation-bybit-hack/)
 - [Wired: Mt. Gox bitcoin exchange collapse, 2014](https://www.wired.com/2014/03/bitcoin-exchange/)
+- [Cosmos Labs: Cosmos EVM GHSA-7g4w-cg88-2cq2 post-mortem (August 2026)](https://github.com/cosmos/security/blob/main/communications/cosmos_evm_GHSA-7g4w-cg88-2cq2_post_mortem.md)
 
 ## Tools and Documentation
 

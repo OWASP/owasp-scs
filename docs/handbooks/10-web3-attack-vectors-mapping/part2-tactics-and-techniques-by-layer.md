@@ -371,7 +371,15 @@ Direct compromise of the consensus layer itself, rather than the RPC interface i
 
 A newer variant of this concern applies to rollups and other layer-2 networks that rely on a centralized or lightly decentralized sequencer to order transactions: a compromised or malicious sequencer can reorder, delay, or censor transactions even without any consensus-layer attack in the traditional sense, an architectural risk actively discussed as rollups move toward decentralized sequencing. Detection signals include an unexpected deep chain reorganization reported by monitoring infrastructure, and a node whose peer set shows unusually low diversity in IP ranges or autonomous system numbers. Mitigation includes requiring a higher confirmation count for high-value transactions on lower-hash-rate chains, running validating nodes with diverse, monitored peer connections to reduce eclipse risk, and, at the protocol design level, pursuing sequencer decentralization or fraud-proof mechanisms that bound how much damage a compromised sequencer can cause.
 
-### 8.3 Technique Catalog and TTP IDs
+### 8.3 Execution-Layer State Reconciliation Flaws
+
+Chains that embed an EVM inside a native framework keep two views of the same balances: the EVM's state database and the native modules that own the canonical ledger. Precompiles bridge the two, letting EVM code call native operations such as staking. When the native module accepts an operation over funds the EVM view does not track (for example, the locked portion of a vesting account), the EVM-side bookkeeping must absorb a change it cannot represent. If that update uses unchecked arithmetic, the result wraps instead of failing, and the impossible balance can then be moved like any other.
+
+The August 2026 Cosmos EVM incident is the reference case ([Cosmos Labs post-mortem, GHSA-7g4w-cg88-2cq2](https://github.com/cosmos/security/blob/main/communications/cosmos_evm_GHSA-7g4w-cg88-2cq2_post_mortem.md)). A staking precompile let an attacker-controlled contract, deployed at a precomputed address converted into a vesting account, delegate locked balance; an unchecked underflow on the EVM-visible spendable balance produced a value near 2^256, and a transfer to a high-balance victim account overflowed it to zero. Six chains were drained before validators halted them, and the aggregate supply invariant never fired because the attack was supply-neutral. The attacker's contract was only the tool: the vulnerable code was a node module shared by every affected chain, which is why this technique belongs to the node layer rather than to Chapter 7.
+
+Detection signals include per-transaction state diffs where one balance jumps to near 2^256 or another drops to zero without a signature from its owner, and precompile calls whose requested amount exceeds the caller's EVM-visible balance. Mitigation includes checked arithmetic that fails closed on every balance update, per-account invariant checks after each precompile call (not only aggregate supply checks), restricting precompile operations to balances the EVM state can observe, and treating any fix to shared node modules as a coordinated, privately distributed patch rather than a public silent fix.
+
+### 8.4 Technique Catalog and TTP IDs
 
 | TTP ID | Technique | Primary detection signal | Primary mitigation |
 |--------|-----------|---------------------------|---------------------|
@@ -380,6 +388,7 @@ A newer variant of this concern applies to rollups and other layer-2 networks th
 | T8.003 | MEV sandwich/front-running via mempool visibility | Abnormal price impact around a pending transaction | Private mempools/relays, slippage limits |
 | T8.004 | Eclipse attack on node peer connections | Low peer IP/ASN diversity | Diverse, monitored peer connections |
 | T8.005 | 51 percent/consensus reorganization attack | Unexpected deep chain reorganization | Higher confirmation thresholds on lower-hash-rate chains |
+| T8.006 | EVM/native-module state reconciliation flaw via precompile | State diff with a near-2^256 balance or an unsigned drop to zero | Checked arithmetic; per-account invariant check after each precompile call |
 
 ---
 
