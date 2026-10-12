@@ -132,7 +132,8 @@ None of the entries below are endorsements. They are the categories of capabilit
 | Tool | What it does |
 |------|--------------|
 | [Forta Network](https://docs.forta.network/) | Decentralized network of detection bots evaluating live mempool and block data against subscribable rules (Part 3, 5.2). |
-| [OpenZeppelin Defender](https://docs.openzeppelin.com/defender/) | Contract-scoped monitoring (Monitor) paired with automated response actions (Sentinel). |
+| [OpenZeppelin Monitor](https://github.com/OpenZeppelin/openzeppelin-monitor) | Open-source, self-hosted contract-scoped monitoring with alerts to Slack, Discord, Telegram, email, webhooks or scripts. Moved to open source when OpenZeppelin retired the hosted Defender service on July 1, 2026. |
+| [OpenZeppelin Relayer](https://github.com/OpenZeppelin/openzeppelin-relayer) | Open-source, self-hosted transaction relayer; a monitor's webhook or script can call its API to send a response transaction such as `pause()` from a managed signing key. |
 | [Tenderly Alerts](https://tenderly.co/alerting) | Contract-scoped monitoring with a no-code condition builder. |
 
 **Infrastructure and application monitoring**

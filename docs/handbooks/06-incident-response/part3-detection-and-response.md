@@ -27,7 +27,7 @@ Treat these four as a single pipeline you test end to end, not four independent 
 
 On-chain monitoring watches the one data source an attacker cannot suppress: the chain itself. Every state-changing action a protocol takes, and every action an attacker takes against it, is a transaction with a permanent, publicly queryable record. The job of on-chain monitoring is to turn that record into alerts before the block finalizes rather than after a post-mortem.
 
-[Forta Network](https://docs.forta.network/) is the most widely deployed example of this pattern: independent detection bots run against a live mempool and block stream, evaluate each transaction against a rule, and publish alerts to a public network other consumers can subscribe to. [OpenZeppelin Defender's](https://docs.openzeppelin.com/defender/) Monitor module and [Tenderly Alerts](https://tenderly.co/alerting) provide the equivalent capability scoped to your own contracts, with a UI for defining conditions without writing a bot from scratch.
+[Forta Network](https://docs.forta.network/) is the most widely deployed example of this pattern: independent detection bots run against a live mempool and block stream, evaluate each transaction against a rule, and publish alerts to a public network other consumers can subscribe to. [Tenderly Alerts](https://tenderly.co/alerting) provides the equivalent capability scoped to your own contracts, with a UI for defining conditions without writing a bot from scratch. [OpenZeppelin Monitor](https://github.com/OpenZeppelin/openzeppelin-monitor) covers the same contract-scoped conditions as a self-hosted, open-source service configured through files; OpenZeppelin moved it to open source when it retired the hosted Defender service on July 1, 2026.
 
 The signal classes every protocol should monitor, regardless of platform:
 
@@ -39,7 +39,9 @@ The signal classes every protocol should monitor, regardless of platform:
 ```javascript
 // Minimal viem-based watcher for the signal classes above.
 // Production deployments should run this as a Forta bot or
-// a Defender Sentinel so alerting survives a single host failing.
+// on two independently hosted monitors (for example two
+// OpenZeppelin Monitor instances) so alerting survives a
+// single host failing.
 import { createPublicClient, webSocket, parseAbiItem, formatUnits } from "viem";
 import { mainnet } from "viem/chains";
 

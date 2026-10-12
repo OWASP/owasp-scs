@@ -120,7 +120,7 @@ The sources below are cited across the seven parts of this handbook, grouped by 
 - [Chainstack, RPC security and access rules](https://chainstack.com/rpc-security-access-rules/)
 - [HashiCorp Cloud Platform, Vault Secrets auto-rotation](https://developer.hashicorp.com/hcp/docs/vault-secrets/auto-rotation)
 - [AWS IAM, security best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-- [OpenZeppelin Defender documentation](https://docs.openzeppelin.com/defender/)
+- [OpenZeppelin, Defender Sunset FAQ](https://www.openzeppelin.com/news/defender-sunset-faq)
 - [Web3Signer, slashing protection](https://docs.web3signer.consensys.io/concepts/slashing-protection)
 - [ethereum.org, client diversity](https://ethereum.org/developers/docs/nodes-and-clients/client-diversity/)
 - [Geth (go-ethereum), security documentation](https://geth.ethereum.org/docs/fundamentals/security)

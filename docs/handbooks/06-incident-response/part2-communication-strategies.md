@@ -72,7 +72,7 @@ escalation_policy:
       target: incident_commander_pool
       timeout_minutes: 10
   triggers:
-    - source: monitoring_webhook     # e.g. Forta, OpenZeppelin Defender, custom bot
+    - source: monitoring_webhook     # e.g. Forta, OpenZeppelin Monitor, custom bot
       severity: [sev1, sev2]
       auto_page: true
     - source: manual_report

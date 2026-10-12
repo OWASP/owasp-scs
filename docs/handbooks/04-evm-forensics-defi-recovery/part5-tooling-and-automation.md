@@ -144,11 +144,11 @@ Consistency matters more than exhaustiveness here: a checklist that is actually 
 
 ### 20.3 Integration with Incident Response Pipelines
 
-Tooling delivers the most value when detection, **evidence collection**, and human escalation are wired together rather than triggered manually in sequence. A typical pipeline routes a Forta or Defender alert into a ticketing or paging system, fires an automated snapshot script the moment the alert lands (before anyone has read it), and only then hands the packaged evidence to a human, who decides whether to escalate into the fuller process owned by the **Incident Response** Handbook (06).
+Tooling delivers the most value when detection, **evidence collection**, and human escalation are wired together rather than triggered manually in sequence. A typical pipeline routes a Forta or OpenZeppelin Monitor alert into a ticketing or paging system, fires an automated snapshot script the moment the alert lands (before anyone has read it), and only then hands the packaged evidence to a human, who decides whether to escalate into the fuller process owned by the **Incident Response** Handbook (06).
 
 ```mermaid
 sequenceDiagram
-    participant Bot as Detection bot (Forta / Defender Sentinel)
+    participant Bot as Detection bot (Forta / OpenZeppelin Monitor)
     participant Router as Alert router (webhook)
     participant Snapshot as Automated snapshot script
     participant Ticket as Ticketing / paging system
@@ -167,7 +167,7 @@ sequenceDiagram
 | Alert source | Automated action | Escalation trigger |
 |---------------|------------------|---------------------|
 | Forta bot finding | Run snapshot script, open ticket | Any Critical or High severity finding |
-| Defender Sentinel condition | Run snapshot script, optional Autotask pause | Contract balance or supply moves past threshold |
+| OpenZeppelin Monitor condition | Run snapshot script, optional scripted pause | Contract balance or supply moves past threshold |
 | Chainalysis/TRM risk alert | Log address, no auto-pause | Sanctioned or high-risk counterparty match |
 | Manual analyst report | Run snapshot script on demand | Any suspected active exploit |
 
@@ -181,4 +181,4 @@ Keep the automated leg conservative: auto-pausing a contract is powerful but not
 - Capture both `callTracer` and `prestateTracer` output for every exploit transaction to fix the exact pre-attack state, not just the call sequence.
 - Independently re-verify bytecode against source (Sourcify or a second explorer) rather than trusting a single verification badge.
 - **Script the first ten minutes of every incident:** snapshot, hash, manifest, before analysis diverges by case.
-- Wire detection tools (Forta, Defender Sentinel) to fire an automated evidence snapshot before human triage begins, and reserve automated response actions for high-confidence signals only.
+- Wire detection tools (Forta, OpenZeppelin Monitor) to fire an automated evidence snapshot before human triage begins, and reserve automated response actions for high-confidence signals only.
